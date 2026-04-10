@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>å±å¤ææ°</title>
+<meta name="description" content="ä½ ççå­æ¨¡å¼è¿å¨è¿è¡ã12éé¢ï¼ä¸åæå¯¹æ¹ï¼åªçä½ èªå·±ã">
+<meta property="og:title" content="å±å¤ææ°">
+<meta property="og:description" content="ä½ ççå­æ¨¡å¼è¿å¨è¿è¡ã">
+<style>
+/* ============================================
+   DESIGN SYSTEM â abstract, warm, breathable
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+:root {
+  /* Warm paper palette */
+  --bg: #F6F1EB;
+  --bg-warm: #EDE7DF;
+  --surface: #FFFFFF;
+  --surface-warm: #FBF8F4;
+
+  /* Ink system â one hue family, many weights */
+  --ink-100: #1A1614;
+  --ink-80: #3D3632;
+  --ink-60: #6B6058;
+  --ink-40: #9C9088;
+  --ink-20: #C4BBB2;
+  --ink-10: #DDD6CE;
+  --ink-05: #EDE8E2;
+
+  /* Signal â warm amber, used surgically */
+  --signal: #B8845A;
+  --signal-soft: #D4AA7D;
+  --signal-wash: #F2E6D6;
+  --signal-glow: rgba(184, 132, 90, 0.08);
+
+  /* Typography */
+  --serif: 'Noto Serif SC', 'Songti SC', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
+
+  /* Spacing rhythm â 8px base */
+  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 40px; --s6: 48px; --s8: 64px;
+
+  /* Curves */
+  --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-xl: 20px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink-100);
+  font-family: var(--sans);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--signal-wash); color: var(--ink-100); }
+
+.wrap { max-width: 580px; margin: 0 auto; padding: 0 var(--s3); }
+
+/* ============================================
+   HEADER â barely there
+   ============================================ */
+header {
+  padding: var(--s2) 0;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+header:hover { opacity: 1; }
+.header-row {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.header-logo {
+  font-family: var(--serif);
+  font-size: 13px; font-weight: 400;
+  color: var(--ink-60);
+  letter-spacing: 0.06em;
+}
+.header-link {
+  font-size: 11px; color: var(--ink-40);
+  text-decoration: none; letter-spacing: 0.04em;
+}
+.header-link:hover { color: var(--signal); }
+
+/* ============================================
+   SCREEN SYSTEM
+   ============================================ */
+.screen { display: none; }
+.screen.active { display: block; }
+
+.screen.active .fade-in { animation: fadeIn 0.5s ease both; }
+.screen.active .fade-in-d1 { animation: fadeIn 0.5s 0.1s ease both; }
+.screen.active .fade-in-d2 { animation: fadeIn 0.5s 0.2s ease both; }
+.screen.active .fade-in-d3 { animation: fadeIn 0.5s 0.35s ease both; }
+.screen.active .fade-in-d4 { animation: fadeIn 0.5s 0.5s ease both; }
+.screen.active .fade-in-d5 { animation: fadeIn 0.6s 0.7s ease both; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.97) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes slideRight {
+  from { width: 0%; } to { width: var(--target-width); }
+}
+@keyframes typeReveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   INTRO â hook in 3 seconds
+   ============================================
+
+   Psychology hooks applied:
+   - Curiosity gap: "è¿å¨è¿è¡" implies something unknown is happening to YOU
+   - Identity threat: "ä½ å¯è½æ¯ææ¯çé£ä¸ªäºº" creates cognitive dissonance
+   - Low commitment entry: "12é¢ Â· 3åé" reduces friction
+   - Zeigarnik: once started, incompleteness drives completion
+*/
+.intro { padding: var(--s8) 0 var(--s5); }
+
+.intro-hook {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--ink-100);
+  margin-bottom: var(--s3);
+  letter-spacing: -0.01em;
+}
+.intro-hook .hl {
+  color: var(--signal);
+  text-decoration: underline;
+  text-decoration-color: var(--signal-wash);
+  text-underline-offset: 5px;
+  text-decoration-thickness: 2px;
+}
+
+/* The one-liner that reframes everything */
+.intro-reframe {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink-60);
+  line-height: 2;
+  margin-bottom: var(--s5);
+  max-width: 480px;
+}
+.intro-reframe strong {
+  color: var(--ink-100);
+  font-weight: 500;
+}
+
+/* Micro-commitment CTA */
+.cta-area { margin-bottom: var(--s6); }
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--sans);
+  font-size: 15px; font-weight: 500;
+  padding: 14px 32px;
+  background: var(--ink-100);
+  color: var(--bg);
+  border: none; border-radius: var(--r-md);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.01em;
+}
+.cta-btn:hover { background: var(--ink-80); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.cta-btn:active { transform: translateY(0); }
+.cta-btn .arrow { transition: transform 0.25s; font-size: 16px; }
+.cta-btn:hover .arrow { transform: translateX(4px); }
+
+.cta-meta {
+  margin-top: var(--s2);
+  font-size: 12px;
+  color: var(--ink-40);
+  letter-spacing: 0.03em;
+}
+
+/* Trust strip â subtle social proof */
+.trust-strip {
+  padding: var(--s3) 0;
+  border-top: 1px solid var(--ink-05);
+}
+.trust-text {
+  font-size: 12px;
+  color: var(--ink-40);
+  line-height: 1.8;
+}
+
+/* ============================================
+   QUIZ ENGINE
+   ============================================
+
+   Hooks:
+   - Progress bar = Zeigarnik effect (must complete)
+   - Section labels shift = variable context (keeps brain awake)
+   - Option selection has micro-delay = anticipation loop
+   - Question transitions have momentum = flow state
+   - Last 2 questions flagged "æ·±å±" = escalation of commitment
+*/
+.quiz-area { padding: var(--s4) 0 var(--s3); }
+
+/* Progress â minimal but tension-building */
+.prog-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: var(--s1);
+}
+.prog-count {
+  font-size: 13px; font-weight: 500;
+  color: var(--ink-80);
+  font-variant-numeric: tabular-nums;
+}
+.prog-section {
+  font-size: 11px; color: var(--ink-40);
+  letter-spacing: 0.08em;
+  transition: all 0.3s;
+}
+.prog-track {
+  height: 2px; background: var(--ink-05);
+  border-radius: 2px; overflow: hidden;
+  margin-bottom: var(--s6);
+}
+.prog-fill {
+  height: 100%; background: var(--signal);
+  border-radius: 2px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Question */
+.q-area {
+  animation: fadeInScale 0.35s ease both;
+}
+.q-num {
+  font-size: 11px; color: var(--ink-20);
+  letter-spacing: 0.12em;
+  margin-bottom: var(--s2);
+  font-weight: 500;
+}
+.q-text {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 2.6vw, 1.15rem);
+  font-weight: 400;
+  line-height: 1.85;
+  color: var(--ink-100);
+  margin-bottom: var(--s4);
+}
+
+/* Options â satisfying click targets */
+.opts { display: flex; flex-direction: column; gap: var(--s1); }
+.opt {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 15px 18px;
+  background: var(--surface);
+  border: 1.5px solid transparent;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left; width: 100%;
+  font-family: var(--sans);
+  position: relative;
+  overflow: hidden;
+}
+/* Subtle hover warmth */
+.opt::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--signal-glow);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.opt:hover::before { opacity: 1; }
+.opt:hover { border-color: var(--ink-10); }
+
+/* Selected = confident, warm, done */
+.opt.selected {
+  border-color: var(--signal);
+  background: var(--signal-wash);
+}
+.opt.selected::before { opacity: 0; }
+.opt.selected .opt-key { color: var(--signal); }
+
+.opt-key {
+  font-size: 11px; font-weight: 500;
+  color: var(--ink-20);
+  min-width: 16px;
+  padding-top: 3px;
+  transition: color 0.15s;
+}
+.opt-label {
+  font-size: 14px;
+  color: var(--ink-80);
+  line-height: 1.6;
+  transition: color 0.15s;
+}
+.opt:hover .opt-label { color: var(--ink-100); }
+.opt.selected .opt-label { color: var(--ink-100); font-weight: 400; }
+
+.q-foot {
+  margin-top: var(--s4);
+  padding-top: var(--s2);
+  border-top: 1px solid var(--ink-05);
+  font-size: 11px; color: var(--ink-20);
+  letter-spacing: 0.02em;
+}
+
+/* ============================================
+   ANALYZING â the anticipation gap
+   ============================================
+
+   Hook: Delayed gratification.
+   A 2.5s "analyzing" screen before result.
+   Creates anticipation, makes result feel earned.
+   Like a slot machine's spin.
+*/
+.analyzing { padding: var(--s8) 0; text-align: center; }
+.analyzing-text {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink-40);
+  animation: pulse 1.5s ease infinite;
+  margin-bottom: var(--s3);
+}
+.analyzing-bar {
+  width: 120px; height: 2px;
+  background: var(--ink-05);
+  margin: 0 auto;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.analyzing-fill {
+  height: 100%; width: 0%;
+  background: var(--signal);
+  border-radius: 2px;
+  animation: analyzeGrow 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes analyzeGrow {
+  0% { width: 0%; }
+  30% { width: 45%; }
+  60% { width: 70%; }
+  85% { width: 88%; }
+  100% { width: 100%; }
+}
+
+/* ============================================
+   RESULT â the social currency
+   ============================================
+
+   Hooks:
+   - Barnum effect: results feel specific to YOU
+   - Identity label: type code becomes self-identifier
+   - Share card designed for screenshot (aspect ratio, contrast, breathing room)
+   - Warmth section = emotional reward after roast
+   - "Rare type" framing for COEX = social status
+*/
+.result-area { padding: var(--s5) 0 var(--s3); }
+
+/* === THE CARD === screenshot-optimized */
+.card {
+  background: var(--surface);
+  border-radius: var(--r-xl);
+  padding: 36px 28px 28px;
+  margin-bottom: var(--s3);
+  position: relative;
+  overflow: hidden;
+  /* Subtle shadow for depth on screenshot */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 30px rgba(0,0,0,0.04);
+}
+
+/* Top accent line â identity stripe */
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--signal-wash) 0%, var(--signal) 50%, var(--signal-wash) 100%);
+}
+
+.card-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--signal);
+  margin-bottom: var(--s3);
+  font-weight: 500;
+}
+
+.card-code {
+  font-size: 12px;
+  color: var(--ink-20);
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+/* Type name â the thing people screenshot */
+.card-name {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 7vw, 3rem);
+  font-weight: 300;
+  color: var(--ink-100);
+  line-height: 1.15;
+  margin: 4px 0 2px;
+  letter-spacing: -0.02em;
+}
+.card-zh {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--signal);
+  font-weight: 400;
+  margin-bottom: var(--s4);
+}
+
+.card-line {
+  width: 32px; height: 2px;
+  background: var(--ink-10);
+  margin-bottom: var(--s3);
+}
+
+/* Roast â the meat */
+.card-roast {
+  font-family: var(--serif);
+  font-size: 14.5px;
+  color: var(--ink-60);
+  line-height: 2.05;
+  margin-bottom: var(--s3);
+}
+
+/* Warmth â the reward */
+.card-warm {
+  background: var(--surface-warm);
+  border-radius: var(--r-md);
+  padding: 18px 20px;
+  margin-bottom: var(--s3);
+  border-left: 2.5px solid var(--signal-soft);
+}
+.card-warm-tag {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--signal);
+  margin-bottom: var(--s1);
+  font-weight: 500;
+}
+.card-warm-text {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--ink-60);
+  line-height: 2;
+  font-style: italic;
+}
+
+/* Card footer â brand watermark for screenshots */
+.card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: var(--s2);
+  border-top: 1px solid var(--ink-05);
+}
+.card-foot-type {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  color: var(--signal-soft);
+  font-style: italic;
+  font-weight: 300;
+}
+.card-foot-brand {
+  text-align: right;
+  font-size: 10px;
+  color: var(--ink-20);
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+/* Psychology expandable */
+.psych {
+  background: var(--bg-warm);
+  border-radius: var(--r-lg);
+  margin-bottom: var(--s3);
+  overflow: hidden;
+}
+.psych-toggle {
+  width: 100%;
+  padding: 18px 22px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: none; border: none;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 13px; font-weight: 500;
+  color: var(--ink-60);
+  letter-spacing: 0.03em;
+  transition: color 0.15s;
+}
+.psych-toggle:hover { color: var(--ink-100); }
+.psych-toggle .chevron {
+  transition: transform 0.3s;
+  color: var(--ink-40);
+  font-size: 14px;
+}
+.psych-toggle.open .chevron { transform: rotate(180deg); }
+.psych-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.psych-body.open { max-height: 600px; }
+.psych-content {
+  padding: 0 22px 22px;
+  font-size: 13px;
+  color: var(--ink-60);
+  line-height: 1.95;
+}
+.psych-content em { color: var(--ink-100); font-style: normal; font-weight: 500; }
+
+/* Action buttons */
+.actions {
+  display: flex; gap: var(--s1); flex-wrap: wrap;
+  margin-bottom: var(--s2);
+}
+.btn-save {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sans);
+  font-size: 13px; font-weight: 500;
+  padding: 12px 24px;
+  background: var(--ink-100);
+  color: var(--bg);
+  border: none; border-radius: var(--r-md);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-save:hover { background: var(--ink-80); }
+.btn-redo {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--sans);
+  font-size: 13px;
+  padding: 12px 24px;
+  background: transparent;
+  border: 1.5px solid var(--ink-10);
+  color: var(--ink-60);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-redo:hover { border-color: var(--signal-soft); color: var(--ink-100); }
+
+.share-hint {
+  font-size: 12px;
+  color: var(--ink-20);
+  margin-bottom: var(--s5);
+}
+
+/* Version links */
+.versions {
+  display: flex; gap: var(--s1); flex-wrap: wrap;
+  padding-top: var(--s3);
+  border-top: 1px solid var(--ink-05);
+  margin-bottom: var(--s2);
+}
+.ver {
+  font-size: 11px; color: var(--ink-40);
+  padding: 5px 14px;
+  border: 1px solid var(--ink-05);
+  border-radius: 20px;
+  text-decoration: none;
+  transition: all 0.15s;
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* FOOTER */
+footer {
+  padding: var(--s2) 0 var(--s3);
+  border-top: 1px solid var(--ink-05);
+  margin-top: var(--s4);
+}
+.foot-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: var(--ink-20);
+}
+.foot-row a { color: var(--ink-40); text-decoration: none; }
+.foot-row a:hover { color: var(--signal); }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: var(--ink-100); color: var(--bg);
+  padding: 11px 24px; border-radius: var(--r-md);
+  font-size: 13px; opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100; pointer-events: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Mobile */
+@media (max-width: 480px) {
+  .wrap { padding: 0 20px; }
+  .card { padding: 28px 22px 22px; }
+  .card-foot { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .card-foot-brand { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <div class="header-logo">å±å¤ææ°</div>
+      <a class="header-link" href="../">dmlogic.ca</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ====== INTRO ====== -->
+  <div class="screen active" id="s-intro">
+    <section class="intro">
+      <h1 class="intro-hook fade-in">
+        ä½ ççå­æ¨¡å¼<br><span class="hl">è¿å¨è¿è¡</span>
+      </h1>
+
+      <div class="intro-reframe fade-in-d1">
+        ç½ä¸ææå³äºNPDçåå®¹é½å¨æä½ è¯å«ãå¯¹æãè¯æ­ã<br>
+        ä½ä½ ææ²¡ææ³è¿ââ<strong>åæå¤ªå¤ææ¯å³ç³»çæ¶åï¼ä½ åèæä¸ºäºææ¯çé£ä¸ªäººã</strong><br><br>
+        è¿ä¸ªæµè¯ä¸åæå¯¹æ¹ã<br>
+        å®åªåä¸ä»¶äºï¼çç<strong>ä½ </strong>ã
+      </div>
+
+      <div class="cta-area fade-in-d2">
+        <button class="cta-btn" onclick="startQuiz()">
+          å¼å§ <span class="arrow">â</span>
+        </button>
+        <div class="cta-meta">12é¢ Â· 3åé Â· ä¸æ¶éä»»ä½ä¿¡æ¯</div>
+      </div>
+    </section>
+
+    <div class="trust-strip fade-in-d3">
+      <div class="trust-text">
+        å¿çå­¦åè Â· Pete Walker 4Fåä¼¤ååº Â· Marsha Linehan DBT Â· Stephen Porges å¤è¿·èµ°ç¥ç»çè®º<br>
+        æ¬æµè¯ä¸ææä¸´åºè¯æ­ã
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== QUIZ ====== -->
+  <div class="screen" id="s-quiz">
+    <section class="quiz-area">
+      <div class="prog-row">
+        <span class="prog-count" id="prog-count">1 / 12</span>
+        <span class="prog-section" id="prog-section"></span>
+      </div>
+      <div class="prog-track">
+        <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+      </div>
+      <div id="q-area"></div>
+      <div class="q-foot" id="q-foot">åå®å®ãä¸çå·²ç»å¤ä¹±äºã</div>
+    </section>
+  </div>
+
+  <!-- ====== ANALYZING ====== -->
+  <div class="screen" id="s-analyzing">
+    <section class="analyzing">
+      <div class="analyzing-text">æ­£å¨åæä½ çæ¨¡å¼â¦</div>
+      <div class="analyzing-bar">
+        <div class="analyzing-fill" id="analyze-fill"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ====== RESULT ====== -->
+  <div class="screen" id="s-result">
+    <section class="result-area">
+
+      <div class="card fade-in" id="share-card">
+        <div class="card-eyebrow">ä½ çå±å¤ææ°ç»æ</div>
+        <div class="card-code" id="r-code"></div>
+        <div class="card-name" id="r-name"></div>
+        <div class="card-zh" id="r-zh"></div>
+        <div class="card-line"></div>
+        <div class="card-roast" id="r-roast"></div>
+        <div class="card-warm">
+          <div class="card-warm-tag">ä½æ¯</div>
+          <div class="card-warm-text" id="r-warm"></div>
+        </div>
+        <div class="card-foot">
+          <div class="card-foot-type" id="r-foot-type"></div>
+          <div class="card-foot-brand">å±å¤ææ°<br>dmlogic.ca</div>
+        </div>
+      </div>
+
+      <div class="psych fade-in-d1">
+        <button class="psych-toggle" onclick="togglePsych(this)">
+          å¿çå­¦èæ¯ <span class="chevron">â¾</span>
+        </button>
+        <div class="psych-body" id="psych-body">
+          <div class="psych-content" id="r-psych"></div>
+        </div>
+      </div>
+
+      <div class="actions fade-in-d2">
+        <button class="btn-save" onclick="saveCard()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          ä¿å­ç»æå¾
+        </button>
+        <button class="btn-redo" onclick="restartQuiz()">
+          åæµä¸æ¬¡
+        </button>
+      </div>
+      <div class="share-hint fade-in-d2">æªå¾åäº«ç»æå Â· æä¿å­ç»æå¾åæåå</div>
+
+      <div class="versions fade-in-d3">
+        <span class="ver">æ¹è¨ç Â· å³å°</span>
+        <span class="ver">English Â· Coming</span>
+        <span class="ver">AIç Â· Coming</span>
+      </div>
+
+    </section>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <span>Â© 2026 å¤§æ¯</span>
+      <a href="../">dmlogic.ca</a>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================
+   QUESTIONS â çº¯ä¸­æ, designed for flow state
+   ============================================
+   Structure: start with body (low cognitive load)
+   â cognitive patterns â relational â emotional
+   â current state â deep cuts (escalation)
+
+   The last 2 carry double weight (commitment + sunk cost)
+*/
+const Q = [
+  {
+    s: "ç¥ç»ç³»ç»",
+    t: "å½ä½ æè§å°æ¿é´éçæ°æ°å¨åââæäººçæç»ªå¼å§è½¬ââä½ èº«ä½çç¬¬ä¸ååºæ¯ï¼",
+    o: [
+      { t: "å¿«éæ«æï¼è°æ´èªå·±å»éå", k: "MIRR" },
+      { t: "åå¾éå¸¸å®éï¼å¼å¸åæ¢ï¼è®©èªå·±ä¸æ¾ç¼", k: "GHST" },
+      { t: "ä¸ç§éåï¼è¿å¥è­¦è§", k: "FGHT" },
+      { t: "èå­å¼å§è½¬ï¼åæåæå°åºåçäºä»ä¹", k: "DECT" },
+      { t: "ä¸ç§æ½ç¦»ââäººå¨ï¼ä½ç²¾ç¥éäºä¸æ­¥", k: "PHIL" }
+    ]
+  },
+  {
+    s: "ç¥ç»ç³»ç»",
+    t: "ä¸æ¬¡å°é¾çäºå¨ä¹åï¼ä½ çèº«ä½ä¿æç´§ç»·ç¶æå¤ä¹ï¼",
+    o: [
+      { t: "å åéãç»æäºå°±è¿äº", k: "COEX" },
+      { t: "å¥½å ä¸ªå°æ¶ï¼èå­éä¸ååæ¾", k: "DECT" },
+      { t: "ä¸ç¥éãç´§å¼ çæ¶åæä¸å¤ªæ³¨æèº«ä½", k: "GHST" },
+      { t: "ä¸æ´å¤©ï¼çè³æ´ä¹", k: "MIRR" },
+      { t: "ç´å°ææè¿ä»¶äºååºæ¥æè·äººèé", k: "PHIL" }
+    ]
+  },
+  {
+    s: "è®¤ç¥æ¨¡å¼",
+    t: "ä¸æ®µå³ç³»åºäºé®é¢ï¼ä½ çç¬¬ä¸ååºæ¯ä»ä¹ï¼",
+    o: [
+      { t: "ç ç©¶ââæ¾åå ï¼çè§£æºå¶", k: "DECT" },
+      { t: "æ²é»ââåç­ç­ç", k: "GHST" },
+      { t: "è¯´åºæ¥ââå³ä½¿ä¼ææ©æ¦", k: "FGHT" },
+      { t: "åæ³å¯¹æ¹çè§åº¦ââä¹è®¸æ¯ææ¼äºä»ä¹", k: "MIRR" },
+      { t: "å¾å¤§å¤çââæ¾æ´å¤§çæä¹", k: "PHIL" }
+    ]
+  },
+  {
+    s: "è®¤ç¥æ¨¡å¼",
+    t: "è¿å»ä¸ä¸ªæï¼ä½ çäºå¤å°å³äºNPDãææ¯å³ç³»çåå®¹ï¼",
+    o: [
+      { t: "æ²¡äºãä¸ç ç©¶è¿ä¸ªäº", k: "COEX" },
+      { t: "å ç¯ï¼éä¾¿çç", k: "GHST" },
+      { t: "å¤åä¸ç¯ç»´åºç¾ç§äº", k: "DECT" },
+      { t: "è¿äºç ç©¶é¶æ®µï¼ç°å¨å³æ³¨èªå·±", k: "PHIL" },
+      { t: "éè¦è®ºæ®çæ¶åæå»ç¿»", k: "FGHT" }
+    ]
+  },
+  {
+    s: "å³ç³»è¡ä¸º",
+    t: "ä½ ææ²¡æåç°èªå·±å¨å¸®å«äººè§£éä»ä»¬çåè¡ä¸ºââå³ä½¿ä½ å¿éç¥éè¯´ä¸éï¼",
+    o: [
+      { t: "æï¼å ä¹æ¯èªå¨çï¼æ»è½ç»ä»ä»¬æ¾å°çç±", k: "MIRR" },
+      { t: "å¶å°ï¼ä¸ºäºä¸å°´å°¬", k: "GHST" },
+      { t: "ä¸ï¼æåªæ¯é»é»è®°å½ï¼å­æ¡£", k: "DECT" },
+      { t: "ä¸ï¼ç´æ¥è¯µåºæ¥", k: "FGHT" },
+      { t: "ä»¥åä¼ãæè¯å°æ¯å¨ä¿æ¤ä»ä»¬ä¹åå°±åäº", k: "COEX" }
+    ]
+  },
+  {
+    s: "å³ç³»è¡ä¸º",
+    t: "ä¸ä¸ªä½ å¨ä¹çäººå¯¹ä½ çæ°äºââä½ è¿ä¸ç¥éèªå·±åäºä»ä¹ââä½ çç¬¬ä¸æ­¥æ¯ï¼",
+    o: [
+      { t: "åéæ­ãä¹ååå¼æ¸æ¥", k: "MIRR" },
+      { t: "ç­ãä¸äºè§£å¨å±ä¹åä¸å¨", k: "GHST" },
+      { t: "ç´æ¥é®ï¼æä¹äºï¼", k: "FGHT" },
+      { t: "åæ¾è¿å»48å°æ¶ï¼åæåå ", k: "DECT" },
+      { t: "ç»ç©ºé´ï¼ç¸ä¿¡å³ç³»ï¼è®©å®è¿å»", k: "COEX" }
+    ]
+  },
+  {
+    s: "æç»ª",
+    t: "ä½ åãæ¤æãçå³ç³»æ¯ææ ·çï¼",
+    o: [
+      { t: "ä¸çãæå°æ¤æä¹åï¼å·²ç»åæ§çäº", k: "MIRR" },
+      { t: "å®å­å¨ï¼ä½ææ§å¶å®ãä¸è®©å®åºæ¥", k: "GHST" },
+      { t: "æ¯çæãæ¤æçæ¶åææ¸é", k: "FGHT" },
+      { t: "ç ç©¶è¿å®ãçè§£å®çæ¥æº", k: "DECT" },
+      { t: "æ¥çæ¶åæ¿è®¤å®ï¼å®ä¼è¿å»äº", k: "COEX" }
+    ]
+  },
+  {
+    s: "æç»ª",
+    t: "ä¸ä¸æ¬¡è¢«äººè¿çäººä¼¤å®³ââä½ æä¹å¤ççï¼",
+    o: [
+      { t: "å½ä¸å»äºãä¸æ³è®©äºææ´å¤æ", k: "MIRR" },
+      { t: "ä»ä¹ä¹æ²¡è¯´ãéäºä¸æ­¥ï¼éå»ºè·ç¦»", k: "GHST" },
+      { t: "é¢å¯¹äºï¼ä¹è®¸ä¸å®ç¾ï¼ä½è¯´åºæ¥äº", k: "FGHT" },
+      { t: "æ·±åº¦å¤çââå¨èå­éãåæ¥è®°ãè·äººè", k: "DECT" },
+      { t: "æåäºï¼è®°å½äºï¼è®©å®åç¥æä½ä¸æ§å¶æ", k: "COEX" }
+    ]
+  },
+  {
+    s: "å½ä¸",
+    t: "ä½ ç®ååé£ä¸ªå°é¾çäººæå¤å¢ââå³ç³»æ¯ä»ä¹æ ·çï¼",
+    o: [
+      { t: "è¿å¨åªåè®©å®è¿è½¬ï¼è®©èªå·±è¢«çè§£", k: "MIRR" },
+      { t: "åé äºè·ç¦»ãå®å¨èå´åå±å­", k: "GHST" },
+      { t: "è¿å¨å¶ä¸­ãéè¦çæ¶åæä¼ææ", k: "FGHT" },
+      { t: "æ¯ä»¥åæ´äºè§£äºãè¿å°±æ¯è¿æ­¥", k: "DECT" },
+      { t: "å¤§è´æ¥åäºå®çæ ·å­ãæè¿æèªå·±ççæ´»", k: "COEX" }
+    ]
+  },
+  {
+    s: "å½ä¸",
+    t: "ãè®¾ç«è¾¹çãå¯¹ä½ æ¥è¯´æ¯ä»ä¹æ ·å­çï¼",
+    o: [
+      { t: "æ§ççæ¥æºãè®¾äºï¼é©¬ä¸æå¿å¯¹æ¹ååº", k: "MIRR" },
+      { t: "ææåãåå°é²é¢ï¼ä¸è§£é", k: "GHST" },
+      { t: "æ¸æ¥å°è¯´åºæ¥ï¼åå¤å¥½æ§è¡", k: "FGHT" },
+      { t: "çè®ºä¸ä¼ãå®è·µæ¯å¦ä¸åäº", k: "DECT" },
+      { t: "æ²¡ä»¥åæå§æ§äºãå°±æ¯ä¸æ¡çº¿", k: "COEX" }
+    ]
+  },
+  {
+    s: "æ·±å±",
+    t: "ä½ æ³å¿µä»ä»¬ââè¿æ¯æ³å¿µä»¥åçé£ä¸ªçæ¬ï¼",
+    o: [
+      { t: "æ³å¿µä»ä»¬ãå°±æ¯æ¬äººãç°å¨ä¹æ¯", k: "MIRR" },
+      { t: "æ³å¿µé£æ®µå³ç³»å¹³éçæ¶å", k: "GHST" },
+      { t: "æ³å¿µè¿æ²¡å­¦ä¼åå»æ¶çèªå·±", k: "FGHT" },
+      { t: "æ³å¿µæä»¥ä¸ºä»ä»¬æ¯çé£ä¸ªäºº", k: "DECT" },
+      { t: "å·²ç»ä¸åé®èªå·±è¿ä¸ªé®é¢äº", k: "COEX" }
+    ]
+  },
+  {
+    s: "æ·±å±",
+    t: "æåä¸é¢ãä½ çæ­£æ³è¦çæ¯ä»ä¹ââä¸æ¯ä½ è®¤ä¸ºä½ åºè¯¥æ³è¦çã",
+    o: [
+      { t: "è®©ä»ä»¬ç»äºçè§æ", k: "MIRR" },
+      { t: "è®©ä¸åå®éä¸æ®µæ¶é´", k: "GHST" },
+      { t: "èµ¢ä¸æ¬¡ãæ¸æ°å°ãä¸éå¸¦æ¡ä»¶", k: "FGHT" },
+      { t: "ç»äºå®å¨çè§£æå¨é¢å¯¹ä»ä¹", k: "DECT" },
+      { t: "ä¸åéè¦ä»è¿ä¸åä¸­å¾å°æä¸ªç»æ", k: "COEX" }
+    ]
+  }
+];
+
+/* ====== RESULTS ====== */
+const R = {
+  MIRR: {
+    code: "TYPE 01 Â· MIRR",
+    name: "The Mirror",
+    zh: "éå­",
+    roast: "ä½ å¤ªæé¿åæ å«äººéè¦çä¸è¥¿äºï¼ä»¥è³äºå¿äºèªå·±é¿ä»ä¹æ ·ãä½ ç§°ä¹ä¸ºå±æââææ¶åç¡®å®æ¯ãä½æ´å¤æ¶åï¼æ¯ä¸ä¸ªå­¦ä¼äºãåæä»ä»¬éè¦çæ ·å­å°±å®å¨äºãçç¥ç»ç³»ç»å¨èªå¨è¿è¡ã\n\nä½ å¨ä¸ç¥éèªå·±åéäºä»ä¹ä¹åå°±åéæ­ãä½ å¸®å«äººè§£éä»ä»¬çè¡ä¸ºï¼å¶å°èªå·±ä¹ä¿¡äºãä½ ç»´æåå¹³ç»´æäºå¤ªä¹ï¼ä¹å°å¿äºââåå¹³ä»æ¥ä¸æ¯ä½ çè´£ä»»ã",
+    warm: "éå­ä¼ç¢ãäººä¸ç¨ã\nä½ è¿å¨ã",
+    psych: "ä½ æè¿°çæ¯åä¼¤æ²»çå¸Pete Walkerå®ä¹ç<em>è®¨å¥½ååºï¼Fawn Responseï¼</em>ãç¥ç»ç³»ç»å­¦ä¼äºï¼åæ¦åå®æå¯ä»¥éä½å±é©ãStephen Porgesçå¤è¿·èµ°ç¥ç»çè®ºå°æ­¤è§£éä¸ºèªä¸»ç¥ç»ç³»ç»éè¿ç¤¾äº¤å®å¨ä¿¡å·æ¥è°èèªèº«ãä»£ä»·æ¯éæ¸å¤±å»å¯¹èªå·±åå¨ä¿¡å·çæç¥ãæ¢å¤ä¸æ¯åå¾ä¸å±æï¼èæ¯éå»ºåºåèªå·±æååå«äººæåçè½åã"
+  },
+  GHST: {
+    code: "TYPE 02 Â· GHST",
+    name: "The Ghost",
+    zh: "éèº«è",
+    roast: "ä½ æ²¡æææï¼æ²¡æéè·ãä½ ææè¯å°è®©èªå·±åå¾éå¸¸æ èââåå¾ç¸å½åºè²ã\n\nç°å²©æ³æ¯ä¸ç§åçççå­ææ¯ãæ æ³ç¦»å¼ä¹æ æ³èµ¢çæ¶åï¼ä½ è®©èªå·±åå¾æ è¶£ï¼å¹³æ·¡çååºï¼æ²¡ææç»ªååºï¼æå²çªå¯ä»¥æä½çè¡¨é¢ç§¯åå°æä½ã\n\né®é¢æ¯ä½ å·²ç»ä¸è®°å¾ä¸æ¬¡ä¸å¨å¯¹æäººç¨è¿ä¸ªææ¯æ¯ä»ä¹æ¶åäºãä¿æ¤ä½ çä¸è¥¿ï¼åæäºé»è®¤è®¾ç½®ã",
+    warm: "éæ©æ¶å¤±ï¼ä»ç¶æ¯ä¸ç§éæ©ã\nè¿æå³çä½ è¿æä¸»å¨æââæ¯ä½ æè§å°çå¤ã",
+    psych: "éç¼©åæç»ªå³é­æ¯å¤è¿·èµ°ç¥ç»çè®ºæè¯´ç<em>èä¾§è¿·èµ°ç¶æ</em>ââç¥ç»ç³»ç»æå¤èççå­åè·¯ãå½æåéé½ä¸å¯è½ï¼ç³»ç»èµ°åå»ç»ãç°å²©ç­ç¥æ¯å¯¹è¿ç§å¤èååºçææè¯è¿ç¨ãé¿æä½¿ç¨å¯è½å¯¼è´<em>æç»ªéå</em>ââå³ä½¿æ³æåä¹å¾é¾å¤èµ·ãåå½çè·¯ä¸æ¯å¼ºè¿«èªå·±æå¼ï¼æ¯ä»æ³¨æå¾®å°çå®å¨æå¼å§ã"
+  },
+  FGHT: {
+    code: "TYPE 03 Â· FGHT",
+    name: "The Fighter",
+    zh: "æå£«",
+    roast: "ä½ åå»äºãæ¯ä¸æ¬¡ãä½ å­¦ä¼äºä»ä»¬çå¨ä½ãæ¨¡å¼ãååç¹ï¼åå¾éå¸¸æé¿ã\n\nä½ ææ²¡ææ³¨æå°ä½ ç°å¨äºè®ºçæ¹å¼åäºï¼æ´å¿«è¿å¥åå»ï¼ææ¶å¯¹æä¸­è¦å®³ææ»¡è¶³æï¼å¨æ ¹æ¬æ²¡å¨èçå³ç³»éï¼ä½ ä»ç¶å¨æ«æå¨èï¼\n\nä½ æ²¡æåæä»ä»¬ãä½å¨ä¸ä¸ªéè¦ææçç³»ç»éå¾äºå¤ªä¹ï¼ææåæäºèªç¶ååºââå³ä½¿å¨ä¸éè¦çæ¶åã",
+    warm: "å¨éè¦ææçå°æ¹å­¦ä¼ææï¼ä¸æ¯ç¼ºé·ãé£æ¯å¿è¦çã\nç°å¨çé®é¢æ¯ï¼åªäºå³ç³»çæ­£éè¦å®ã",
+    psych: "é¿ææ¿æ´»çææååºä¼å°ç¥ç»ç³»ç»éå¡ä¸º<em>è¿åº¦è­¦è§</em>ãPete Walkeræåºï¼åºå®çææååºå¯è½äº§çä¸è§¦åèç¸ä¼¼çé²å¾¡è¡ä¸ºæ¨¡å¼ãè¿ä¸æ¯éå¾·é®é¢ââæ¯ç¥ç»çç©å­¦ãDBTç<em>ç¸åè¡å¨</em>æ¹æ³ï¼å»æç»ä¹ ä¸æ¡ä»¶åå°ç¸åçååºï¼å¨æ§çç¥ç»éè·¯æå»ºç«æ°çã"
+  },
+  DECT: {
+    code: "TYPE 04 Â· DECT",
+    name: "The Detective",
+    zh: "ä¾¦æ¢",
+    roast: "ä½ è¯»äºææä¸è¥¿ãä¸å¥è¯å°±è½è¯æ­ãä¾éé£æ ¼ãç«¥å¹´åä¼¤ãç¥ç»æºå¶ãæ¨¡å¼ãå¾ªç¯ââä½ å¨æã\n\nä½ ä¹ç²¾ç²åç«­äºãå½è¿ä¸ªè¯é¢åºç°å¨é¥­å±ä¸çæ¶åï¼ä½ æç¹è®©äººåä¸äºã\n\nåæçé®é¢æ¯ï¼å®æè§åè¿æ­¥ãææ¶åç¡®å®æ¯ãä½æä¸ç§ãç ç©¶ãï¼å®éä¸æ¯ç²¾å·§çåé¿ç­ç¥ââçè§£ä¸åï¼å°±è½æ§å¶ç»æãçè§£å¯ä»¥ä»£æ¿é£ä¸ªä¸ç´æ²¡æ¶é´å»æåçæåã",
+    warm: "çè§£æ¯çæ­£çæè½ãåæä¸æ¯æäººã\né®é¢æ¯å®ä¸ç´å¨æå¡äºæ´å¯ââè¿æ¯å¨å¸®ä½ åæåä¿æè·ç¦»ã",
+    psych: "çæºåæ¯åä¼¤æç®ä¸­ç<em>è®¤ç¥åºå¯¹æºå¶</em>ââç¨åæç®¡çæç»ªæ·¹æ²¡æãBessel van der Kolkæåºï¼å³äºåä¼¤çç¥è¯åçææ¯æ ¹æ¬ä¸åçè¿ç¨ãèº«ä½è®°å½äºåæ°ï¼ä¸æ¯ç ç©¶æä»¶ãDBTç<em>æºæ§å¿</em>ï¼ç®æ ä¸æ¯çº¯çæ§ä¹ä¸æ¯çº¯ææï¼èæ¯ä¸¤èçæ´åã"
+  },
+  PHIL: {
+    code: "TYPE 05 Â· PHIL",
+    name: "The Philosopher",
+    zh: "é¡¾æè",
+    roast: "ä½ åè°äºä»ä»¬ãæ¾å°äºå¹³éãä»ç»åä¸­æåäºæä¹ãåæ¥è®°ââå¯è½åå¾è¿ä¸éã\n\nä½ ä¹æä½æ¯ä¸ªæºä¼æèµ·è¿ä»¶äºãä¸æ¯æ²¡èµ°åºæ¥ââä½ ç¡®å®èµ°åºæ¥äºãèæ¯è¿ä¸ªæäºå·²ç»æä¸ºä½ èº«ä»½çä¸é¨åï¼å¤±å»å®å°±æå³çå¤±å»å´ç»å®å»ºç«çå½ä¸çèªå·±ã\n\nå¨çè¦ä¸­æ¾å°æä¹ï¼åéè¦ä¼¤å£ä¿æå¯è§æ¥è¯ææ´å¯åââè¿ä¸¤èä¹é´æ¯æåºå«çã",
+    warm: "å¨çè¦ä¸­æ¾å°æä¹çè½åæ¯çæ­£ç½è§çãå¤§å¤æ°äººåä¸å°ã\né£ä»½æé¿æ¯çå®çââåªæ¯ä¸éè¦æ¯å¤©è¢«éªè¯ã",
+    psych: "ä½ ææè¿°çä¸<em>åä¼¤åæé¿</em>éå ââå°é¾ç»åäºåççå®å¿çåå±ãä½å®å¯è½æ»å¥Lindsay Gibsonæè¯´ç<em>åäºèº«ä»½çº ç¼ </em>ï¼æäºåå¾å¦æ­¤æ ¸å¿ï¼å®å¨è§£å³åèåä¸ç§æå¤±ãDBTç<em>æ¿è¿æ¥çº³</em>ï¼å®å¨æ¥åæä»¶äºæå³çå®ä¸åéè¦è¢«å¤çââå®åªæ¯ç°å®çä¸é¨åãçæ­£çè§£å³ï¼æ¯å®éçã"
+  },
+  COEX: {
+    code: "TYPE 06 Â· COEX",
+    name: "The Coexister",
+    zh: "å±å¤è",
+    roast: "ä½ ä¸åè¯å¾ä¿®å¤ä»ä»¬äºãä¹ä¸åè¯å¾å®å¨éè±ãä½ å­¦ä¼äºå¤©æ°çè§å¾ï¼ç¶åç¸åºå°ç©¿è¡£æã\n\nè¿å¬èµ·æ¥å¾ç¦ãä½ èªå·±ç¥éæå¤å°æ¬¡å·®ç¹å´©æºã\n\nä½ ä¸æ¯å¼æäºââä½ æ¯æç­ç¥çãå±å¤ä¸æ¯åå¹³ï¼æ¯ä¸ç§ä½ ä¸å¾ä¸åå±åºæ¥çæè½ï¼å ä¸ºå¶ä»éæ©çä»£ä»·æ¯ä½ æ¿æä»åºçæ´å¤ãè¿ä¸ªåºå«å¾éè¦ã",
+    warm: "å±å¤ä¸æ¯è®¤è¾ã\næ¯ä½ æ¯ä»ä»¬æ´äºè§£è¿ä¸ªæ¸¸æï¼ç¶åéæ©ä¸ç©ã\nè¿ä¸æ¯ä»ä¹é½æ²¡æââè¿å°±æ¯ä¸åã",
+    psych: "ä½ å°è¾¾çç¶æä¸DBTç<em>æ¿è¿æ¥çº³</em>é«åº¦å»åââä¸æ¯åæä¹ä¸æ¯å·æ¼ ï¼èæ¯å¯¹ç°å®åè²çå®å¨æ¿è®¤ãMarsha Linehançç ç©¶è¡¨æï¼å³ä½¿å¤å¢ä¸åï¼è¿ç§ç¶æä¹ä¸æ¾èåå°ççè¦ç¸å³ãå¤è¿·èµ°ç¥ç»çè®ºä¼æè¿°ä½ è½å¤æç»­è®¿é®<em>è¹ä¾§è¿·èµ°åè·¯</em>ââå³ä½¿å¨èå­å¨ãè¿ä¸æ¯æ§æ ¼ç¹è´¨ï¼æ¯æ¥ä¹ä¸æçè°èè½åã"
+  }
+};
+
+/* ====== STATE ====== */
+let scores = {MIRR:0, DECT:0, GHST:0, FGHT:0, PHIL:0, COEX:0};
+let cur = 0;
+
+/* ====== FLOW ====== */
+function startQuiz() {
+  scores = {MIRR:0, DECT:0, GHST:0, FGHT:0, PHIL:0, COEX:0};
+  cur = 0;
+  show('s-quiz');
+  render();
+}
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function render() {
+  const q = Q[cur];
+  const pct = (cur / Q.length) * 100;
+  document.getElementById('prog-count').textContent = (cur + 1) + ' / ' + Q.length;
+  document.getElementById('prog-section').textContent = q.s;
+  document.getElementById('prog-fill').style.width = pct + '%';
+
+  // Section-specific footer text for escalation feel
+  const footTexts = {
+    'ç¥ç»ç³»ç»': 'ä»èº«ä½å¼å§ã',
+    'è®¤ç¥æ¨¡å¼': 'ä½ çèå­æä¹è¿è½¬çã',
+    'å³ç³»è¡ä¸º': 'ä½ å¨å³ç³»éåäºä»ä¹ã',
+    'æç»ª': 'ä½ åæç»ªçå³ç³»ã',
+    'å½ä¸': 'ä½ ç°å¨å¨åªéã',
+    'æ·±å±': 'æåä¸¤é¢ãè¯å®ä¸ç¹ã'
+  };
+  document.getElementById('q-foot').textContent = footTexts[q.s] || '';
+
+  const keys = ['A','B','C','D','E'];
+  document.getElementById('q-area').innerHTML = `
+    <div class="q-area">
+      <div class="q-num">Q${String(cur+1).padStart(2,'0')}</div>
+      <div class="q-text">${q.t}</div>
+      <div class="opts">
+        ${q.o.map((o,i) => `
+          <button class="opt" onclick="pick(this,'${o.k}')">
+            <span class="opt-key">${keys[i]}</span>
+            <span class="opt-label">${o.t}</span>
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function pick(el, k) {
+  // Visual feedback
+  document.querySelectorAll('.opt').forEach(o => {
+    o.classList.remove('selected');
+    o.style.pointerEvents = 'none'; // prevent double-tap
+  });
+  el.classList.add('selected');
+
+  // Score with escalation: last 2 questions = double weight
+  setTimeout(() => {
+    scores[k]++;
+    if (cur >= 10) scores[k]++; // deep questions double weight
+
+    cur++;
+    if (cur >= Q.length) {
+      // Anticipation gap: show analyzing screen
+      show('s-analyzing');
+      // Reset the animation
+      const fill = document.getElementById('analyze-fill');
+      fill.style.animation = 'none';
+      fill.offsetHeight; // trigger reflow
+      fill.style.animation = 'analyzeGrow 2.5s cubic-bezier(0.4,0,0.2,1) forwards';
+
+      setTimeout(() => showResult(), 2800);
+    } else {
+      render();
+    }
+  }, 280);
+}
+
+function showResult() {
+  document.getElementById('prog-fill').style.width = '100%';
+  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+  const w = sorted[0][0];
+  const r = R[w];
+
+  document.getElementById('r-code').textContent = r.code;
+  document.getElementById('r-name').textContent = r.name;
+  document.getElementById('r-zh').textContent = r.zh;
+  document.getElementById('r-roast').innerHTML = r.roast.replace(/\n/g,'<br>');
+  document.getElementById('r-warm').innerHTML = r.warm.replace(/\n/g,'<br>');
+  document.getElementById('r-psych').innerHTML = r.psych;
+  document.getElementById('r-foot-type').textContent = r.name + ' Â· ' + r.zh;
+
+  // Reset psych toggle
+  const toggle = document.querySelector('.psych-toggle');
+  toggle.classList.remove('open');
+  document.getElementById('psych-body').classList.remove('open');
+
+  show('s-result');
+}
+
+function restartQuiz() { startQuiz(); }
+
+function togglePsych(btn) {
+  btn.classList.toggle('open');
+  document.getElementById('psych-body').classList.toggle('open');
+}
+
+/* ====== SAVE IMAGE ====== */
+function saveCard() {
+  const card = document.getElementById('share-card');
+  if (typeof html2canvas !== 'undefined') {
+    html2canvas(card, {
+      backgroundColor: '#FFFFFF',
+      scale: 2,
+      useCORS: true,
+      borderRadius: 20,
+      windowWidth: 620
+    }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'å±å¤ææ°-' + document.getElementById('r-name').textContent + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      toast('å·²ä¿å­');
+    }).catch(() => toast('é¿ææªå¾å³å¯åäº«'));
+  } else {
+    toast('é¿ææªå¾å³å¯åäº«');
+  }
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" async></script>
+</body>
+</html>
