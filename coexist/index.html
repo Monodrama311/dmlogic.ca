@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>共处指数</title>
+<meta name="description" content="你的生存模式还在运行。12道题，不分析对方，只看你自己。">
+<meta property="og:title" content="共处指数">
+<meta property="og:description" content="你的生存模式还在运行。">
+<style>
+/* ============================================
+   DESIGN SYSTEM — abstract, warm, breathable
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+:root {
+  /* Warm paper palette */
+  --bg: #F6F1EB;
+  --bg-warm: #EDE7DF;
+  --surface: #FFFFFF;
+  --surface-warm: #FBF8F4;
+
+  /* Ink system — one hue family, many weights */
+  --ink-100: #1A1614;
+  --ink-80: #3D3632;
+  --ink-60: #6B6058;
+  --ink-40: #9C9088;
+  --ink-20: #C4BBB2;
+  --ink-10: #DDD6CE;
+  --ink-05: #EDE8E2;
+
+  /* Signal — warm amber, used surgically */
+  --signal: #B8845A;
+  --signal-soft: #D4AA7D;
+  --signal-wash: #F2E6D6;
+  --signal-glow: rgba(184, 132, 90, 0.08);
+
+  /* Typography */
+  --serif: 'Noto Serif SC', 'Songti SC', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
+
+  /* Spacing rhythm — 8px base */
+  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 40px; --s6: 48px; --s8: 64px;
+
+  /* Curves */
+  --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-xl: 20px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink-100);
+  font-family: var(--sans);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--signal-wash); color: var(--ink-100); }
+
+.wrap { max-width: 580px; margin: 0 auto; padding: 0 var(--s3); }
+
+/* ============================================
+   HEADER — barely there
+   ============================================ */
+header {
+  padding: var(--s2) 0;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+header:hover { opacity: 1; }
+.header-row {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.header-logo {
+  font-family: var(--serif);
+  font-size: 13px; font-weight: 400;
+  color: var(--ink-60);
+  letter-spacing: 0.06em;
+}
+.header-link {
+  font-size: 11px; color: var(--ink-40);
+  text-decoration: none; letter-spacing: 0.04em;
+}
+.header-link:hover { color: var(--signal); }
+
+/* ============================================
+   SCREEN SYSTEM
+   ============================================ */
+.screen { display: none; }
+.screen.active { display: block; }
+
+.screen.active .fade-in { animation: fadeIn 0.5s ease both; }
+.screen.active .fade-in-d1 { animation: fadeIn 0.5s 0.1s ease both; }
+.screen.active .fade-in-d2 { animation: fadeIn 0.5s 0.2s ease both; }
+.screen.active .fade-in-d3 { animation: fadeIn 0.5s 0.35s ease both; }
+.screen.active .fade-in-d4 { animation: fadeIn 0.5s 0.5s ease both; }
+.screen.active .fade-in-d5 { animation: fadeIn 0.6s 0.7s ease both; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.97) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes slideRight {
+  from { width: 0%; } to { width: var(--target-width); }
+}
+@keyframes typeReveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   INTRO — hook in 3 seconds
+   ============================================
+
+   Psychology hooks applied:
+   - Curiosity gap: "还在运行" implies something unknown is happening to YOU
+   - Identity threat: "你可能是有毒的那个人" creates cognitive dissonance
+   - Low commitment entry: "12题 · 3分钟" reduces friction
+   - Zeigarnik: once started, incompleteness drives completion
+*/
+.intro { padding: var(--s8) 0 var(--s5); }
+
+.intro-hook {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--ink-100);
+  margin-bottom: var(--s3);
+  letter-spacing: -0.01em;
+}
+.intro-hook .hl {
+  color: var(--signal);
+  text-decoration: underline;
+  text-decoration-color: var(--signal-wash);
+  text-underline-offset: 5px;
+  text-decoration-thickness: 2px;
+}
+
+/* The one-liner that reframes everything */
+.intro-reframe {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink-60);
+  line-height: 2;
+  margin-bottom: var(--s5);
+  max-width: 480px;
+}
+.intro-reframe strong {
+  color: var(--ink-100);
+  font-weight: 500;
+}
+
+/* Micro-commitment CTA */
+.cta-area { margin-bottom: var(--s6); }
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--sans);
+  font-size: 15px; font-weight: 500;
+  padding: 14px 32px;
+  background: var(--ink-100);
+  color: var(--bg);
+  border: none; border-radius: var(--r-md);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.01em;
+}
+.cta-btn:hover { background: var(--ink-80); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.cta-btn:active { transform: translateY(0); }
+.cta-btn .arrow { transition: transform 0.25s; font-size: 16px; }
+.cta-btn:hover .arrow { transform: translateX(4px); }
+
+.cta-meta {
+  margin-top: var(--s2);
+  font-size: 12px;
+  color: var(--ink-40);
+  letter-spacing: 0.03em;
+}
+
+/* Trust strip — subtle social proof */
+.trust-strip {
+  padding: var(--s3) 0;
+  border-top: 1px solid var(--ink-05);
+}
+.trust-text {
+  font-size: 12px;
+  color: var(--ink-40);
+  line-height: 1.8;
+}
+
+/* ============================================
+   QUIZ ENGINE
+   ============================================
+
+   Hooks:
+   - Progress bar = Zeigarnik effect (must complete)
+   - Section labels shift = variable context (keeps brain awake)
+   - Option selection has micro-delay = anticipation loop
+   - Question transitions have momentum = flow state
+   - Last 2 questions flagged "深层" = escalation of commitment
+*/
+.quiz-area { padding: var(--s4) 0 var(--s3); }
+
+/* Progress — minimal but tension-building */
+.prog-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: var(--s1);
+}
+.prog-count {
+  font-size: 13px; font-weight: 500;
+  color: var(--ink-80);
+  font-variant-numeric: tabular-nums;
+}
+.prog-section {
+  font-size: 11px; color: var(--ink-40);
+  letter-spacing: 0.08em;
+  transition: all 0.3s;
+}
+.prog-track {
+  height: 2px; background: var(--ink-05);
+  border-radius: 2px; overflow: hidden;
+  margin-bottom: var(--s6);
+}
+.prog-fill {
+  height: 100%; background: var(--signal);
+  border-radius: 2px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Question */
+.q-area {
+  animation: fadeInScale 0.35s ease both;
+}
+.q-num {
+  font-size: 11px; color: var(--ink-20);
+  letter-spacing: 0.12em;
+  margin-bottom: var(--s2);
+  font-weight: 500;
+}
+.q-text {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 2.6vw, 1.15rem);
+  font-weight: 400;
+  line-height: 1.85;
+  color: var(--ink-100);
+  margin-bottom: var(--s4);
+}
+
+/* Options — satisfying click targets */
+.opts { display: flex; flex-direction: column; gap: var(--s1); }
+.opt {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 15px 18px;
+  background: var(--surface);
+  border: 1.5px solid transparent;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left; width: 100%;
+  font-family: var(--sans);
+  position: relative;
+  overflow: hidden;
+}
+/* Subtle hover warmth */
+.opt::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--signal-glow);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.opt:hover::before { opacity: 1; }
+.opt:hover { border-color: var(--ink-10); }
+
+/* Selected = confident, warm, done */
+.opt.selected {
+  border-color: var(--signal);
+  background: var(--signal-wash);
+}
+.opt.selected::before { opacity: 0; }
+.opt.selected .opt-key { color: var(--signal); }
+
+.opt-key {
+  font-size: 11px; font-weight: 500;
+  color: var(--ink-20);
+  min-width: 16px;
+  padding-top: 3px;
+  transition: color 0.15s;
+}
+.opt-label {
+  font-size: 14px;
+  color: var(--ink-80);
+  line-height: 1.6;
+  transition: color 0.15s;
+}
+.opt:hover .opt-label { color: var(--ink-100); }
+.opt.selected .opt-label { color: var(--ink-100); font-weight: 400; }
+
+.q-foot {
+  margin-top: var(--s4);
+  padding-top: var(--s2);
+  border-top: 1px solid var(--ink-05);
+  font-size: 11px; color: var(--ink-20);
+  letter-spacing: 0.02em;
+}
+
+/* ============================================
+   ANALYZING — the anticipation gap
+   ============================================
+
+   Hook: Delayed gratification.
+   A 2.5s "analyzing" screen before result.
+   Creates anticipation, makes result feel earned.
+   Like a slot machine's spin.
+*/
+.analyzing { padding: var(--s8) 0; text-align: center; }
+.analyzing-text {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink-40);
+  animation: pulse 1.5s ease infinite;
+  margin-bottom: var(--s3);
+}
+.analyzing-bar {
+  width: 120px; height: 2px;
+  background: var(--ink-05);
+  margin: 0 auto;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.analyzing-fill {
+  height: 100%; width: 0%;
+  background: var(--signal);
+  border-radius: 2px;
+  animation: analyzeGrow 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes analyzeGrow {
+  0% { width: 0%; }
+  30% { width: 45%; }
+  60% { width: 70%; }
+  85% { width: 88%; }
+  100% { width: 100%; }
+}
+
+/* ============================================
+   RESULT — the social currency
+   ============================================
+
+   Hooks:
+   - Barnum effect: results feel specific to YOU
+   - Identity label: type code becomes self-identifier
+   - Share card designed for screenshot (aspect ratio, contrast, breathing room)
+   - Warmth section = emotional reward after roast
+   - "Rare type" framing for COEX = social status
+*/
+.result-area { padding: var(--s5) 0 var(--s3); }
+
+/* === THE CARD === screenshot-optimized */
+.card {
+  background: var(--surface);
+  border-radius: var(--r-xl);
+  padding: 36px 28px 28px;
+  margin-bottom: var(--s3);
+  position: relative;
+  overflow: hidden;
+  /* Subtle shadow for depth on screenshot */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 30px rgba(0,0,0,0.04);
+}
+
+/* Top accent line — identity stripe */
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--signal-wash) 0%, var(--signal) 50%, var(--signal-wash) 100%);
+}
+
+.card-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--signal);
+  margin-bottom: var(--s3);
+  font-weight: 500;
+}
+
+.card-code {
+  font-size: 12px;
+  color: var(--ink-20);
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+/* Type name — the thing people screenshot */
+.card-name {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 7vw, 3rem);
+  font-weight: 300;
+  color: var(--ink-100);
+  line-height: 1.15;
+  margin: 4px 0 2px;
+  letter-spacing: -0.02em;
+}
+.card-zh {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--signal);
+  font-weight: 400;
+  margin-bottom: var(--s4);
+}
+
+.card-line {
+  width: 32px; height: 2px;
+  background: var(--ink-10);
+  margin-bottom: var(--s3);
+}
+
+/* Roast — the meat */
+.card-roast {
+  font-family: var(--serif);
+  font-size: 14.5px;
+  color: var(--ink-60);
+  line-height: 2.05;
+  margin-bottom: var(--s3);
+}
+
+/* Warmth — the reward */
+.card-warm {
+  background: var(--surface-warm);
+  border-radius: var(--r-md);
+  padding: 18px 20px;
+  margin-bottom: var(--s3);
+  border-left: 2.5px solid var(--signal-soft);
+}
+.card-warm-tag {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--signal);
+  margin-bottom: var(--s1);
+  font-weight: 500;
+}
+.card-warm-text {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--ink-60);
+  line-height: 2;
+  font-style: italic;
+}
+
+/* Card footer — brand watermark for screenshots */
+.card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: var(--s2);
+  border-top: 1px solid var(--ink-05);
+}
+.card-foot-type {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  color: var(--signal-soft);
+  font-style: italic;
+  font-weight: 300;
+}
+.card-foot-brand {
+  text-align: right;
+  font-size: 10px;
+  color: var(--ink-20);
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+/* Psychology expandable */
+.psych {
+  background: var(--bg-warm);
+  border-radius: var(--r-lg);
+  margin-bottom: var(--s3);
+  overflow: hidden;
+}
+.psych-toggle {
+  width: 100%;
+  padding: 18px 22px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: none; border: none;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 13px; font-weight: 500;
+  color: var(--ink-60);
+  letter-spacing: 0.03em;
+  transition: color 0.15s;
+}
+.psych-toggle:hover { color: var(--ink-100); }
+.psych-toggle .chevron {
+  transition: transform 0.3s;
+  color: var(--ink-40);
+  font-size: 14px;
+}
+.psych-toggle.open .chevron { transform: rotate(180deg); }
+.psych-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.psych-body.open { max-height: 600px; }
+.psych-content {
+  padding: 0 22px 22px;
+  font-size: 13px;
+  color: var(--ink-60);
+  line-height: 1.95;
+}
+.psych-content em { color: var(--ink-100); font-style: normal; font-weight: 500; }
+
+/* Action buttons */
+.actions {
+  display: flex; gap: var(--s1); flex-wrap: wrap;
+  margin-bottom: var(--s2);
+}
+.btn-save {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sans);
+  font-size: 13px; font-weight: 500;
+  padding: 12px 24px;
+  background: var(--ink-100);
+  color: var(--bg);
+  border: none; border-radius: var(--r-md);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-save:hover { background: var(--ink-80); }
+.btn-redo {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--sans);
+  font-size: 13px;
+  padding: 12px 24px;
+  background: transparent;
+  border: 1.5px solid var(--ink-10);
+  color: var(--ink-60);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-redo:hover { border-color: var(--signal-soft); color: var(--ink-100); }
+
+.share-hint {
+  font-size: 12px;
+  color: var(--ink-20);
+  margin-bottom: var(--s5);
+}
+
+/* Version links */
+.versions {
+  display: flex; gap: var(--s1); flex-wrap: wrap;
+  padding-top: var(--s3);
+  border-top: 1px solid var(--ink-05);
+  margin-bottom: var(--s2);
+}
+.ver {
+  font-size: 11px; color: var(--ink-40);
+  padding: 5px 14px;
+  border: 1px solid var(--ink-05);
+  border-radius: 20px;
+  text-decoration: none;
+  transition: all 0.15s;
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* FOOTER */
+footer {
+  padding: var(--s2) 0 var(--s3);
+  border-top: 1px solid var(--ink-05);
+  margin-top: var(--s4);
+}
+.foot-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: var(--ink-20);
+}
+.foot-row a { color: var(--ink-40); text-decoration: none; }
+.foot-row a:hover { color: var(--signal); }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: var(--ink-100); color: var(--bg);
+  padding: 11px 24px; border-radius: var(--r-md);
+  font-size: 13px; opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100; pointer-events: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Mobile */
+@media (max-width: 480px) {
+  .wrap { padding: 0 20px; }
+  .card { padding: 28px 22px 22px; }
+  .card-foot { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .card-foot-brand { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-row">
+      <div class="header-logo">共处指数</div>
+      <a class="header-link" href="../">dmlogic.ca</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ====== INTRO ====== -->
+  <div class="screen active" id="s-intro">
+    <section class="intro">
+      <h1 class="intro-hook fade-in">
+        你的生存模式<br><span class="hl">还在运行</span>
+      </h1>
+
+      <div class="intro-reframe fade-in-d1">
+        网上所有关于NPD的内容都在教你识别、对抗、诊断。<br>
+        但你有没有想过——<strong>分析太多有毒关系的时候，你反而成为了有毒的那个人。</strong><br><br>
+        这个测试不分析对方。<br>
+        它只做一件事：看看<strong>你</strong>。
+      </div>
+
+      <div class="cta-area fade-in-d2">
+        <button class="cta-btn" onclick="startQuiz()">
+          开始 <span class="arrow">→</span>
+        </button>
+        <div class="cta-meta">12题 · 3分钟 · 不收集任何信息</div>
+      </div>
+    </section>
+
+    <div class="trust-strip fade-in-d3">
+      <div class="trust-text">
+        心理学参考 · Pete Walker 4F创伤反应 · Marsha Linehan DBT · Stephen Porges 多迷走神经理论<br>
+        本测试不构成临床诊断。
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== QUIZ ====== -->
+  <div class="screen" id="s-quiz">
+    <section class="quiz-area">
+      <div class="prog-row">
+        <span class="prog-count" id="prog-count">1 / 12</span>
+        <span class="prog-section" id="prog-section"></span>
+      </div>
+      <div class="prog-track">
+        <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+      </div>
+      <div id="q-area"></div>
+      <div class="q-foot" id="q-foot">做完它。世界已经够乱了。</div>
+    </section>
+  </div>
+
+  <!-- ====== ANALYZING ====== -->
+  <div class="screen" id="s-analyzing">
+    <section class="analyzing">
+      <div class="analyzing-text">正在分析你的模式…</div>
+      <div class="analyzing-bar">
+        <div class="analyzing-fill" id="analyze-fill"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ====== RESULT ====== -->
+  <div class="screen" id="s-result">
+    <section class="result-area">
+
+      <div class="card fade-in" id="share-card">
+        <div class="card-eyebrow">你的共处指数结果</div>
+        <div class="card-code" id="r-code"></div>
+        <div class="card-name" id="r-name"></div>
+        <div class="card-zh" id="r-zh"></div>
+        <div class="card-line"></div>
+        <div class="card-roast" id="r-roast"></div>
+        <div class="card-warm">
+          <div class="card-warm-tag">但是</div>
+          <div class="card-warm-text" id="r-warm"></div>
+        </div>
+        <div class="card-foot">
+          <div class="card-foot-type" id="r-foot-type"></div>
+          <div class="card-foot-brand">共处指数<br>dmlogic.ca</div>
+        </div>
+      </div>
+
+      <div class="psych fade-in-d1">
+        <button class="psych-toggle" onclick="togglePsych(this)">
+          心理学背景 <span class="chevron">▾</span>
+        </button>
+        <div class="psych-body" id="psych-body">
+          <div class="psych-content" id="r-psych"></div>
+        </div>
+      </div>
+
+      <div class="actions fade-in-d2">
+        <button class="btn-save" onclick="saveCard()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          保存结果图
+        </button>
+        <button class="btn-redo" onclick="restartQuiz()">
+          再测一次
+        </button>
+      </div>
+      <div class="share-hint fade-in-d2">截图分享给朋友 · 或保存结果图发朋友圈</div>
+
+      <div class="versions fade-in-d3">
+        <span class="ver">方言版 · 即将</span>
+        <span class="ver">English · Coming</span>
+        <span class="ver">AI版 · Coming</span>
+      </div>
+
+    </section>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <span>© 2026 大毛</span>
+      <a href="../">dmlogic.ca</a>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================
+   QUESTIONS — 纯中文, designed for flow state
+   ============================================
+   Structure: start with body (low cognitive load)
+   → cognitive patterns → relational → emotional
+   → current state → deep cuts (escalation)
+
+   The last 2 carry double weight (commitment + sunk cost)
+*/
+const Q = [
+  {
+    s: "神经系统",
+    t: "当你感觉到房间里的气氛在变——某人的情绪开始转——你身体的第一反应是？",
+    o: [
+      { t: "快速扫描，调整自己去配合", k: "MIRR" },
+      { t: "变得非常安静，呼吸变慢，让自己不显眼", k: "GHST" },
+      { t: "一种锕化，进入警觉", k: "FGHT" },
+      { t: "脑子开始转，分析刚才到底发生了什么", k: "DECT" },
+      { t: "一种抽离——人在，但精神退了一步", k: "PHIL" }
+    ]
+  },
+  {
+    s: "神经系统",
+    t: "一次困难的互动之后，你的身体保持紧绷状态多久？",
+    o: [
+      { t: "几分钟。结束了就过了", k: "COEX" },
+      { t: "好几个小时，脑子里不停回放", k: "DECT" },
+      { t: "不知道。紧张的时候我不太注意身体", k: "GHST" },
+      { t: "一整天，甚至更久", k: "MIRR" },
+      { t: "直到我把这件事写出来或跟人聊透", k: "PHIL" }
+    ]
+  },
+  {
+    s: "认知模式",
+    t: "一段关系出了问题，你的第一反应是什么？",
+    o: [
+      { t: "研究——找原因，理解机制", k: "DECT" },
+      { t: "沉默——光等等看", k: "GHST" },
+      { t: "说出来——即使会有摩擦", k: "FGHT" },
+      { t: "先想对方的角度——也许是我漏了什么", k: "MIRR" },
+      { t: "往大处看——找更大的意义", k: "PHIL" }
+    ]
+  },
+  {
+    s: "认知模式",
+    t: "过去三个月，你看了多少关于NPD、有毒关系的内容？",
+    o: [
+      { t: "没了。不研究这个了", k: "COEX" },
+      { t: "几篇，随便看看", k: "GHST" },
+      { t: "够写一篇维基百科了", k: "DECT" },
+      { t: "过了研究阶段，现在关注自己", k: "PHIL" },
+      { t: "需要论据的时候才去翻", k: "FGHT" }
+    ]
+  },
+  {
+    s: "关系行为",
+    t: "你有没有发现自己在帮别人解释他们的坏行为——即使你心里知道说不通？",
+    o: [
+      { t: "有，几乎是自动的，总能给他们找到理由", k: "MIRR" },
+      { t: "偶尔，为了不尴尬", k: "GHST" },
+      { t: "不，我只是默默记录，存档", k: "DECT" },
+      { t: "不，直接诵出来", k: "FGHT" },
+      { t: "以前会。意识到是在保护他们之后就停了", k: "COEX" }
+    ]
+  },
+  {
+    s: "关系行为",
+    t: "一个你在乎的人对你生气了——你还不知道自己做了什么——你的第一步是？",
+    o: [
+      { t: "先道歉。之后再弄清楚", k: "MIRR" },
+      { t: "等。不了解全局之前不动", k: "GHST" },
+      { t: "直接问：怎么了？", k: "FGHT" },
+      { t: "回放过去48小时，分析原因", k: "DECT" },
+      { t: "给空间，相信关系，让它过去", k: "COEX" }
+    ]
+  },
+  {
+    s: "情绪",
+    t: "你和「愤怒」的关系是怎样的？",
+    o: [
+      { t: "不熟。感到愤怒之前，已经先愧疚了", k: "MIRR" },
+      { t: "它存在，但我控制它。不让它出来", k: "GHST" },
+      { t: "是燃料。愤怒的时候最清醒", k: "FGHT" },
+      { t: "研究过它。理解它的来源", k: "DECT" },
+      { t: "来的时候承认它，它会过去了", k: "COEX" }
+    ]
+  },
+  {
+    s: "情绪",
+    t: "上一次被人近的人伤害——你怎么处理的？",
+    o: [
+      { t: "咽下去了。不想让事情更复杂", k: "MIRR" },
+      { t: "什么也没说。退了一步，重建距离", k: "GHST" },
+      { t: "面对了，也许不完美，但说出来了", k: "FGHT" },
+      { t: "深度处理——在脑子里　写日记、跟人聊", k: "DECT" },
+      { t: "感受了，记录了，让它告知我但不控制我", k: "COEX" }
+    ]
+  },
+  {
+    s: "当下",
+    t: "你目前和那个困难的人或处境——关系是什么样的？",
+    o: [
+      { t: "还在努力让它运转，让自己被理解", k: "MIRR" },
+      { t: "创造了距离。安全范围内共存", k: "GHST" },
+      { t: "还在其中。需要的时候我会战斗", k: "FGHT" },
+      { t: "比以前更了解了。这就是进步", k: "DECT" },
+      { t: "大致接受了它的样子。我还有自己的生活", k: "COEX" }
+    ]
+  },
+  {
+    s: "当下",
+    t: "「设立边界」对你来说是什么样子的？",
+    o: [
+      { t: "愧疚的来源。设了，马上担必对方反应", k: "MIRR" },
+      { t: "悄悄做。减少露面，不解释", k: "GHST" },
+      { t: "清楚地说出来，准备好执行", k: "FGHT" },
+      { t: "理论上会。实践是另一回事", k: "DECT" },
+      { t: "没以前戏剧性了。就是一条线", k: "COEX" }
+    ]
+  },
+  {
+    s: "深层",
+    t: "你想念他们——还是想念以前的那个版本？",
+    o: [
+      { t: "想念他们。就是本人。现在也是", k: "MIRR" },
+      { t: "想念那段关系平静的时光", k: "GHST" },
+      { t: "想念还没学会反击时的自己", k: "FGHT" },
+      { t: "想念我以为他们是的那个人", k: "DECT" },
+      { t: "已经不再问自己这个问题了", k: "COEX" }
+    ]
+  },
+  {
+    s: "深层",
+    t: "最后一题。你真正想要的是什么——不是你认为你应该想要的。",
+    o: [
+      { t: "让他们终于看见我", k: "MIRR" },
+      { t: "让一切安静一段时间", k: "GHST" },
+      { t: "赢一次。清晰地。不附带条件", k: "FGHT" },
+      { t: "终于完全理解我在面对什么", k: "DECT" },
+      { t: "不再需要从这一切中得到某个结果", k: "COEX" }
+    ]
+  }
+];
+
+/* ====== RESULTS ====== */
+const R = {
+  MIRR: {
+    code: "TYPE 01 · MIRR",
+    name: "The Mirror",
+    zh: "镜子",
+    roast: "你太擅长反映别人需要的东西了，以至于忘了自己长什么样。你称之为共情——有时候确实是。但更多时候，是一个学会了「变成他们需要的样子就安全了」的神经系统在自动运行。\n\n你在不知道自己做错了什么之前就先道歉。你帮别人解释他们的行为，偶尔自己也信了。你维持和平维持了太久，久到忘了——和平从来不是你的责任。",
+    warm: "镜子会碎。人不用。\n你还在。",
+    psych: "你描述的是创伤治疗师Pete Walker定义的<em>讨好反应（Fawn Response）</em>。神经系统学会了：取悦和安抚可以降低危险。Stephen Porges的多迷走神经理论将此解释为自主神经系统通过社交安全信号来调节自身。代价是逐渐失去对自己内在信号的感知。恢复不是变得不共情，而是重建区分自己感受和别人感受的能力。"
+  },
+  GHST: {
+    code: "TYPE 02 · GHST",
+    name: "The Ghost",
+    zh: "隐身者",
+    roast: "你没有战斗，没有逃跑。你有意识地让自己变得非常无聊——做得相当出色。\n\n灰岩法是一种合理的生存技术。无法离开也无法赢的时候，你让自己变得无趣：平淡的回应，没有情绪反应，把冲突可以抓住的表面积压到最低。\n\n问题是你已经不记得上次不在对某人用这个技术是什么时候了。保护你的东西，变成了默认设置。",
+    warm: "选择消失，仍然是一种选择。\n这意味着你还有主动权——比你感觉到的多。",
+    psych: "退缩和情绪关闭是多迷走神经理论所说的<em>背侧迷走状态</em>——神经系统最古老的生存回路。当战和逃都不可能，系统走向冻结。灰岩策略是对这种古老反应的有意识运用。长期使用可能导致<em>情绪钝化</em>——即使想感受也很难唤起。回归的路不是强迫自己敎开，是从注意微小的安全感开始。"
+  },
+  FGHT: {
+    code: "TYPE 03 · FGHT",
+    name: "The Fighter",
+    zh: "战士",
+    roast: "你反击了。每一次。你学会了他们的动作、模式、压力点，变得非常擅长。\n\n你有没有注意到你现在争论的方式变了？更快进入反击，有时对打中要害有满足感？在根本没威胁的关系里，你仍然在扫描威胁？\n\n你没有变成他们。但在一个需要战斗的系统里待了太久，战斗变成了自然反应——即使在不需要的时候。",
+    warm: "在需要战斗的地方学会战斗，不是缺陷。那是必要的。\n现在的问题是：哪些关系真正需要它。",
+    psych: "长期激活的战斗反应会将神经系统重塑为<em>过度警觉</em>。Pete Walker指出，固定的战斗反应可能产生与触发者相似的防御行为模式。这不是道德问题——是神经生物学。DBT的<em>相反行动</em>方法：刻意练习与条件反射相反的回应，在旧的神经通路旁建立新的。"
+  },
+  DECT: {
+    code: "TYPE 04 · DECT",
+    name: "The Detective",
+    zh: "侦探",
+    roast: "你读了所有东西。三句话就能诊断。依附风格。童年创伤、神经机制、模式、循环——你全懂。\n\n你也精疲力竭了。当这个话题出现在饭局上的时候，你有点让人受不了。\n\n分析的问题是：它感觉像进步。有时候确实是。但有一种「研究」，实际上是精巧的回避策略——理解一切，就能控制结果。理解可以代替那个一直没时间去感受的感受。",
+    warm: "理解是真正的技能。分析不是敌人。\n问题是它一直在服务于洞察——还是在帮你和感受保持距离。",
+    psych: "理智化是创伤文献中的<em>认知应对机制</em>——用分析管理情绪淹没感。Bessel van der Kolk指出，关于创伤的知识和疗愈是根本不同的过程。身体记录了分数，不是研究文件。DBT的<em>智慧心</em>：目标不是纯理性也不是纯情感，而是两者的整合。"
+  },
+  PHIL: {
+    code: "TYPE 05 · PHIL",
+    name: "The Philosopher",
+    zh: "顾悟者",
+    roast: "你原谅了他们。找到了平静。从经历中提取了意义。写日记——可能写得还不错。\n\n你也抓住每个机会提起这件事。不是没走出来——你确实走出来了。而是这个故事已经成为你身份的一部分，失去它就意味着失去围绕它建立的当下的自己。\n\n在痛苦中找到意义，和需要伤口保持可见来证明洞察力——这两者之间是有区别的。",
+    warm: "在痛苦中找到意义的能力是真正罕见的。大多数人做不到。\n那份成长是真实的——只是不需要每天被验证。",
+    psych: "你所描述的与<em>创伤后成长</em>重叠——困难经历事后的真实心理发展。但它可能滑入Lindsay Gibson所说的<em>叙事身份纠缠</em>：故事变得如此核心，完全解决反而像一种损失。DBT的<em>激进接纳</em>：完全接受某件事意味着它不再需要被处理——它只是现实的一部分。真正的解决，是安静的。"
+  },
+  COEX: {
+    code: "TYPE 06 · COEX",
+    name: "The Coexister",
+    zh: "共处者",
+    roast: "你不再试图修复他们了。也不再试图完全逃脱。你学会了天气的规律，然后相应地穿衣服。\n\n这听起来很禅。你自己知道有多少次差点崩溃。\n\n你不是开悟了——你是有策略的。共处不是和平，是一种你不得不发展出来的技能，因为其他选择的代价比你愿意付出的更多。这个区别很重要。",
+    warm: "共处不是认输。\n是你比他们更了解这个游戏，然后选择不玩。\n这不是什么都没有——这就是一切。",
+    psych: "你到达的状态与DBT的<em>激进接纳</em>高度吻合——不是同意也不是冷漠，而是对现实原貌的完全承认。Marsha Linehan的研究表明，即使处境不变，这种状态也与显著减少的痛苦相关。多迷走神经理论会描述你能够持续访问<em>腹侧迷走回路</em>——即使威胁存在。这不是性格特质，是来之不易的调节能力。"
+  }
+};
+
+/* ====== STATE ====== */
+let scores = {MIRR:0, DECT:0, GHST:0, FGHT:0, PHIL:0, COEX:0};
+let cur = 0;
+
+/* ====== FLOW ====== */
+function startQuiz() {
+  scores = {MIRR:0, DECT:0, GHST:0, FGHT:0, PHIL:0, COEX:0};
+  cur = 0;
+  show('s-quiz');
+  render();
+}
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function render() {
+  const q = Q[cur];
+  const pct = (cur / Q.length) * 100;
+  document.getElementById('prog-count').textContent = (cur + 1) + ' / ' + Q.length;
+  document.getElementById('prog-section').textContent = q.s;
+  document.getElementById('prog-fill').style.width = pct + '%';
+
+  // Section-specific footer text for escalation feel
+  const footTexts = {
+    '神经系统': '从身体开始。',
+    '认知模式': '你的脑子怎么运转的。',
+    '关系行为': '你在关系里做了什么。',
+    '情绪': '你和情绪的关系。',
+    '当下': '你现在在哪里。',
+    '深层': '最后两题。诚实一点。'
+  };
+  document.getElementById('q-foot').textContent = footTexts[q.s] || '';
+
+  const keys = ['A','B','C','D','E'];
+  document.getElementById('q-area').innerHTML = `
+    <div class="q-area">
+      <div class="q-num">Q${String(cur+1).padStart(2,'0')}</div>
+      <div class="q-text">${q.t}</div>
+      <div class="opts">
+        ${q.o.map((o,i) => `
+          <button class="opt" onclick="pick(this,'${o.k}')">
+            <span class="opt-key">${keys[i]}</span>
+            <span class="opt-label">${o.t}</span>
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function pick(el, k) {
+  // Visual feedback
+  document.querySelectorAll('.opt').forEach(o => {
+    o.classList.remove('selected');
+    o.style.pointerEvents = 'none'; // prevent double-tap
+  });
+  el.classList.add('selected');
+
+  // Score with escalation: last 2 questions = double weight
+  setTimeout(() => {
+    scores[k]++;
+    if (cur >= 10) scores[k]++; // deep questions double weight
+
+    cur++;
+    if (cur >= Q.length) {
+      // Anticipation gap: show analyzing screen
+      show('s-analyzing');
+      // Reset the animation
+      const fill = document.getElementById('analyze-fill');
+      fill.style.animation = 'none';
+      fill.offsetHeight; // trigger reflow
+      fill.style.animation = 'analyzeGrow 2.5s cubic-bezier(0.4,0,0.2,1) forwards';
+
+      setTimeout(() => showResult(), 2800);
+    } else {
+      render();
+    }
+  }, 280);
+}
+
+function showResult() {
+  document.getElementById('prog-fill').style.width = '100%';
+  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+  const w = sorted[0][0];
+  const r = R[w];
+
+  document.getElementById('r-code').textContent = r.code;
+  document.getElementById('r-name').textContent = r.name;
+  document.getElementById('r-zh').textContent = r.zh;
+  document.getElementById('r-roast').innerHTML = r.roast.replace(/\n/g,'<br>');
+  document.getElementById('r-warm').innerHTML = r.warm.replace(/\n/g,'<br>');
+  document.getElementById('r-psych').innerHTML = r.psych;
+  document.getElementById('r-foot-type').textContent = r.name + ' · ' + r.zh;
+
+  // Reset psych toggle
+  const toggle = document.querySelector('.psych-toggle');
+  toggle.classList.remove('open');
+  document.getElementById('psych-body').classList.remove('open');
+
+  show('s-result');
+}
+
+function restartQuiz() { startQuiz(); }
+
+function togglePsych(btn) {
+  btn.classList.toggle('open');
+  document.getElementById('psych-body').classList.toggle('open');
+}
+
+/* ====== SAVE IMAGE ====== */
+function saveCard() {
+  const card = document.getElementById('share-card');
+  if (typeof html2canvas !== 'undefined') {
+    html2canvas(card, {
+      backgroundColor: '#FFFFFF',
+      scale: 2,
+      useCORS: true,
+      borderRadius: 20,
+      windowWidth: 620
+    }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = '共处指数-' + document.getElementById('r-name').textContent + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      toast('已保存');
+    }).catch(() => toast('长按截图即可分享'));
+  } else {
+    toast('长按截图即可分享');
+  }
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" async></script>
+</body>
+</html>
