@@ -3,292 +3,537 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>大毛 · dmlogic</title>
-<meta name="description" content="拍照的，写东西的，偶尔做点有用的。">
+<title>大毛 — DM Logic</title>
+<meta name="description" content="降维生存。不分析对方，只看你自己。">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M130 130 A30 30 0 0 1 70 130' fill='none' stroke='%23B8845A' stroke-width='4'/%3E%3Ccircle cx='100' cy='137' r='4' fill='%232C2825'/%3E%3Cline x1='100' y1='140' x2='100' y2='158' stroke='%232C2825' stroke-width='3'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
-
 :root {
-  --bg: #F6F1EB;
-  --bg-warm: #EDE7DF;
-  --surface: #FFFFFF;
-  --ink-100: #1A1614;
-  --ink-80: #3D3632;
-  --ink-60: #6B6058;
-  --ink-40: #9C9088;
-  --ink-20: #C4BBB2;
-  --ink-10: #DDD6CE;
-  --ink-05: #EDE8E2;
+  --paper: #F6F1EB;
+  --ink: #2C2825;
+  --ink-light: #6B6560;
+  --ink-faint: #A8A09A;
   --signal: #B8845A;
-  --signal-soft: #D4AA7D;
-  --signal-wash: #F2E6D6;
-  --signal-glow: rgba(184, 132, 90, 0.06);
-  --serif: 'Noto Serif SC', 'Songti SC', Georgia, serif;
-  --sans: 'DM Sans', -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
-  --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-xl: 20px;
+  --signal-light: #D4A87A;
+  --warm-white: #FAF8F5;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+::selection {
+  background: var(--signal);
+  color: var(--paper);
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
 body {
-  background: var(--bg);
-  color: var(--ink-100);
-  font-family: var(--sans);
-  min-height: 100vh;
+  font-family: 'Noto Serif SC', 'DM Sans', Georgia, serif;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
-::selection { background: var(--signal-wash); }
 
-.page { max-width: 640px; margin: 0 auto; padding: 0 28px; }
+/* ═══════════════════════════════════════ */
+/*  SECTION 1: THE ENTRANCE               */
+/* ═══════════════════════════════════════ */
 
-nav {
-  padding: 24px 0;
-  display: flex; justify-content: space-between; align-items: center;
+.entrance {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 60px 24px;
 }
-.nav-name {
-  font-family: var(--serif);
-  font-size: 14px; font-weight: 400;
-  color: var(--ink-80);
-  letter-spacing: 0.03em;
-}
-.nav-links { display: flex; gap: 24px; list-style: none; }
-.nav-links a {
-  font-size: 12px; color: var(--ink-40);
-  text-decoration: none; letter-spacing: 0.03em;
-  transition: color 0.15s;
-}
-.nav-links a:hover { color: var(--ink-100); }
 
-.hero {
-  padding: 80px 0 64px;
-  animation: heroIn 0.6s ease both;
+/* Subtle noise texture overlay */
+.entrance::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
 }
-@keyframes heroIn {
+
+.entrance > * { position: relative; z-index: 1; }
+
+/* The logo — animated entrance */
+.logo-mark {
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: breatheIn 2s ease-out 0.3s forwards;
+}
+
+.logo-mark svg {
+  width: 120px;
+  height: 120px;
+}
+
+/* Sun rays pulse gently */
+.ray {
+  animation: rayPulse 4s ease-in-out infinite;
+}
+.ray:nth-child(4) { animation-delay: 0.5s; }
+.ray:nth-child(5) { animation-delay: 1s; }
+.ray:nth-child(6) { animation-delay: 1.5s; }
+.ray:nth-child(7) { animation-delay: 2s; }
+
+@keyframes rayPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes breatheIn {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.hero-above {
-  font-size: 12px; color: var(--ink-40);
-  letter-spacing: 0.06em;
-  margin-bottom: 20px;
+
+/* Name treatment */
+.name-block {
+  text-align: center;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: breatheIn 2s ease-out 0.8s forwards;
 }
-.hero-title {
-  font-family: var(--serif);
-  font-size: clamp(1.8rem, 5.5vw, 2.6rem);
+
+.name-zh {
+  font-size: 2.4rem;
   font-weight: 300;
-  line-height: 1.5;
-  color: var(--ink-100);
-  margin-bottom: 16px;
-  letter-spacing: -0.01em;
-}
-.hero-title em {
-  font-style: normal; color: var(--signal);
-}
-.hero-desc {
-  font-size: 15px; color: var(--ink-60);
-  line-height: 1.9; max-width: 500px;
+  letter-spacing: 0.3em;
+  margin-bottom: 8px;
+  color: var(--ink);
 }
 
-.line { height: 1px; background: var(--ink-05); }
-
-.section {
-  padding: 48px 0;
-  animation: sectionIn 0.5s 0.15s ease both;
-}
-@keyframes sectionIn {
-  from { opacity: 0; } to { opacity: 1; }
-}
-.section-label {
-  font-size: 11px; letter-spacing: 0.14em;
-  color: var(--ink-20); margin-bottom: 24px;
-  font-weight: 500;
+.name-en {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
 }
 
-.cards { display: flex; flex-direction: column; gap: 12px; }
-
-.card {
-  display: flex; align-items: flex-start; gap: 18px;
-  padding: 22px 22px;
-  background: var(--surface);
-  border: 1px solid transparent;
-  border-radius: var(--r-lg);
-  text-decoration: none; color: inherit;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.card::before {
-  content: ''; position: absolute; inset: 0;
-  background: var(--signal-glow);
-  opacity: 0; transition: opacity 0.25s;
-}
-.card:hover::before { opacity: 1; }
-.card:hover {
-  border-color: var(--ink-10);
-  box-shadow: 0 2px 16px rgba(0,0,0,0.04);
-  transform: translateY(-1px);
+/* The one-liner */
+.tagline {
+  max-width: 400px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 2;
+  color: var(--ink-light);
+  margin-bottom: 56px;
+  opacity: 0;
+  animation: breatheIn 2s ease-out 1.3s forwards;
 }
 
-.card-icon {
-  width: 42px; height: 42px;
-  border-radius: var(--r-md);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; flex-shrink: 0;
-  position: relative;
-}
-.card-icon.i-quiz { background: var(--signal-wash); }
-.card-icon.i-photo { background: #E8EDF3; }
-.card-icon.i-book { background: #EDE8F3; }
-
-.card-body { flex: 1; position: relative; }
-.card-title {
-  font-family: var(--serif);
-  font-size: 15px; font-weight: 400;
-  color: var(--ink-100);
-  margin-bottom: 3px;
-  display: flex; align-items: center; gap: 8px;
-}
-.card-tag {
-  font-family: var(--sans);
-  font-size: 10px; font-weight: 500;
+.tagline em {
+  font-style: normal;
   color: var(--signal);
-  background: var(--signal-wash);
-  padding: 2px 8px;
-  border-radius: 10px;
-}
-.card-tag.muted {
-  color: var(--ink-40);
-  background: var(--ink-05);
-}
-.card-desc {
-  font-size: 13px; color: var(--ink-40);
-  line-height: 1.6;
-}
-.card-arrow {
-  color: var(--ink-20); font-size: 16px;
-  align-self: center; position: relative;
-  transition: all 0.25s;
-}
-.card:hover .card-arrow { transform: translateX(4px); color: var(--signal); }
-
-.contact {
-  padding: 40px 0;
-  animation: sectionIn 0.5s 0.25s ease both;
-}
-.contact-row {
-  display: flex; justify-content: space-between;
-  align-items: center; flex-wrap: wrap; gap: 16px;
-}
-.contact-text {
-  font-family: var(--serif);
-  font-size: 15px; color: var(--ink-60); line-height: 1.6;
-}
-.contact-btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--sans);
-  font-size: 13px; font-weight: 500;
-  padding: 10px 24px;
-  background: var(--ink-100); color: var(--bg);
-  border: none; border-radius: var(--r-md);
-  cursor: pointer; text-decoration: none;
-  transition: all 0.2s;
-}
-.contact-btn:hover { background: var(--ink-80); }
-
-footer {
-  border-top: 1px solid var(--ink-05);
-  padding: 20px 0 28px;
-  margin-top: 16px;
-}
-.foot {
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 11px; color: var(--ink-20);
 }
 
-@media (max-width: 480px) {
-  .page { padding: 0 20px; }
-  .hero { padding: 56px 0 48px; }
-  .contact-row { flex-direction: column; align-items: flex-start; }
+/* Social links — minimal */
+.social-row {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  opacity: 0;
+  animation: breatheIn 2s ease-out 1.8s forwards;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--ink-faint);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color 0.4s ease;
+}
+
+.social-link:hover {
+  color: var(--signal);
+}
+
+.social-link svg {
+  width: 16px;
+  height: 16px;
+  opacity: 0.5;
+  transition: opacity 0.4s ease;
+}
+
+.social-link:hover svg {
+  opacity: 1;
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: breatheIn 2s ease-out 2.5s forwards;
+}
+
+.scroll-hint span {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 32px;
+  background: var(--ink-faint);
+  opacity: 0.3;
+  animation: scrollPulse 2s ease-in-out infinite 3s;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { transform: scaleY(1); opacity: 0.3; }
+  50% { transform: scaleY(1.5); opacity: 0.15; }
+}
+
+/* ═══════════════════════════════════════ */
+/*  SECTION 2: THE IDENTITY                */
+/* ═══════════════════════════════════════ */
+
+.identity {
+  padding: 120px 24px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.identity-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 32px;
+  opacity: 0.7;
+}
+
+.identity-text {
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 2.2;
+  color: var(--ink-light);
+}
+
+.identity-text strong {
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.identity-text .aside {
+  display: block;
+  margin-top: 24px;
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+/* ═══════════════════════════════════════ */
+/*  SECTION 3: THE PROJECTS                */
+/* ═══════════════════════════════════════ */
+
+.projects {
+  padding: 80px 24px 120px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 48px;
+  opacity: 0.7;
+}
+
+.project-grid {
+  display: grid;
+  gap: 1px;
+  background: rgba(44, 40, 37, 0.06);
+}
+
+.project-card {
+  background: var(--paper);
+  padding: 40px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.5s ease;
+  cursor: pointer;
+}
+
+.project-card:hover {
+  background: var(--warm-white);
+}
+
+.project-info { flex: 1; }
+
+.project-status {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 12px;
+}
+
+.project-title {
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.project-subtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.05em;
+}
+
+.project-arrow {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.2rem;
+  color: var(--ink-faint);
+  transition: color 0.4s ease, transform 0.4s ease;
+  margin-top: 8px;
+}
+
+.project-card:hover .project-arrow {
+  color: var(--signal);
+  transform: translateX(4px);
+}
+
+/* ═══════════════════════════════════════ */
+/*  FOOTER                                 */
+/* ═══════════════════════════════════════ */
+
+.footer {
+  padding: 60px 24px;
+  text-align: center;
+  border-top: 1px solid rgba(44, 40, 37, 0.06);
+}
+
+.footer-logo svg {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 20px;
+  opacity: 0.3;
+}
+
+.footer-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ═══════════════════════════════════════ */
+/*  RESPONSIVE                             */
+/* ═══════════════════════════════════════ */
+
+@media (max-width: 600px) {
+  .name-zh { font-size: 1.8rem; }
+  .tagline { font-size: 0.85rem; max-width: 300px; }
+  .identity { padding: 80px 20px; }
+  .identity-text { font-size: 1rem; }
+  .project-card { padding: 28px 20px; flex-direction: column; }
+  .project-arrow { align-self: flex-end; }
+  .social-row { gap: 24px; }
+}
+
+/* ═══════════════════════════════════════ */
+/*  SCROLL ANIMATIONS                      */
+/* ═══════════════════════════════════════ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
 </head>
 <body>
 
-<div class="page">
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 1: THE ENTRANCE               -->
+<!-- ═══════════════════════════════════════ -->
 
-  <nav>
-    <div class="nav-name">大毛</div>
-    <ul class="nav-links">
-      <li><a href="#stuff">项目</a></li>
-      <li><a href="#reach">联系</a></li>
-    </ul>
-  </nav>
+<section class="entrance">
+  <div class="logo-mark">
+    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Horizon line -->
+      <line x1="30" y1="130" x2="170" y2="130" stroke="#2C2825" stroke-width="1.5" stroke-linecap="round" opacity="0.15"/>
+      <!-- Half sun -->
+      <path d="M130 130 A30 30 0 0 1 70 130" fill="none" stroke="#B8845A" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Rays -->
+      <line class="ray" x1="100" y1="92" x2="100" y2="82" stroke="#B8845A" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <line class="ray" x1="120" y1="96" x2="126" y2="88" stroke="#B8845A" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+      <line class="ray" x1="80" y1="96" x2="74" y2="88" stroke="#B8845A" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+      <line class="ray" x1="134" y1="110" x2="142" y2="106" stroke="#B8845A" stroke-width="1.5" stroke-linecap="round" opacity="0.2"/>
+      <line class="ray" x1="66" y1="110" x2="58" y2="106" stroke="#B8845A" stroke-width="1.5" stroke-linecap="round" opacity="0.2"/>
+      <!-- Figure -->
+      <line x1="100" y1="140" x2="100" y2="158" stroke="#2C2825" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="100" cy="137" r="3" fill="#2C2825"/>
+    </svg>
+  </div>
 
-  <section class="hero">
-    <div class="hero-above">dmlogic.ca</div>
-    <h1 class="hero-title">拍照的，写东西的，<br>偶尔做点<em>有用的</em></h1>
-    <p class="hero-desc">这里是大毛的playground。<br>有些东西认真做，有些只是试试看。如果你刚好经历着什么——可以先做个测试。</p>
-  </section>
+  <div class="name-block">
+    <div class="name-zh">大毛</div>
+    <div class="name-en">DM Logic</div>
+  </div>
 
-  <hr class="line">
+  <div class="tagline">
+    停止运转的艺术家，还在运转的生意人。<br>
+    <em>看天气穿衣服的人。</em>
+  </div>
 
-  <section class="section" id="stuff">
-    <div class="section-label">在做的事</div>
-    <div class="cards">
+  <div class="social-row">
+    <a href="https://instagram.com/mr.glvte" target="_blank" rel="noopener" class="social-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5"/>
+        <circle cx="12" cy="12" r="5"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+      <span>@mr.glvte</span>
+    </a>
+    <a href="https://youtube.com/@MrGlvte" target="_blank" rel="noopener" class="social-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+        <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>
+      </svg>
+      <span>@MrGlvte</span>
+    </a>
+  </div>
 
-      <a class="card" href="coexist/">
-        <div class="card-icon i-quiz">🧭</div>
-        <div class="card-body">
-          <div class="card-title">共处指数 <span class="card-tag">可以玩</span></div>
-          <div class="card-desc">你的生存模式还在运行。12题，只看你自己。</div>
-        </div>
-        <div class="card-arrow">→</div>
-      </a>
+  <div class="scroll-hint">
+    <span>向下</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
 
-      <a class="card" href="#reach">
-        <div class="card-icon i-photo">📷</div>
-        <div class="card-body">
-          <div class="card-title">影集</div>
-          <div class="card-desc">温哥华 · 人像 · 日常</div>
-        </div>
-        <div class="card-arrow">→</div>
-      </a>
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 2: THE IDENTITY               -->
+<!-- ═══════════════════════════════════════ -->
 
-      <a class="card" href="javascript:void(0)">
-        <div class="card-icon i-book">📖</div>
-        <div class="card-body">
-          <div class="card-title">《共处》 <span class="card-tag muted">写作中</span></div>
-          <div class="card-desc">在无法控制也无法逃脱的关系里，不失去自己。</div>
-        </div>
-        <div class="card-arrow">→</div>
-      </a>
+<section class="identity">
+  <div class="identity-label reveal">关于</div>
+  <div class="identity-text reveal">
+    曾经做过艺术，后来发现<strong>活着本身就是创作</strong>。
+    现在经营生意，研究人，偶尔研究自己。
+    不再画画，但还在观察——
+    观察那些<strong>在有毒的关系里学会了生存的人</strong>。
+    <span class="aside">
+      分析太多有毒关系的时候，你反而成为了有毒的那个人。<br>
+      所以我不教你分析。我教你共处。
+    </span>
+  </div>
+</section>
 
-    </div>
-  </section>
+<!-- ═══════════════════════════════════════ -->
+<!--  SECTION 3: THE PROJECTS               -->
+<!-- ═══════════════════════════════════════ -->
 
-  <hr class="line">
+<section class="projects">
+  <div class="section-label reveal">作品</div>
+  <div class="project-grid reveal">
 
-  <section class="contact" id="reach">
-    <div class="contact-row">
-      <div class="contact-text">拍照、聊天、或有什么好玩的想法</div>
-      <a class="contact-btn" href="mailto:mrglvte@gmail.com">
-        邮件 →
-      </a>
-      <a class="contact-btn" href="javascript:void(0)" onclick="alert('微信号: Ooobasil')" style="background:transparent;border:1.5px solid var(--ink-10);color:var(--ink-80);">
-        微信: Ooobasil
-      </a>
-    </div>
-  </section>
+    <a href="./coexist/" class="project-card">
+      <div class="project-info">
+        <div class="project-status">进行中</div>
+        <div class="project-title">共处指数</div>
+        <div class="project-subtitle">12道题，不分析对方，只看你自己</div>
+      </div>
+      <div class="project-arrow">&#8594;</div>
+    </a>
 
-  <footer>
-    <div class="foot">
-      <span>© 2026 大毛 · Vancouver</span>
-      <span>dmlogic.ca</span>
-    </div>
-  </footer>
+    <a href="#" class="project-card" style="pointer-events: none; opacity: 0.45;">
+      <div class="project-info">
+        <div class="project-status">即将</div>
+        <div class="project-title">影集</div>
+        <div class="project-subtitle">一个停止运转的艺术家的视觉碎片</div>
+      </div>
+      <div class="project-arrow">&#8594;</div>
+    </a>
 
-</div>
+    <a href="#" class="project-card" style="pointer-events: none; opacity: 0.45;">
+      <div class="project-info">
+        <div class="project-status">即将</div>
+        <div class="project-title">《共处》</div>
+        <div class="project-subtitle">不是自救指南，是生存实录</div>
+      </div>
+      <div class="project-arrow">&#8594;</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  FOOTER                                -->
+<!-- ═══════════════════════════════════════ -->
+
+<footer class="footer">
+  <div class="footer-logo">
+    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M130 130 A30 30 0 0 1 70 130" fill="none" stroke="#2C2825" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="100" y1="140" x2="100" y2="155" stroke="#2C2825" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="100" cy="137" r="3" fill="#2C2825"/>
+    </svg>
+  </div>
+  <div class="footer-text">降维生存 · DM Logic &copy; 2026</div>
+</footer>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SCROLL REVEAL SCRIPT                  -->
+<!-- ═══════════════════════════════════════ -->
+
+<script>
+(function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    observer.observe(el);
+  });
+})();
+</script>
 
 </body>
 </html>
+
