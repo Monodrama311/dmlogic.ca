@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大毛 · dmlogic</title>
+<meta name="description" content="拍照的，写东西的，偶尔做点有用的。">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+:root {
+  --bg: #F6F1EB;
+  --bg-warm: #EDE7DF;
+  --surface: #FFFFFF;
+  --ink-100: #1A1614;
+  --ink-80: #3D3632;
+  --ink-60: #6B6058;
+  --ink-40: #9C9088;
+  --ink-20: #C4BBB2;
+  --ink-10: #DDD6CE;
+  --ink-05: #EDE8E2;
+  --signal: #B8845A;
+  --signal-soft: #D4AA7D;
+  --signal-wash: #F2E6D6;
+  --signal-glow: rgba(184, 132, 90, 0.06);
+  --serif: 'Noto Serif SC', 'Songti SC', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-xl: 20px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink-100);
+  font-family: var(--sans);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--signal-wash); }
+
+.page { max-width: 640px; margin: 0 auto; padding: 0 28px; }
+
+nav {
+  padding: 24px 0;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.nav-name {
+  font-family: var(--serif);
+  font-size: 14px; font-weight: 400;
+  color: var(--ink-80);
+  letter-spacing: 0.03em;
+}
+.nav-links { display: flex; gap: 24px; list-style: none; }
+.nav-links a {
+  font-size: 12px; color: var(--ink-40);
+  text-decoration: none; letter-spacing: 0.03em;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink-100); }
+
+.hero {
+  padding: 80px 0 64px;
+  animation: heroIn 0.6s ease both;
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-above {
+  font-size: 12px; color: var(--ink-40);
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 5.5vw, 2.6rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--ink-100);
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+.hero-title em {
+  font-style: normal; color: var(--signal);
+}
+.hero-desc {
+  font-size: 15px; color: var(--ink-60);
+  line-height: 1.9; max-width: 500px;
+}
+
+.line { height: 1px; background: var(--ink-05); }
+
+.section {
+  padding: 48px 0;
+  animation: sectionIn 0.5s 0.15s ease both;
+}
+@keyframes sectionIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+.section-label {
+  font-size: 11px; letter-spacing: 0.14em;
+  color: var(--ink-20); margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.cards { display: flex; flex-direction: column; gap: 12px; }
+
+.card {
+  display: flex; align-items: flex-start; gap: 18px;
+  padding: 22px 22px;
+  background: var(--surface);
+  border: 1px solid transparent;
+  border-radius: var(--r-lg);
+  text-decoration: none; color: inherit;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--signal-glow);
+  opacity: 0; transition: opacity 0.25s;
+}
+.card:hover::before { opacity: 1; }
+.card:hover {
+  border-color: var(--ink-10);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+  transform: translateY(-1px);
+}
+
+.card-icon {
+  width: 42px; height: 42px;
+  border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+  position: relative;
+}
+.card-icon.i-quiz { background: var(--signal-wash); }
+.card-icon.i-photo { background: #E8EDF3; }
+.card-icon.i-book { background: #EDE8F3; }
+
+.card-body { flex: 1; position: relative; }
+.card-title {
+  font-family: var(--serif);
+  font-size: 15px; font-weight: 400;
+  color: var(--ink-100);
+  margin-bottom: 3px;
+  display: flex; align-items: center; gap: 8px;
+}
+.card-tag {
+  font-family: var(--sans);
+  font-size: 10px; font-weight: 500;
+  color: var(--signal);
+  background: var(--signal-wash);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.card-tag.muted {
+  color: var(--ink-40);
+  background: var(--ink-05);
+}
+.card-desc {
+  font-size: 13px; color: var(--ink-40);
+  line-height: 1.6;
+}
+.card-arrow {
+  color: var(--ink-20); font-size: 16px;
+  align-self: center; position: relative;
+  transition: all 0.25s;
+}
+.card:hover .card-arrow { transform: translateX(4px); color: var(--signal); }
+
+.contact {
+  padding: 40px 0;
+  animation: sectionIn 0.5s 0.25s ease both;
+}
+.contact-row {
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 16px;
+}
+.contact-text {
+  font-family: var(--serif);
+  font-size: 15px; color: var(--ink-60); line-height: 1.6;
+}
+.contact-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sans);
+  font-size: 13px; font-weight: 500;
+  padding: 10px 24px;
+  background: var(--ink-100); color: var(--bg);
+  border: none; border-radius: var(--r-md);
+  cursor: pointer; text-decoration: none;
+  transition: all 0.2s;
+}
+.contact-btn:hover { background: var(--ink-80); }
+
+footer {
+  border-top: 1px solid var(--ink-05);
+  padding: 20px 0 28px;
+  margin-top: 16px;
+}
+.foot {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: var(--ink-20);
+}
+
+@media (max-width: 480px) {
+  .page { padding: 0 20px; }
+  .hero { padding: 56px 0 48px; }
+  .contact-row { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <nav>
+    <div class="nav-name">大毛</div>
+    <ul class="nav-links">
+      <li><a href="#stuff">项目</a></li>
+      <li><a href="#reach">联系</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-above">dmlogic.ca</div>
+    <h1 class="hero-title">拍照的，写东西的，<br>偶尔做点<em>有用的</em></h1>
+    <p class="hero-desc">这里是大毛的playground。<br>有些东西认真做，有些只是试试看。如果你刚好经历着什么——可以先做个测试。</p>
+  </section>
+
+  <hr class="line">
+
+  <section class="section" id="stuff">
+    <div class="section-label">在做的事</div>
+    <div class="cards">
+
+      <a class="card" href="coexist/">
+        <div class="card-icon i-quiz">🧭</div>
+        <div class="card-body">
+          <div class="card-title">共处指数 <span class="card-tag">可以玩</span></div>
+          <div class="card-desc">你的生存模式还在运行。12题，只看你自己。</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a class="card" href="#reach">
+        <div class="card-icon i-photo">📷</div>
+        <div class="card-body">
+          <div class="card-title">影集</div>
+          <div class="card-desc">温哥华 · 人像 · 日常</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a class="card" href="javascript:void(0)">
+        <div class="card-icon i-book">📖</div>
+        <div class="card-body">
+          <div class="card-title">《共处》 <span class="card-tag muted">写作中</span></div>
+          <div class="card-desc">在无法控制也无法逃脱的关系里，不失去自己。</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+    </div>
+  </section>
+
+  <hr class="line">
+
+  <section class="contact" id="reach">
+    <div class="contact-row">
+      <div class="contact-text">拍照、聊天、或有什么好玩的想法</div>
+      <a class="contact-btn" href="mailto:mrglvte@gmail.com">
+        邮件 →
+      </a>
+      <a class="contact-btn" href="javascript:void(0)" onclick="alert('微信号: Ooobasil')" style="background:transparent;border:1.5px solid var(--ink-10);color:var(--ink-80);">
+        微信: Ooobasil
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot">
+      <span>© 2026 大毛 · Vancouver</span>
+      <span>dmlogic.ca</span>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
