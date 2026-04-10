@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>大毛 — DM Logic</title>
-<meta name="description" content="降维生存。不分析对方，只看你自己。">
+<title>DM Logic</title>
+<meta name="description" content="DM Logic — Photography, film, and the things between.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M130 130 A30 30 0 0 1 70 130' fill='none' stroke='%23B8845A' stroke-width='4'/%3E%3Ccircle cx='100' cy='137' r='4' fill='%232C2825'/%3E%3Cline x1='100' y1='140' x2='100' y2='158' stroke='%232C2825' stroke-width='3'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
@@ -20,66 +20,125 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-::selection {
-  background: var(--signal);
-  color: var(--paper);
-}
+::selection { background: var(--signal); color: var(--paper); }
 
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
+html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
-  font-family: 'Noto Serif SC', 'DM Sans', Georgia, serif;
+  font-family: 'DM Sans', -apple-system, sans-serif;
   background: var(--paper);
   color: var(--ink);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
+a { color: inherit; text-decoration: none; }
+
 /* ═══════════════════════════════════════ */
-/*  SECTION 1: THE ENTRANCE               */
+/*  NAV                                    */
 /* ═══════════════════════════════════════ */
 
-.entrance {
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.nav.scrolled {
+  background: rgba(246, 241, 235, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(44,40,37,0.06);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-logo svg { width: 28px; height: 28px; }
+
+.nav-logo span {
+  font-size: 0.75rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-links a:hover,
+.nav-links a.active { color: var(--ink); }
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--signal);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after { width: 100%; }
+
+/* Mobile nav toggle */
+.nav-toggle { display: none; cursor: pointer; }
+.nav-toggle span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--ink);
+  margin: 4px 0;
+  transition: 0.3s;
+}
+
+/* ═══════════════════════════════════════ */
+/*  HERO                                   */
+/* ═══════════════════════════════════════ */
+
+.hero {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  padding: 100px 24px 60px;
   position: relative;
-  padding: 60px 24px;
 }
 
-/* Subtle noise texture overlay */
-.entrance::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-}
-
-.entrance > * { position: relative; z-index: 1; }
-
-/* The logo — animated entrance */
-.logo-mark {
-  margin-bottom: 48px;
+.hero-logo {
+  margin-bottom: 40px;
   opacity: 0;
-  animation: breatheIn 2s ease-out 0.3s forwards;
+  animation: fadeUp 1.6s ease-out 0.2s forwards;
 }
 
-.logo-mark svg {
-  width: 120px;
-  height: 120px;
-}
+.hero-logo svg { width: 100px; height: 100px; }
 
-/* Sun rays pulse gently */
-.ray {
-  animation: rayPulse 4s ease-in-out infinite;
-}
+.ray { animation: rayPulse 4s ease-in-out infinite; }
 .ray:nth-child(4) { animation-delay: 0.5s; }
 .ray:nth-child(5) { animation-delay: 1s; }
 .ray:nth-child(6) { animation-delay: 1.5s; }
@@ -90,243 +149,316 @@ body {
   50% { opacity: 0.7; }
 }
 
-@keyframes breatheIn {
-  from { opacity: 0; transform: translateY(12px); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Name treatment */
-.name-block {
-  text-align: center;
-  margin-bottom: 40px;
-  opacity: 0;
-  animation: breatheIn 2s ease-out 0.8s forwards;
-}
-
-.name-zh {
-  font-size: 2.4rem;
+.hero-title {
+  font-size: 3rem;
   font-weight: 300;
-  letter-spacing: 0.3em;
-  margin-bottom: 8px;
-  color: var(--ink);
-}
-
-.name-en {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.5em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-
-/* The one-liner */
-.tagline {
-  max-width: 400px;
-  text-align: center;
-  font-size: 0.95rem;
-  font-weight: 300;
-  line-height: 2;
-  color: var(--ink-light);
-  margin-bottom: 56px;
-  opacity: 0;
-  animation: breatheIn 2s ease-out 1.3s forwards;
-}
-
-.tagline em {
-  font-style: normal;
-  color: var(--signal);
-}
-
-/* Social links — minimal */
-.social-row {
-  display: flex;
-  gap: 32px;
-  align-items: center;
-  opacity: 0;
-  animation: breatheIn 2s ease-out 1.8s forwards;
-}
-
-.social-link {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  color: var(--ink-faint);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.7rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  transition: color 0.4s ease;
+  margin-bottom: 12px;
+  opacity: 0;
+  animation: fadeUp 1.6s ease-out 0.5s forwards;
 }
 
-.social-link:hover {
+.hero-cn {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--ink-faint);
+  letter-spacing: 0.2em;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 1.6s ease-out 0.65s forwards;
+}
+
+.hero-sub {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--ink-light);
+  letter-spacing: 0.08em;
+  max-width: 400px;
+  line-height: 1.8;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 1.6s ease-out 0.9s forwards;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
   color: var(--signal);
+  border: 1px solid var(--signal);
+  padding: 14px 32px;
+  transition: all 0.4s ease;
+  opacity: 0;
+  animation: fadeUp 1.6s ease-out 1.2s forwards;
 }
 
-.social-link svg {
-  width: 16px;
-  height: 16px;
-  opacity: 0.5;
-  transition: opacity 0.4s ease;
+.hero-cta:hover {
+  background: var(--signal);
+  color: var(--paper);
 }
 
-.social-link:hover svg {
-  opacity: 1;
-}
-
-/* Scroll hint */
-.scroll-hint {
+.scroll-indicator {
   position: absolute;
   bottom: 32px;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
   opacity: 0;
-  animation: breatheIn 2s ease-out 2.5s forwards;
+  animation: fadeUp 1.6s ease-out 1.5s forwards;
 }
 
-.scroll-hint span {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-
-.scroll-line {
+.scroll-indicator .line {
   width: 1px;
-  height: 32px;
-  background: var(--ink-faint);
-  opacity: 0.3;
-  animation: scrollPulse 2s ease-in-out infinite 3s;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, var(--ink-faint));
+  margin: 0 auto;
+  animation: scrollPulse 2s ease-in-out infinite;
 }
 
 @keyframes scrollPulse {
-  0%, 100% { transform: scaleY(1); opacity: 0.3; }
-  50% { transform: scaleY(1.5); opacity: 0.15; }
+  0%, 100% { transform: scaleY(1); opacity: 0.4; }
+  50% { transform: scaleY(1.3); opacity: 0.15; }
 }
 
 /* ═══════════════════════════════════════ */
-/*  SECTION 2: THE IDENTITY                */
+/*  SECTIONS COMMON                        */
 /* ═══════════════════════════════════════ */
 
-.identity {
-  padding: 120px 24px;
-  max-width: 640px;
-  margin: 0 auto;
-}
-
-.identity-label {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--signal);
-  margin-bottom: 32px;
-  opacity: 0.7;
-}
-
-.identity-text {
-  font-size: 1.1rem;
-  font-weight: 300;
-  line-height: 2.2;
-  color: var(--ink-light);
-}
-
-.identity-text strong {
-  font-weight: 400;
-  color: var(--ink);
-}
-
-.identity-text .aside {
-  display: block;
-  margin-top: 24px;
-  font-size: 0.85rem;
-  color: var(--ink-faint);
-  font-style: italic;
-}
-
-/* ═══════════════════════════════════════ */
-/*  SECTION 3: THE PROJECTS                */
-/* ═══════════════════════════════════════ */
-
-.projects {
-  padding: 80px 24px 120px;
-  max-width: 800px;
+.section {
+  padding: 120px 40px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
 .section-label {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.4em;
+  font-size: 0.6rem;
+  letter-spacing: 0.5em;
   text-transform: uppercase;
   color: var(--signal);
   margin-bottom: 48px;
   opacity: 0.7;
 }
 
-.project-grid {
-  display: grid;
-  gap: 1px;
-  background: rgba(44, 40, 37, 0.06);
-}
-
-.project-card {
-  background: var(--paper);
-  padding: 40px 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 24px;
-  text-decoration: none;
-  color: inherit;
-  transition: background 0.5s ease;
-  cursor: pointer;
-}
-
-.project-card:hover {
-  background: var(--warm-white);
-}
-
-.project-info { flex: 1; }
-
-.project-status {
+.section-heading {
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.6rem;
-  letter-spacing: 0.25em;
+  font-size: 1.8rem;
+  font-weight: 300;
+  margin-bottom: 20px;
+  letter-spacing: 0.02em;
+}
+
+.section-text {
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 2;
+  color: var(--ink-light);
+  max-width: 560px;
+}
+
+/* ═══════════════════════════════════════ */
+/*  PHOTOS                                 */
+/* ═══════════════════════════════════════ */
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-top: 48px;
+}
+
+.photo-placeholder {
+  aspect-ratio: 1;
+  background: var(--warm-white);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+
+.photo-placeholder:hover { transform: scale(1.02); }
+
+.photo-placeholder .ph-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-faint);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+.photo-link {
+  margin-top: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--signal);
-  margin-bottom: 12px;
+  transition: gap 0.3s ease;
 }
 
-.project-title {
-  font-size: 1.3rem;
+.photo-link:hover { gap: 14px; }
+
+/* ═══════════════════════════════════════ */
+/*  PLAYGROUND                             */
+/* ═══════════════════════════════════════ */
+
+.playground-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1px;
+  background: rgba(44, 40, 37, 0.06);
+  margin-top: 48px;
+}
+
+.play-card {
+  background: var(--paper);
+  padding: 40px 32px;
+  transition: background 0.4s ease;
+  display: block;
+}
+
+.play-card:hover { background: var(--warm-white); }
+
+.play-card-badge {
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 16px;
+}
+
+.play-card-title {
+  font-size: 1.2rem;
   font-weight: 400;
   margin-bottom: 8px;
 }
 
-.project-subtitle {
-  font-family: 'DM Sans', sans-serif;
+.play-card-title .zh {
+  font-family: 'Noto Serif SC', serif;
+}
+
+.play-card-desc {
   font-size: 0.75rem;
   color: var(--ink-faint);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.play-card-arrow {
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+  transition: color 0.3s, transform 0.3s;
+  display: inline-block;
+}
+
+.play-card:hover .play-card-arrow {
+  color: var(--signal);
+  transform: translateX(4px);
+}
+
+/* ══════════════════════════════════════ */
+/*  CONTACT                                */
+/* ═══════════════════════════════════════ */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  margin-top: 48px;
+}
+
+.contact-info p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 2;
+  color: var(--ink-light);
+  margin-bottom: 24px;
+}
+
+.contact-links { list-style: none; }
+
+.contact-links li {
+  margin-bottom: 12px;
+}
+
+.contact-links a {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  transition: color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact-links a:hover { color: var(--signal); }
+
+.contact-links svg { width: 14px; height: 14px; }
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  padding: 14px 0;
+  border: none;
+  border-bottom: 1px solid rgba(44,40,37,0.12);
+  background: transparent;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.3s;
+  resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--signal);
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--ink-faint);
+  font-weight: 300;
   letter-spacing: 0.05em;
 }
 
-.project-arrow {
+.contact-form button {
+  align-self: flex-start;
   font-family: 'DM Sans', sans-serif;
-  font-size: 1.2rem;
-  color: var(--ink-faint);
-  transition: color 0.4s ease, transform 0.4s ease;
-  margin-top: 8px;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.4s ease;
 }
 
-.project-card:hover .project-arrow {
-  color: var(--signal);
-  transform: translateX(4px);
+.contact-form button:hover {
+  background: var(--ink);
+  color: var(--paper);
 }
 
 /* ═══════════════════════════════════════ */
@@ -334,21 +466,20 @@ body {
 /* ═══════════════════════════════════════ */
 
 .footer {
-  padding: 60px 24px;
+  padding: 48px 40px;
   text-align: center;
   border-top: 1px solid rgba(44, 40, 37, 0.06);
 }
 
 .footer-logo svg {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 20px;
-  opacity: 0.3;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 16px;
+  opacity: 0.25;
 }
 
 .footer-text {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--ink-faint);
@@ -358,26 +489,38 @@ body {
 /*  RESPONSIVE                             */
 /* ═══════════════════════════════════════ */
 
-@media (max-width: 600px) {
-  .name-zh { font-size: 1.8rem; }
-  .tagline { font-size: 0.85rem; max-width: 300px; }
-  .identity { padding: 80px 20px; }
-  .identity-text { font-size: 1rem; }
-  .project-card { padding: 28px 20px; flex-direction: column; }
-  .project-arrow { align-self: flex-end; }
-  .social-row { gap: 24px; }
+@media (max-width: 768px) {
+  .nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    inset: 0;
+    background: var(--paper);
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    z-index: 200;
+  }
+  .nav-links.open a { font-size: 1rem; }
+  .nav-toggle { display: block; z-index: 300; }
+  .hero-title { font-size: 2rem; }
+  .section { padding: 80px 24px; }
+  .photo-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
 }
 
-/* ═══════════════════════════════════════ */
-/*  SCROLL ANIMATIONS                      */
-/* ═══════════════════════════════════════ */
+@media (max-width: 480px) {
+  .photo-grid { grid-template-columns: 1fr; }
+}
 
+/* Reveal */
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transform: translateY(16px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }
-
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
@@ -387,115 +530,154 @@ body {
 <body>
 
 <!-- ═══════════════════════════════════════ -->
-<!--  SECTION 1: THE ENTRANCE               -->
+<!--  NAV                                   -->
 <!-- ═══════════════════════════════════════ -->
 
-<section class="entrance">
-  <div class="logo-mark">
-    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Horizon line -->
+<nav class="nav" id="nav">
+  <a href="#home" class="nav-logo">
+    <svg viewBox="0 0 200 200" fill="none">
+      <path d="M130 130 A30 30 0 0 1 70 130" fill="none" stroke="#B8845A" stroke-width="3" stroke-linecap="round"/>
+      <line x1="100" y1="140" x2="100" y2="155" stroke="#2C2825" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="100" cy="137" r="3.5" fill="#2C2825"/>
+    </svg>
+    <span>DM Logic</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#photos">Photos</a></li>
+    <li><a href="#playground">Playground</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-toggle" id="navToggle" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  HERO                                  -->
+<!-- ═══════════════════════════════════════ -->
+
+<section class="hero" id="home">
+  <div class="hero-logo">
+    <svg viewBox="0 0 200 200" fill="none">
       <line x1="30" y1="130" x2="170" y2="130" stroke="#2C2825" stroke-width="1.5" stroke-linecap="round" opacity="0.15"/>
-      <!-- Half sun -->
       <path d="M130 130 A30 30 0 0 1 70 130" fill="none" stroke="#B8845A" stroke-width="2.5" stroke-linecap="round"/>
-      <!-- Rays -->
       <line class="ray" x1="100" y1="92" x2="100" y2="82" stroke="#B8845A" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
       <line class="ray" x1="120" y1="96" x2="126" y2="88" stroke="#B8845A" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
       <line class="ray" x1="80" y1="96" x2="74" y2="88" stroke="#B8845A" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
       <line class="ray" x1="134" y1="110" x2="142" y2="106" stroke="#B8845A" stroke-width="1.5" stroke-linecap="round" opacity="0.2"/>
       <line class="ray" x1="66" y1="110" x2="58" y2="106" stroke="#B8845A" stroke-width="1.5" stroke-linecap="round" opacity="0.2"/>
-      <!-- Figure -->
       <line x1="100" y1="140" x2="100" y2="158" stroke="#2C2825" stroke-width="2" stroke-linecap="round"/>
       <circle cx="100" cy="137" r="3" fill="#2C2825"/>
     </svg>
   </div>
 
-  <div class="name-block">
-    <div class="name-zh">大毛</div>
-    <div class="name-en">DM Logic</div>
-  </div>
+  <h1 class="hero-title">DM Logic</h1>
+  <p class="hero-cn">&#x5927;&#x6BDB;&#x6709;&#x7406;</p>
+  <p class="hero-sub">Photography, film, and the things between.<br>Based in Calgary.</p>
+  <a href="#contact" class="hero-cta">Get in Touch &rarr;</a>
 
-  <div class="tagline">
-    停止运转的艺术家，还在运转的生意人。<br>
-    <em>看天气穿衣服的人。</em>
-  </div>
-
-  <div class="social-row">
-    <a href="https://instagram.com/mr.glvte" target="_blank" rel="noopener" class="social-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5"/>
-        <circle cx="12" cy="12" r="5"/>
-        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-      </svg>
-      <span>@mr.glvte</span>
-    </a>
-    <a href="https://youtube.com/@MrGlvte" target="_blank" rel="noopener" class="social-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
-        <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>
-      </svg>
-      <span>@MrGlvte</span>
-    </a>
-  </div>
-
-  <div class="scroll-hint">
-    <span>向下</span>
-    <div class="scroll-line"></div>
+  <div class="scroll-indicator">
+    <div class="line"></div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════ -->
-<!--  SECTION 2: THE IDENTITY               -->
+<!--  PHOTOS                                -->
 <!-- ═══════════════════════════════════════ -->
 
-<section class="identity">
-  <div class="identity-label reveal">关于</div>
-  <div class="identity-text reveal">
-    曾经做过艺术，后来发现<strong>活着本身就是创作</strong>。
-    现在经营生意，研究人，偶尔研究自己。
-    不再画画，但还在观察——
-    观察那些<strong>在有毒的关系里学会了生存的人</strong>。
-    <span class="aside">
-      分析太多有毒关系的时候，你反而成为了有毒的那个人。<br>
-      所以我不教你分析。我教你共处。
-    </span>
+<section class="section" id="photos">
+  <div class="section-label reveal">Photos</div>
+  <h2 class="section-heading reveal">Selected Work</h2>
+  <p class="section-text reveal">Portraits, spaces, and the quiet moments most people walk past.</p>
+
+  <div class="photo-grid reveal">
+    <div class="photo-placeholder"><div class="ph-inner">01</div></div>
+    <div class="photo-placeholder"><div class="ph-inner">02</div></div>
+    <div class="photo-placeholder"><div class="ph-inner">03</div></div>
+    <div class="photo-placeholder"><div class="ph-inner">04</div></div>
+    <div class="photo-placeholder"><div class="ph-inner">05</div></div>
+    <div class="photo-placeholder"><div class="ph-inner">06</div></div>
+  </div>
+
+  <a href="https://instagram.com/mr.glvte" target="_blank" rel="noopener" class="photo-link reveal">
+    View more on Instagram &rarr;
+  </a>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  PLAYGROUND                            -->
+<!-- ═══════════════════════════════════════ -->
+
+<section class="section" id="playground">
+  <div class="section-label reveal">Playground</div>
+  <h2 class="section-heading reveal">Side Projects</h2>
+  <p class="section-text reveal">Things I build when the camera is off. Psychology, writing, experiments.</p>
+
+  <div class="playground-grid reveal">
+
+    <a href="./coexist/" class="play-card">
+      <div class="play-card-badge">Live</div>
+      <div class="play-card-title"><span class="zh">&#x5171;&#x5904;&#x6307;&#x6570;</span> &middot; Coexist Index</div>
+      <div class="play-card-desc">A 12-question psychological quiz. Not about them &mdash; about you. How did you survive a toxic relationship? Chinese only.</div>
+      <span class="play-card-arrow">&rarr;</span>
+    </a>
+
+    <a href="https://www.youtube.com/@MrGlvte" target="_blank" rel="noopener" class="play-card">
+      <div class="play-card-badge">YouTube</div>
+      <div class="play-card-title">Video Essays</div>
+      <div class="play-card-desc">Behind-the-scenes, process breakdowns, and the occasional rant about light.</div>
+      <span class="play-card-arrow">&rarr;</span>
+    </a>
+
+    <div class="play-card" style="opacity: 0.45; pointer-events: none;">
+      <div class="play-card-badge">Coming</div>
+      <div class="play-card-title"><span class="zh">&#x300A;&#x5171;&#x5904;&#x300B;</span> &middot; The Book</div>
+      <div class="play-card-desc">Not a self-help guide. A survival record. Pre-order with a coffee.</div>
+      <span class="play-card-arrow">&rarr;</span>
+    </div>
+
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════ -->
-<!--  SECTION 3: THE PROJECTS               -->
+<!--  CONTACT                               -->
 <!-- ═══════════════════════════════════════ -->
 
-<section class="projects">
-  <div class="section-label reveal">作品</div>
-  <div class="project-grid reveal">
+<section class="section" id="contact">
+  <div class="section-label reveal">Contact</div>
+  <h2 class="section-heading reveal">Let's Work Together</h2>
 
-    <a href="./coexist/" class="project-card">
-      <div class="project-info">
-        <div class="project-status">进行中</div>
-        <div class="project-title">共处指数</div>
-        <div class="project-subtitle">12道题，不分析对方，只看你自己</div>
-      </div>
-      <div class="project-arrow">&#8594;</div>
-    </a>
+  <div class="contact-grid reveal">
+    <div class="contact-info">
+      <p>Available for photography, video production, and creative direction. Based in Calgary, open to travel.</p>
+      <ul class="contact-links">
+        <li>
+          <a href="mailto:mrglvte@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4 12 13 2 4"/></svg>
+            mrglvte@gmail.com
+          </a>
+        </li>
+        <li>
+          <a href="https://instagram.com/mr.glvte" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/></svg>
+            @mr.glvte
+          </a>
+        </li>
+        <li>
+          <a href="https://www.youtube.com/@MrGlvte" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98"/></svg>
+            @MrGlvte
+          </a>
+        </li>
+      </ul>
+    </div>
 
-    <a href="#" class="project-card" style="pointer-events: none; opacity: 0.45;">
-      <div class="project-info">
-        <div class="project-status">即将</div>
-        <div class="project-title">影集</div>
-        <div class="project-subtitle">一个停止运转的艺术家的视觉碎片</div>
-      </div>
-      <div class="project-arrow">&#8594;</div>
-    </a>
-
-    <a href="#" class="project-card" style="pointer-events: none; opacity: 0.45;">
-      <div class="project-info">
-        <div class="project-status">即将</div>
-        <div class="project-title">《共处》</div>
-        <div class="project-subtitle">不是自救指南，是生存实录</div>
-      </div>
-      <div class="project-arrow">&#8594;</div>
-    </a>
-
+    <form class="contact-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='SENT \u2713'; this.querySelector('button').style.borderColor='var(--signal)'; this.querySelector('button').style.color='var(--signal)';">
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="message" rows="4" placeholder="Tell me about your project..." required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
   </div>
 </section>
 
@@ -505,32 +687,35 @@ body {
 
 <footer class="footer">
   <div class="footer-logo">
-    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 200 200" fill="none">
       <path d="M130 130 A30 30 0 0 1 70 130" fill="none" stroke="#2C2825" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="100" y1="140" x2="100" y2="155" stroke="#2C2825" stroke-width="2" stroke-linecap="round"/>
       <circle cx="100" cy="137" r="3" fill="#2C2825"/>
     </svg>
   </div>
-  <div class="footer-text">降维生存 · DM Logic &copy; 2026</div>
+  <div class="footer-text">DM Logic &copy; 2026</div>
 </footer>
 
 <!-- ═══════════════════════════════════════ -->
-<!--  SCROLL REVEAL SCRIPT                  -->
+<!--  SCRIPTS                               -->
 <!-- ═══════════════════════════════════════ -->
 
 <script>
 (function() {
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.15 });
+  // Nav scroll effect
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
 
-  document.querySelectorAll('.reveal').forEach(function(el) {
-    observer.observe(el);
-  });
+  // Reveal on scroll
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
 })();
 </script>
 
