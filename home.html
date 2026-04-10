@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>å¤§æ¯æç Â· DM Logic</title>
+<meta name="description" content="DM Logic â What remains when you stop performing.">
+<meta property="og:title" content="å¤§æ¯æç Â· DM Logic">
+<meta property="og:description" content="What remains when you stop performing.">
+<meta property="og:url" content="https://dmlogic.ca">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Serif+SC:wght@200;300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+:root{
+  --bg:#F5F0E8;
+  --fg:#2A2724;
+  --mid:#8C857D;
+  --faint:#B8B2A9;
+  --accent:#A0785A;
+  --surface:#EDE8DF;
+  --ink05:#F0EBE3;
+  --serif:'Noto Serif SC',Georgia,serif;
+  --sans:'DM Sans',-apple-system,sans-serif;
+  --mono:'Space Mono',monospace;
+}
+
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--fg);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--accent);color:var(--bg)}
+
+/* âââ GLOBAL âââ */
+.wrap{max-width:1200px;margin:0 auto;padding:0 clamp(24px,5vw,80px)}
+
+/* âââ NAV âââ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:20px clamp(24px,5vw,80px);
+  display:flex;justify-content:space-between;align-items:center;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  background:rgba(245,240,232,0.8);
+  border-bottom:1px solid rgba(184,178,169,0.1);
+}
+.nav-mark{
+  font-size:15px;font-weight:500;letter-spacing:3px;
+  color:var(--fg);
+  text-decoration:none;
+  display:flex;align-items:center;gap:12px;
+}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-link{
+  font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--mid);
+  text-decoration:none;transition:color .3s;
+}
+.nav-link:hover{color:var(--accent)}
+
+/* âââ HERO â logo as centerpiece âââ */
+.hero{
+  min-height:100svh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  position:relative;
+}
+.hero-logo{
+  width:clamp(140px,20vw,220px);
+  height:clamp(140px,20vw,220px);
+  margin-bottom:clamp(28px,4vh,48px);
+  animation:breathe 6s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%,100%{opacity:0.85;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.03)}
+}
+.hero-brand{
+  font-family:var(--serif);
+  font-weight:200;
+  font-size:clamp(28px,4.5vw,56px);
+  letter-spacing:clamp(8px,1.5vw,20px);
+  color:var(--fg);
+  margin-bottom:clamp(12px,2vh,20px);
+}
+.hero-tagline{
+  font-weight:300;
+  font-size:clamp(13px,1.3vw,17px);
+  color:var(--mid);
+  letter-spacing:clamp(2px,0.4vw,5px);
+  font-style:italic;
+}
+.hero-scroll{
+  position:absolute;bottom:clamp(24px,5vh,48px);
+  font-size:9px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--faint);
+  animation:drift 2s ease-in-out infinite;
+}
+@keyframes drift{
+  0%,100%{transform:translateY(0);opacity:.4}
+  50%{transform:translateY(6px);opacity:.8}
+}
+
+/* âââ SECTION LABEL âââ */
+.sec-label{
+  font-family:var(--mono);
+  font-size:10px;letter-spacing:4px;
+  text-transform:uppercase;color:var(--faint);
+  margin-bottom:clamp(32px,5vh,56px);
+  display:flex;align-items:center;gap:16px;
+}
+.sec-label::after{
+  content:'';flex:1;height:1px;background:var(--faint);opacity:.2;
+}
+
+/* âââ ABOUT â å¤§æ¯'s voice âââ */
+.about{
+  padding:clamp(80px,14vh,160px) 0 clamp(60px,10vh,120px);
+}
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(40px,6vw,80px);
+  align-items:start;
+}
+.about-text p{
+  font-weight:300;
+  font-size:clamp(15px,1.4vw,19px);
+  line-height:2;
+  color:var(--mid);
+  margin-bottom:1.5em;
+}
+.about-text strong{color:var(--fg);font-weight:400}
+.about-aside{
+  padding-top:clamp(8px,2vh,24px);
+}
+.about-card{
+  background:var(--surface);
+  padding:clamp(24px,3vw,40px);
+  position:relative;
+}
+.about-card::before{
+  content:'';position:absolute;top:0;left:0;
+  width:40px;height:2px;background:var(--accent);
+}
+.about-card .q{
+  font-family:var(--serif);
+  font-weight:300;
+  font-size:clamp(16px,1.6vw,22px);
+  line-height:1.8;
+  color:var(--fg);
+  margin-bottom:16px;
+}
+.about-card .attr{
+  font-size:11px;color:var(--faint);letter-spacing:1px;
+}
+
+/* âââ FILM STRIP â full bleed âââ */
+.film{
+  padding:clamp(40px,8vh,80px) 0;
+  overflow:hidden;
+}
+.film-strip{
+  display:flex;gap:5px;
+  padding:0 clamp(24px,5vw,80px);
+  overflow-x:auto;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  cursor:grab;
+}
+.film-strip::-webkit-scrollbar{display:none}
+.film-strip:active{cursor:grabbing}
+
+.film-frame{
+  flex:0 0 auto;
+  width:clamp(220px,25vw,360px);
+  aspect-ratio:3/2;
+  background:var(--fg);
+  position:relative;
+  overflow:hidden;
+  transition:transform .5s ease;
+}
+.film-frame:hover{transform:scale(1.02)}
+.film-frame::after{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(135deg,rgba(160,120,90,.06) 0%,transparent 60%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.film-frame .ph-num{
+  position:absolute;bottom:10px;right:12px;
+  font-family:var(--mono);
+  font-size:9px;letter-spacing:3px;
+  color:rgba(245,240,232,.2);
+}
+.film-tagline{
+  padding:clamp(20px,3vh,36px) clamp(24px,5vw,80px) 0;
+  font-weight:300;
+  font-size:clamp(13px,1.2vw,16px);
+  color:var(--faint);
+  letter-spacing:1px;
+  font-style:italic;
+}
+.film-tagline a{
+  color:var(--mid);text-decoration:none;
+  border-bottom:1px solid transparent;
+  transition:all .3s;
+}
+.film-tagline a:hover{border-color:var(--accent);color:var(--accent)}
+
+/* âââ PROJECTS âââ */
+.projects{
+  padding:clamp(60px,10vh,120px) 0;
+}
+.project-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:clamp(24px,4vh,48px);
+}
+.project-item{
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+  min-height:clamp(360px,50vh,520px);
+  overflow:hidden;
+  transition:transform .4s ease;
+}
+.project-item:hover{transform:translateY(-4px)}
+
+.project-visual{
+  background:var(--fg);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.project-visual::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 50%,rgba(160,120,90,.08) 0%,transparent 70%);
+}
+.glyph{
+  font-family:var(--serif);
+  font-weight:200;
+  font-size:clamp(64px,12vw,140px);
+  color:rgba(245,240,232,.08);
+  line-height:1;
+  user-select:none;
+  letter-spacing:0.05em;
+}
+.glyph-sub{
+  font-family:var(--mono);
+  font-size:9px;letter-spacing:6px;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-top:16px;
+  opacity:.7;
+}
+
+.project-info{
+  background:var(--surface);
+  padding:clamp(32px,4vw,56px);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.project-name{
+  font-family:var(--serif);
+  font-weight:300;
+  font-size:clamp(24px,3vw,36px);
+  line-height:1.4;
+  margin-bottom:6px;
+}
+.project-name-en{
+  font-weight:300;
+  font-size:clamp(13px,1.1vw,15px);
+  color:var(--mid);
+  margin-bottom:clamp(20px,3vh,32px);
+}
+.project-desc{
+  font-weight:300;
+  font-size:clamp(13px,1.1vw,15px);
+  line-height:1.9;
+  color:var(--mid);
+  max-width:36em;
+  margin-bottom:clamp(24px,3vh,36px);
+}
+.project-types{
+  display:flex;flex-wrap:wrap;gap:6px;
+  margin-bottom:clamp(28px,4vh,40px);
+}
+.pill{
+  font-family:var(--mono);
+  font-size:8px;letter-spacing:2px;
+  padding:5px 14px;
+  border:1px solid rgba(184,178,169,.3);
+  color:var(--mid);
+}
+.cta{
+  display:inline-block;
+  background:var(--fg);
+  color:var(--bg);
+  padding:14px 40px;
+  font-size:12px;font-weight:400;
+  letter-spacing:2px;
+  text-decoration:none;
+  text-transform:uppercase;
+  transition:all .4s ease;
+  align-self:flex-start;
+}
+.cta:hover{
+  background:var(--accent);
+  letter-spacing:3px;
+}
+
+/* âââ MANIFESTO strip âââ */
+.manifesto{
+  padding:clamp(60px,10vh,100px) 0;
+  text-align:center;
+}
+.manifesto-text{
+  font-family:var(--serif);
+  font-weight:200;
+  font-size:clamp(18px,2.8vw,38px);
+  line-height:1.8;
+  color:var(--fg);
+  max-width:16em;
+  margin:0 auto;
+  letter-spacing:0.02em;
+}
+.manifesto-text em{
+  font-style:normal;
+  color:var(--accent);
+}
+
+/* âââ CONTACT âââ */
+.contact{
+  border-top:1px solid rgba(184,178,169,.15);
+  padding:clamp(60px,10vh,100px) 0;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:clamp(20px,4vw,60px);
+}
+.contact-label{
+  font-family:var(--mono);
+  font-size:9px;letter-spacing:4px;
+  text-transform:uppercase;color:var(--faint);
+}
+.contact-line{height:1px;background:var(--faint);opacity:.15}
+.contact-email{
+  font-weight:300;
+  font-size:clamp(14px,1.6vw,20px);
+  color:var(--fg);
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+  transition:all .3s;
+  justify-self:end;
+}
+.contact-email:hover{border-color:var(--accent);color:var(--accent)}
+
+/* âââ FOOTER âââ */
+footer{
+  padding:20px 0 clamp(32px,5vh,48px);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:10px;color:var(--faint);
+  letter-spacing:1px;
+}
+footer a{color:var(--faint);text-decoration:none;transition:color .3s}
+footer a:hover{color:var(--accent)}
+.footer-links{display:flex;gap:24px}
+
+/* âââ GRAIN OVERLAY âââ */
+body::before{
+  content:'';position:fixed;inset:0;z-index:9999;
+  pointer-events:none;
+  opacity:0.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* âââ RESPONSIVE âââ */
+@media(max-width:768px){
+  .about-grid{grid-template-columns:1fr}
+  .project-item{grid-template-columns:1fr}
+  .project-visual{min-height:35vh}
+  .contact{grid-template-columns:1fr;text-align:center;gap:12px}
+  .contact-line{display:none}
+  .contact-email{justify-self:center}
+  nav .nav-links{gap:16px}
+}
+@media(max-width:480px){
+  .nav-links .nav-link:not(:last-child){display:none}
+}
+
+/* âââ ENTRANCE ANIMATIONS âââ */
+.fade-in{
+  opacity:0;transform:translateY(24px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-mark">
+    <svg width="36" height="36" viewBox="0 0 200 200">
+      <line x1="30" y1="130" x2="170" y2="130" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+      <path d="M130 130 A30 30 0 0 1 70 130" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+      <line x1="100" y1="92" x2="100" y2="82" stroke="var(--accent)" stroke-width="1.5" opacity="0.5"/>
+      <line x1="120" y1="96" x2="126" y2="88" stroke="var(--accent)" stroke-width="1.5" opacity="0.35"/>
+      <line x1="80" y1="96" x2="74" y2="88" stroke="var(--accent)" stroke-width="1.5" opacity="0.35"/>
+      <line x1="134" y1="110" x2="142" y2="106" stroke="var(--accent)" stroke-width="1.5" opacity="0.2"/>
+      <line x1="66" y1="110" x2="58" y2="106" stroke="var(--accent)" stroke-width="1.5" opacity="0.2"/>
+      <line x1="100" y1="140" x2="100" y2="158" stroke="currentColor" stroke-width="2"/>
+      <circle cx="100" cy="137" r="3" fill="currentColor"/>
+    </svg>
+    å¤§æ¯æç
+  </a>
+  <div class="nav-links">
+    <a href="#film" class="nav-link">Film</a>
+    <a href="#work" class="nav-link">Projects</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO â Logo as bold centerpiece -->
+<section class="hero">
+  <svg class="hero-logo" viewBox="0 0 200 200">
+    <line x1="20" y1="130" x2="180" y2="130" stroke="var(--faint)" stroke-width="1" opacity="0.3"/>
+    <path d="M135 130 A35 35 0 0 1 65 130" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+    <line x1="100" y1="87" x2="100" y2="72" stroke="var(--accent)" stroke-width="2" opacity="0.6"/>
+    <line x1="122" y1="91" x2="130" y2="80" stroke="var(--accent)" stroke-width="1.5" opacity="0.4"/>
+    <line x1="78" y1="91" x2="70" y2="80" stroke="var(--accent)" stroke-width="1.5" opacity="0.4"/>
+    <line x1="140" y1="107" x2="150" y2="100" stroke="var(--accent)" stroke-width="1.5" opacity="0.25"/>
+    <line x1="60" y1="107" x2="50" y2="100" stroke="var(--accent)" stroke-width="1.5" opacity="0.25"/>
+    <line x1="100" y1="140" x2="100" y2="165" stroke="var(--fg)" stroke-width="2.5"/>
+    <circle cx="100" cy="136" r="4" fill="var(--fg)"/>
+  </svg>
+  <div class="hero-brand">å¤§ æ¯ æ ç</div>
+  <div class="hero-tagline">What remains when you stop performing.</div>
+  <div class="hero-scroll">scroll</div>
+</section>
+
+<div class="wrap">
+
+  <!-- ABOUT -->
+  <section class="about fade-in">
+    <div class="sec-label" style="grid-column:1/-1">About</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          An arch holds weight by yielding to it.<br>
+          A pendulum finds center by <strong>never staying there.</strong>
+        </p>
+        <p>
+          Most of this starts with the same question â<br>
+          what happens when you stop trying to win?
+        </p>
+      </div>
+      <div class="about-aside">
+        <div class="about-card">
+          <div class="q">You're not holding on to that person.<br>You're holding on to the <em style="color:var(--accent);font-style:normal">reaction that once saved you.</em></div>
+          <div class="attr">â DM Logic</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FILM STRIP â full bleed -->
+<section class="film fade-in" id="film">
+  <div class="wrap">
+    <div class="sec-label">Photography Â· Film</div>
+  </div>
+  <div class="film-strip" id="filmStrip">
+    <div class="film-frame"><span class="ph-num">001</span></div>
+    <div class="film-frame"><span class="ph-num">002</span></div>
+    <div class="film-frame"><span class="ph-num">003</span></div>
+    <div class="film-frame"><span class="ph-num">004</span></div>
+    <div class="film-frame"><span class="ph-num">005</span></div>
+    <div class="film-frame"><span class="ph-num">006</span></div>
+    <div class="film-frame"><span class="ph-num">007</span></div>
+    <div class="film-frame"><span class="ph-num">008</span></div>
+  </div>
+  <div class="wrap">
+    <div class="film-tagline">The quiet moments most people walk past. â <a href="https://instagram.com/mr.glvte" target="_blank" rel="noopener">@mr.glvte</a></div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<div class="wrap">
+  <section class="manifesto fade-in">
+    <div class="manifesto-text">
+      What remains<br>when you stop<br><em>performing.</em>
+    </div>
+  </section>
+</div>
+
+<!-- PROJECTS -->
+<div class="wrap">
+  <section class="projects fade-in" id="work">
+    <div class="sec-label">Projects</div>
+    <div class="project-grid">
+
+      <!-- å±å¦ -->
+      <div class="project-item">
+        <div class="project-visual">
+          <div class="glyph">å±å¦</div>
+          <div class="glyph-sub">Coexist Index</div>
+        </div>
+        <div class="project-info">
+          <div class="project-name">The Coexist Index</div>
+          <div class="project-name-en">å±å¦ææ°</div>
+          <p class="project-desc">
+            The internet teaches you to fight toxic people.<br>
+            We think that's the trap.<br><br>
+            This test doesn't analyze them â only you.<br>
+            12 questions. No diagnosis. Just a mirror.
+          </p>
+          <div class="project-types">
+            <span class="pill">MIRR</span>
+            <span class="pill">DECT</span>
+            <span class="pill">GHST</span>
+            <span class="pill">FGHT</span>
+            <span class="pill">PHIL</span>
+            <span class="pill">COEX</span>
+          </div>
+          <a href="/coexist/" class="cta">Take the test</a>
+        </div>
+      </div>
+
+      <!-- ooobasil -->
+      <div class="project-item" style="opacity:0.55;pointer-events:none">
+        <div class="project-visual">
+          <div class="glyph" style="font-size:1.6rem;letter-spacing:0.08em">ooobasil</div>
+          <div class="glyph-sub">Digital Alter Ego</div>
+        </div>
+        <div class="project-info">
+          <div class="project-name">ooobasil</div>
+          <div class="project-name-en">The one who answers when I don't.</div>
+          <p class="project-desc">
+            A small intelligence that speaks on behalf of someone<br>
+            who'd rather not explain himself twice.
+          </p>
+          <span class="cta" style="opacity:0.4">Coming soon</span>
+        </div>
+      </div>
+
+      <!-- Survive / å±å¤ Book -->
+      <div class="project-item" style="opacity:0.55;pointer-events:none">
+        <div class="project-visual">
+          <div class="glyph" style="font-family:var(--serif)">å±å¦</div>
+          <div class="glyph-sub">Survive</div>
+        </div>
+        <div class="project-info">
+          <div class="project-name">Survive</div>
+          <div class="project-name-en">ãå±å¦ã â The Book</div>
+          <p class="project-desc">
+            Not a self-help guide. A survival record.<br>
+            From someone who stopped diagnosing and started living.
+          </p>
+          <span class="cta" style="opacity:0.4">Pre-order with a coffee â soon</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <!-- CONTACT -->
+  <section class="contact fade-in" id="contact">
+    <div class="contact-label">Say hello</div>
+    <div class="contact-line"></div>
+    <a href="mailto:mrglvte@gmail.com" class="contact-email">mrglvte@gmail.com</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>Â© 2026 å¤§æ¯æç</span>
+    <div class="footer-links">
+      <a href="https://instagram.com/mr.glvte" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://github.com/Monodrama311" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+/* âââ Intersection Observer â fade in on scroll âââ */
+(function(){
+  const els = document.querySelectorAll('.fade-in');
+  if(!('IntersectionObserver' in window)){
+    els.forEach(el=>el.classList.add('visible'));
+    return;
+  }
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(el=>obs.observe(el));
+})();
+
+/* âââ Film strip drag-to-scroll âââ */
+(function(){
+  const s=document.getElementById('filmStrip');
+  if(!s)return;
+  let down=false,startX,scrollL;
+  s.addEventListener('mousedown',e=>{down=true;s.style.cursor='grabbing';startX=e.pageX-s.offsetLeft;scrollL=s.scrollLeft;});
+  document.addEventListener('mouseup',()=>{down=false;s.style.cursor='grab';});
+  s.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();s.scrollLeft=scrollL-(e.pageX-s.offsetLeft-startX)*1.5;});
+  // touch
+  let tx;
+  s.addEventListener('touchstart',e=>{tx=e.touches[0].pageX;scrollL=s.scrollLeft;},{passive:true});
+  s.addEventListener('touchmove',e=>{if(tx===undefined)return;s.scrollLeft=scrollL-(e.touches[0].pageX-tx);},{passive:true});
+  s.addEventListener('touchend',()=>{tx=undefined;});
+})();
+
+/* âââ Nav blur intensity on scroll âââ */
+(function(){
+  const nav=document.querySelector('nav');
+  let ticking=false;
+  window.addEventListener('scroll',()=>{
+    if(!ticking){
+      window.requestAnimationFrame(()=>{
+        const y=window.scrollY;
+        nav.style.borderBottomColor = y>60 ? 'rgba(184,178,169,0.12)' : 'rgba(184,178,169,0.04)';
+        ticking=false;
+      });
+      ticking=true;
+    }
+  });
+})();
+</script>
+</body>
+</html>
