@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>å¤§æ¯æç Â· DM Logic</title>
-<meta name="description" content="DM Logic â What remains when you stop performing.">
-<meta property="og:title" content="å¤§æ¯æç Â· DM Logic">
+<title>大毛有理 · DM Logic</title>
+<meta name="description" content="DM Logic — What remains when you stop performing.">
+<meta property="og:title" content="大毛有理 · DM Logic">
 <meta property="og:description" content="What remains when you stop performing.">
 <meta property="og:url" content="https://dmlogic.ca">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,10 +36,10 @@ body{
 }
 ::selection{background:var(--accent);color:var(--bg)}
 
-/* âââ GLOBAL âââ */
+/* ━━━ GLOBAL ━━━ */
 .wrap{max-width:1200px;margin:0 auto;padding:0 clamp(24px,5vw,80px)}
 
-/* âââ NAV âââ */
+/* ━━━ NAV ━━━ */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   padding:20px clamp(24px,5vw,80px);
@@ -63,7 +63,7 @@ nav{
 }
 .nav-link:hover{color:var(--accent)}
 
-/* âââ HERO â logo as centerpiece âââ */
+/* ━━━ HERO — logo as centerpiece ━━━ */
 .hero{
   min-height:100svh;
   display:flex;flex-direction:column;
@@ -107,7 +107,7 @@ nav{
   50%{transform:translateY(6px);opacity:.8}
 }
 
-/* âââ SECTION LABEL âââ */
+/* ━━━ SECTION LABEL ━━━ */
 .sec-label{
   font-family:var(--mono);
   font-size:10px;letter-spacing:4px;
@@ -119,7 +119,7 @@ nav{
   content:'';flex:1;height:1px;background:var(--faint);opacity:.2;
 }
 
-/* âââ ABOUT â å¤§æ¯'s voice âââ */
+/* ━━━ ABOUT — 大毛's voice ━━━ */
 .about{
   padding:clamp(80px,14vh,160px) 0 clamp(60px,10vh,120px);
 }
@@ -161,7 +161,7 @@ nav{
   font-size:11px;color:var(--faint);letter-spacing:1px;
 }
 
-/* âââ FILM STRIP â full bleed âââ */
+/* ━━━ FILM STRIP — full bleed ━━━ */
 .film{
   padding:clamp(40px,8vh,80px) 0;
   overflow:hidden;
@@ -215,7 +215,7 @@ nav{
 }
 .film-tagline a:hover{border-color:var(--accent);color:var(--accent)}
 
-/* âââ PROJECTS âââ */
+/* ━━━ PROJECTS ━━━ */
 .projects{
   padding:clamp(60px,10vh,120px) 0;
 }
@@ -315,7 +315,7 @@ nav{
   letter-spacing:3px;
 }
 
-/* âââ MANIFESTO strip âââ */
+/* ━━━ MANIFESTO strip ━━━ */
 .manifesto{
   padding:clamp(60px,10vh,100px) 0;
   text-align:center;
@@ -335,7 +335,7 @@ nav{
   color:var(--accent);
 }
 
-/* âââ CONTACT âââ */
+/* ━━━ CONTACT ━━━ */
 .contact{
   border-top:1px solid rgba(184,178,169,.15);
   padding:clamp(60px,10vh,100px) 0;
@@ -361,7 +361,7 @@ nav{
 }
 .contact-email:hover{border-color:var(--accent);color:var(--accent)}
 
-/* âââ FOOTER âââ */
+/* ━━━ FOOTER ━━━ */
 footer{
   padding:20px 0 clamp(32px,5vh,48px);
   display:flex;justify-content:space-between;align-items:center;
@@ -372,7 +372,7 @@ footer a{color:var(--faint);text-decoration:none;transition:color .3s}
 footer a:hover{color:var(--accent)}
 .footer-links{display:flex;gap:24px}
 
-/* âââ GRAIN OVERLAY âââ */
+/* ━━━ GRAIN OVERLAY ━━━ */
 body::before{
   content:'';position:fixed;inset:0;z-index:9999;
   pointer-events:none;
@@ -380,7 +380,7 @@ body::before{
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
 }
 
-/* âââ RESPONSIVE âââ */
+/* ━━━ RESPONSIVE ━━━ */
 @media(max-width:768px){
   .about-grid{grid-template-columns:1fr}
   .project-item{grid-template-columns:1fr}
@@ -394,7 +394,7 @@ body::before{
   .nav-links .nav-link:not(:last-child){display:none}
 }
 
-/* âââ ENTRANCE ANIMATIONS âââ */
+/* ━━━ ENTRANCE ANIMATIONS ━━━ */
 .fade-in{
   opacity:0;transform:translateY(24px);
   transition:opacity .8s ease,transform .8s ease;
@@ -418,7 +418,7 @@ body::before{
       <line x1="100" y1="140" x2="100" y2="158" stroke="currentColor" stroke-width="2"/>
       <circle cx="100" cy="137" r="3" fill="currentColor"/>
     </svg>
-    å¤§æ¯æç
+    大毛有理
   </a>
   <div class="nav-links">
     <a href="#film" class="nav-link">Film</a>
@@ -427,7 +427,7 @@ body::before{
   </div>
 </nav>
 
-<!-- HERO â Logo as bold centerpiece -->
+<!-- HERO — Logo as bold centerpiece -->
 <section class="hero">
   <svg class="hero-logo" viewBox="0 0 200 200">
     <line x1="20" y1="130" x2="180" y2="130" stroke="var(--faint)" stroke-width="1" opacity="0.3"/>
@@ -440,7 +440,7 @@ body::before{
     <line x1="100" y1="140" x2="100" y2="165" stroke="var(--fg)" stroke-width="2.5"/>
     <circle cx="100" cy="136" r="4" fill="var(--fg)"/>
   </svg>
-  <div class="hero-brand">å¤§ æ¯ æ ç</div>
+  <div class="hero-brand">大 毛 有 理</div>
   <div class="hero-tagline">What remains when you stop performing.</div>
   <div class="hero-scroll">scroll</div>
 </section>
@@ -457,14 +457,14 @@ body::before{
           A pendulum finds center by <strong>never staying there.</strong>
         </p>
         <p>
-          Most of this starts with the same question â<br>
+          Most of this starts with the same question —<br>
           what happens when you stop trying to win?
         </p>
       </div>
       <div class="about-aside">
         <div class="about-card">
           <div class="q">You're not holding on to that person.<br>You're holding on to the <em style="color:var(--accent);font-style:normal">reaction that once saved you.</em></div>
-          <div class="attr">â DM Logic</div>
+          <div class="attr">— DM Logic</div>
         </div>
       </div>
     </div>
@@ -472,10 +472,10 @@ body::before{
 
 </div>
 
-<!-- FILM STRIP â full bleed -->
+<!-- FILM STRIP — full bleed -->
 <section class="film fade-in" id="film">
   <div class="wrap">
-    <div class="sec-label">Photography Â· Film</div>
+    <div class="sec-label">Photography · Film</div>
   </div>
   <div class="film-strip" id="filmStrip">
     <div class="film-frame"><span class="ph-num">001</span></div>
@@ -488,7 +488,7 @@ body::before{
     <div class="film-frame"><span class="ph-num">008</span></div>
   </div>
   <div class="wrap">
-    <div class="film-tagline">The quiet moments most people walk past. â <a href="https://instagram.com/mr.glvte" target="_blank" rel="noopener">@mr.glvte</a></div>
+    <div class="film-tagline">The quiet moments most people walk past. — <a href="https://instagram.com/mr.glvte" target="_blank" rel="noopener">@mr.glvte</a></div>
   </div>
 </section>
 
@@ -507,19 +507,19 @@ body::before{
     <div class="sec-label">Projects</div>
     <div class="project-grid">
 
-      <!-- å±å¦ -->
+      <!-- 共処 -->
       <div class="project-item">
         <div class="project-visual">
-          <div class="glyph">å±å¦</div>
+          <div class="glyph">共処</div>
           <div class="glyph-sub">Coexist Index</div>
         </div>
         <div class="project-info">
           <div class="project-name">The Coexist Index</div>
-          <div class="project-name-en">å±å¦ææ°</div>
+          <div class="project-name-en">共処指数</div>
           <p class="project-desc">
             The internet teaches you to fight toxic people.<br>
             We think that's the trap.<br><br>
-            This test doesn't analyze them â only you.<br>
+            This test doesn't analyze them — only you.<br>
             12 questions. No diagnosis. Just a mirror.
           </p>
           <div class="project-types">
@@ -551,20 +551,20 @@ body::before{
         </div>
       </div>
 
-      <!-- Survive / å±å¤ Book -->
+      <!-- Survive / 共处 Book -->
       <div class="project-item" style="opacity:0.55;pointer-events:none">
         <div class="project-visual">
-          <div class="glyph" style="font-family:var(--serif)">å±å¦</div>
+          <div class="glyph" style="font-family:var(--serif)">共処</div>
           <div class="glyph-sub">Survive</div>
         </div>
         <div class="project-info">
           <div class="project-name">Survive</div>
-          <div class="project-name-en">ãå±å¦ã â The Book</div>
+          <div class="project-name-en">《共処》 — The Book</div>
           <p class="project-desc">
             Not a self-help guide. A survival record.<br>
             From someone who stopped diagnosing and started living.
           </p>
-          <span class="cta" style="opacity:0.4">Pre-order with a coffee â soon</span>
+          <span class="cta" style="opacity:0.4">Pre-order with a coffee — soon</span>
         </div>
       </div>
 
@@ -582,7 +582,7 @@ body::before{
 
   <!-- FOOTER -->
   <footer>
-    <span>Â© 2026 å¤§æ¯æç</span>
+    <span>© 2026 大毛有理</span>
     <div class="footer-links">
       <a href="https://instagram.com/mr.glvte" target="_blank" rel="noopener">Instagram</a>
       <a href="https://github.com/Monodrama311" target="_blank" rel="noopener">GitHub</a>
@@ -591,7 +591,7 @@ body::before{
 </div>
 
 <script>
-/* âââ Intersection Observer â fade in on scroll âââ */
+/* ━━━ Intersection Observer — fade in on scroll ━━━ */
 (function(){
   const els = document.querySelectorAll('.fade-in');
   if(!('IntersectionObserver' in window)){
@@ -609,7 +609,7 @@ body::before{
   els.forEach(el=>obs.observe(el));
 })();
 
-/* âââ Film strip drag-to-scroll âââ */
+/* ━━━ Film strip drag-to-scroll ━━━ */
 (function(){
   const s=document.getElementById('filmStrip');
   if(!s)return;
@@ -624,7 +624,7 @@ body::before{
   s.addEventListener('touchend',()=>{tx=undefined;});
 })();
 
-/* âââ Nav blur intensity on scroll âââ */
+/* ━━━ Nav blur intensity on scroll ━━━ */
 (function(){
   const nav=document.querySelector('nav');
   let ticking=false;
