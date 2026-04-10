@@ -1,1082 +1,1565 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>共处指数</title>
-<meta name="description" content="你的生存模式还在运行。12道题，不分析对方，只看你自己。">
-<meta property="og:title" content="共处指数">
-<meta property="og:description" content="你的生存模式还在运行。">
-<style>
-/* ============================================
-   DESIGN SYSTEM — abstract, warm, breathable
-   ============================================ */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>共处指数 · Coexist Index</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-:root {
-  /* Warm paper palette */
-  --bg: #F6F1EB;
-  --bg-warm: #EDE7DF;
-  --surface: #FFFFFF;
-  --surface-warm: #FBF8F4;
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
 
-  /* Ink system — one hue family, many weights */
-  --ink-100: #1A1614;
-  --ink-80: #3D3632;
-  --ink-60: #6B6058;
-  --ink-40: #9C9088;
-  --ink-20: #C4BBB2;
-  --ink-10: #DDD6CE;
-  --ink-05: #EDE8E2;
+        body {
+            background-color: #F6F1EB;
+            color: #2C2825;
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+        }
 
-  /* Signal — warm amber, used surgically */
-  --signal: #B8845A;
-  --signal-soft: #D4AA7D;
-  --signal-wash: #F2E6D6;
-  --signal-glow: rgba(184, 132, 90, 0.08);
+        /* CONTAINERS */
+        .page {
+            display: none;
+            min-height: 100vh;
+            width: 100%;
+            padding: 2rem;
+            animation: fadeIn 0.6s ease-in-out;
+        }
 
-  /* Typography */
-  --serif: 'Noto Serif SC', 'Songti SC', Georgia, serif;
-  --sans: 'DM Sans', -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
+        .page.active {
+            display: flex;
+            flex-direction: column;
+        }
 
-  /* Spacing rhythm — 8px base */
-  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 40px; --s6: 48px; --s8: 64px;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-  /* Curves */
-  --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-xl: 20px;
-}
+        /* INTRO PAGE */
+        #introPage {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+        .intro-content {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
 
-html { scroll-behavior: smooth; }
+        .intro-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
 
-body {
-  background: var(--bg);
-  color: var(--ink-100);
-  font-family: var(--sans);
-  min-height: 100vh;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
+        .intro-subtitle {
+            font-size: 0.9rem;
+            color: #A8A09A;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+        }
 
-::selection { background: var(--signal-wash); color: var(--ink-100); }
+        .intro-philosophy {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #2C2825;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 400;
+        }
 
-.wrap { max-width: 580px; margin: 0 auto; padding: 0 var(--s3); }
+        .intro-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            font-size: 0.85rem;
+            color: #A8A09A;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
 
-/* ============================================
-   HEADER — barely there
-   ============================================ */
-header {
-  padding: var(--s2) 0;
-  opacity: 0.6;
-  transition: opacity 0.3s;
-}
-header:hover { opacity: 1; }
-.header-row {
-  display: flex; justify-content: space-between; align-items: center;
-}
-.header-logo {
-  font-family: var(--serif);
-  font-size: 13px; font-weight: 400;
-  color: var(--ink-60);
-  letter-spacing: 0.06em;
-}
-.header-link {
-  font-size: 11px; color: var(--ink-40);
-  text-decoration: none; letter-spacing: 0.04em;
-}
-.header-link:hover { color: var(--signal); }
+        .intro-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-/* ============================================
-   SCREEN SYSTEM
-   ============================================ */
-.screen { display: none; }
-.screen.active { display: block; }
+        .intro-meta-dot {
+            width: 3px;
+            height: 3px;
+            background-color: #B8845A;
+            border-radius: 50%;
+        }
 
-.screen.active .fade-in { animation: fadeIn 0.5s ease both; }
-.screen.active .fade-in-d1 { animation: fadeIn 0.5s 0.1s ease both; }
-.screen.active .fade-in-d2 { animation: fadeIn 0.5s 0.2s ease both; }
-.screen.active .fade-in-d3 { animation: fadeIn 0.5s 0.35s ease both; }
-.screen.active .fade-in-d4 { animation: fadeIn 0.5s 0.5s ease both; }
-.screen.active .fade-in-d5 { animation: fadeIn 0.6s 0.7s ease both; }
+        .btn {
+            padding: 0.9rem 2.5rem;
+            border: none;
+            background-color: #2C2825;
+            color: #F6F1EB;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.03em;
+            border-radius: 2px;
+            text-transform: uppercase;
+        }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeInScale {
-  from { opacity: 0; transform: scale(0.97) translateY(8px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-@keyframes slideRight {
-  from { width: 0%; } to { width: var(--target-width); }
-}
-@keyframes typeReveal {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+        .btn:hover {
+            background-color: #B8845A;
+            transform: translateY(-2px);
+        }
 
-/* ============================================
-   INTRO — hook in 3 seconds
-   ============================================
+        .btn:active {
+            transform: translateY(0);
+        }
 
-   Psychology hooks applied:
-   - Curiosity gap: "还在运行" implies something unknown is happening to YOU
-   - Identity threat: "你可能是有毒的那个人" creates cognitive dissonance
-   - Low commitment entry: "12题 · 3分钟" reduces friction
-   - Zeigarnik: once started, incompleteness drives completion
-*/
-.intro { padding: var(--s8) 0 var(--s5); }
+        /* QUIZ PAGE */
+        #quizPage {
+            justify-content: center;
+            align-items: center;
+        }
 
-.intro-hook {
-  font-family: var(--serif);
-  font-size: clamp(1.7rem, 5vw, 2.4rem);
-  font-weight: 300;
-  line-height: 1.45;
-  color: var(--ink-100);
-  margin-bottom: var(--s3);
-  letter-spacing: -0.01em;
-}
-.intro-hook .hl {
-  color: var(--signal);
-  text-decoration: underline;
-  text-decoration-color: var(--signal-wash);
-  text-underline-offset: 5px;
-  text-decoration-thickness: 2px;
-}
+        .quiz-container {
+            max-width: 700px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
 
-/* The one-liner that reframes everything */
-.intro-reframe {
-  font-family: var(--serif);
-  font-size: 15px;
-  color: var(--ink-60);
-  line-height: 2;
-  margin-bottom: var(--s5);
-  max-width: 480px;
-}
-.intro-reframe strong {
-  color: var(--ink-100);
-  font-weight: 500;
-}
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
 
-/* Micro-commitment CTA */
-.cta-area { margin-bottom: var(--s6); }
-.cta-btn {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--sans);
-  font-size: 15px; font-weight: 500;
-  padding: 14px 32px;
-  background: var(--ink-100);
-  color: var(--bg);
-  border: none; border-radius: var(--r-md);
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  letter-spacing: 0.01em;
-}
-.cta-btn:hover { background: var(--ink-80); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-.cta-btn:active { transform: translateY(0); }
-.cta-btn .arrow { transition: transform 0.25s; font-size: 16px; }
-.cta-btn:hover .arrow { transform: translateX(4px); }
+        .progress-bar {
+            flex: 1;
+            height: 2px;
+            background-color: #D9D3CC;
+            border-radius: 1px;
+            overflow: hidden;
+        }
 
-.cta-meta {
-  margin-top: var(--s2);
-  font-size: 12px;
-  color: var(--ink-40);
-  letter-spacing: 0.03em;
-}
+        .progress-fill {
+            height: 100%;
+            background-color: #B8845A;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
 
-/* Trust strip — subtle social proof */
-.trust-strip {
-  padding: var(--s3) 0;
-  border-top: 1px solid var(--ink-05);
-}
-.trust-text {
-  font-size: 12px;
-  color: var(--ink-40);
-  line-height: 1.8;
-}
+        .progress-text {
+            font-size: 0.8rem;
+            color: #A8A09A;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+            font-weight: 500;
+        }
 
-/* ============================================
-   QUIZ ENGINE
-   ============================================
+        .stage-indicator {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #B8845A;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+            opacity: 0.8;
+        }
 
-   Hooks:
-   - Progress bar = Zeigarnik effect (must complete)
-   - Section labels shift = variable context (keeps brain awake)
-   - Option selection has micro-delay = anticipation loop
-   - Question transitions have momentum = flow state
-   - Last 2 questions flagged "深层" = escalation of commitment
-*/
-.quiz-area { padding: var(--s4) 0 var(--s3); }
+        .question-number {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            color: #B8845A;
+            opacity: 0.3;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
 
-/* Progress — minimal but tension-building */
-.prog-row {
-  display: flex; justify-content: space-between; align-items: baseline;
-  margin-bottom: var(--s1);
-}
-.prog-count {
-  font-size: 13px; font-weight: 500;
-  color: var(--ink-80);
-  font-variant-numeric: tabular-nums;
-}
-.prog-section {
-  font-size: 11px; color: var(--ink-40);
-  letter-spacing: 0.08em;
-  transition: all 0.3s;
-}
-.prog-track {
-  height: 2px; background: var(--ink-05);
-  border-radius: 2px; overflow: hidden;
-  margin-bottom: var(--s6);
-}
-.prog-fill {
-  height: 100%; background: var(--signal);
-  border-radius: 2px;
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
+        .question-text {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            color: #2C2825;
+            font-weight: 500;
+        }
 
-/* Question */
-.q-area {
-  animation: fadeInScale 0.35s ease both;
-}
-.q-num {
-  font-size: 11px; color: var(--ink-20);
-  letter-spacing: 0.12em;
-  margin-bottom: var(--s2);
-  font-weight: 500;
-}
-.q-text {
-  font-family: var(--serif);
-  font-size: clamp(1rem, 2.6vw, 1.15rem);
-  font-weight: 400;
-  line-height: 1.85;
-  color: var(--ink-100);
-  margin-bottom: var(--s4);
-}
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
 
-/* Options — satisfying click targets */
-.opts { display: flex; flex-direction: column; gap: var(--s1); }
-.opt {
-  display: flex; align-items: flex-start; gap: 14px;
-  padding: 15px 18px;
-  background: var(--surface);
-  border: 1.5px solid transparent;
-  border-radius: var(--r-md);
-  cursor: pointer;
-  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-  text-align: left; width: 100%;
-  font-family: var(--sans);
-  position: relative;
-  overflow: hidden;
-}
-/* Subtle hover warmth */
-.opt::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: var(--signal-glow);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.opt:hover::before { opacity: 1; }
-.opt:hover { border-color: var(--ink-10); }
+        .option {
+            padding: 1.2rem 1.5rem;
+            border: 1px solid #D9D3CC;
+            background-color: transparent;
+            color: #2C2825;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            text-align: left;
+            line-height: 1.5;
+        }
 
-/* Selected = confident, warm, done */
-.opt.selected {
-  border-color: var(--signal);
-  background: var(--signal-wash);
-}
-.opt.selected::before { opacity: 0; }
-.opt.selected .opt-key { color: var(--signal); }
+        .option:hover {
+            border-color: #B8845A;
+            background-color: rgba(184, 132, 90, 0.05);
+        }
 
-.opt-key {
-  font-size: 11px; font-weight: 500;
-  color: var(--ink-20);
-  min-width: 16px;
-  padding-top: 3px;
-  transition: color 0.15s;
-}
-.opt-label {
-  font-size: 14px;
-  color: var(--ink-80);
-  line-height: 1.6;
-  transition: color 0.15s;
-}
-.opt:hover .opt-label { color: var(--ink-100); }
-.opt.selected .opt-label { color: var(--ink-100); font-weight: 400; }
+        .option.selected {
+            border-color: #B8845A;
+            background-color: #B8845A;
+            color: #F6F1EB;
+        }
 
-.q-foot {
-  margin-top: var(--s4);
-  padding-top: var(--s2);
-  border-top: 1px solid var(--ink-05);
-  font-size: 11px; color: var(--ink-20);
-  letter-spacing: 0.02em;
-}
+        .option-label {
+            display: inline-block;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            font-family: 'Noto Serif SC', serif;
+        }
 
-/* ============================================
-   ANALYZING — the anticipation gap
-   ============================================
+        /* Stage transition overlay */
+        .stage-transition {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #F6F1EB;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
 
-   Hook: Delayed gratification.
-   A 2.5s "analyzing" screen before result.
-   Creates anticipation, makes result feel earned.
-   Like a slot machine's spin.
-*/
-.analyzing { padding: var(--s8) 0; text-align: center; }
-.analyzing-text {
-  font-family: var(--serif);
-  font-size: 15px;
-  color: var(--ink-40);
-  animation: pulse 1.5s ease infinite;
-  margin-bottom: var(--s3);
-}
-.analyzing-bar {
-  width: 120px; height: 2px;
-  background: var(--ink-05);
-  margin: 0 auto;
-  border-radius: 2px;
-  overflow: hidden;
-}
-.analyzing-fill {
-  height: 100%; width: 0%;
-  background: var(--signal);
-  border-radius: 2px;
-  animation: analyzeGrow 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-@keyframes analyzeGrow {
-  0% { width: 0%; }
-  30% { width: 45%; }
-  60% { width: 70%; }
-  85% { width: 88%; }
-  100% { width: 100%; }
-}
+        .stage-transition.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-/* ============================================
-   RESULT — the social currency
-   ============================================
+        .stage-transition-text {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.1rem;
+            color: #2C2825;
+            letter-spacing: 0.05em;
+        }
 
-   Hooks:
-   - Barnum effect: results feel specific to YOU
-   - Identity label: type code becomes self-identifier
-   - Share card designed for screenshot (aspect ratio, contrast, breathing room)
-   - Warmth section = emotional reward after roast
-   - "Rare type" framing for COEX = social status
-*/
-.result-area { padding: var(--s5) 0 var(--s3); }
+        .stage-transition-sub {
+            font-size: 0.8rem;
+            color: #A8A09A;
+            margin-top: 0.8rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
 
-/* === THE CARD === screenshot-optimized */
-.card {
-  background: var(--surface);
-  border-radius: var(--r-xl);
-  padding: 36px 28px 28px;
-  margin-bottom: var(--s3);
-  position: relative;
-  overflow: hidden;
-  /* Subtle shadow for depth on screenshot */
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 30px rgba(0,0,0,0.04);
-}
+        /* Question fade animation */
+        #questionContent {
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+        #questionContent.fade-out {
+            opacity: 0;
+            transform: translateY(10px);
+        }
 
-/* Top accent line — identity stripe */
-.card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--signal-wash) 0%, var(--signal) 50%, var(--signal-wash) 100%);
-}
+        /* RESULT PAGE */
+        #resultPage {
+            justify-content: flex-start;
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
 
-.card-eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: var(--signal);
-  margin-bottom: var(--s3);
-  font-weight: 500;
-}
+        .result-container {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
 
-.card-code {
-  font-size: 12px;
-  color: var(--ink-20);
-  letter-spacing: 0.1em;
-  font-weight: 500;
-}
+        .result-header {
+            text-align: center;
+            padding: 2rem 0 1rem;
+        }
 
-/* Type name — the thing people screenshot */
-.card-name {
-  font-family: var(--serif);
-  font-size: clamp(2.2rem, 7vw, 3rem);
-  font-weight: 300;
-  color: var(--ink-100);
-  line-height: 1.15;
-  margin: 4px 0 2px;
-  letter-spacing: -0.02em;
-}
-.card-zh {
-  font-family: var(--serif);
-  font-size: 1.05rem;
-  color: var(--signal);
-  font-weight: 400;
-  margin-bottom: var(--s4);
-}
+        .result-code {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            color: #A8A09A;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
 
-.card-line {
-  width: 32px; height: 2px;
-  background: var(--ink-10);
-  margin-bottom: var(--s3);
-}
+        .result-name {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #2C2825;
+            margin-bottom: 0.5rem;
+        }
 
-/* Roast — the meat */
-.card-roast {
-  font-family: var(--serif);
-  font-size: 14.5px;
-  color: var(--ink-60);
-  line-height: 2.05;
-  margin-bottom: var(--s3);
-}
+        .result-type {
+            font-size: 0.9rem;
+            color: #B8845A;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
 
-/* Warmth — the reward */
-.card-warm {
-  background: var(--surface-warm);
-  border-radius: var(--r-md);
-  padding: 18px 20px;
-  margin-bottom: var(--s3);
-  border-left: 2.5px solid var(--signal-soft);
-}
-.card-warm-tag {
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  color: var(--signal);
-  margin-bottom: var(--s1);
-  font-weight: 500;
-}
-.card-warm-text {
-  font-family: var(--serif);
-  font-size: 14px;
-  color: var(--ink-60);
-  line-height: 2;
-  font-style: italic;
-}
+        .result-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
 
-/* Card footer — brand watermark for screenshots */
-.card-foot {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding-top: var(--s2);
-  border-top: 1px solid var(--ink-05);
-}
-.card-foot-type {
-  font-family: var(--serif);
-  font-size: 1.2rem;
-  color: var(--signal-soft);
-  font-style: italic;
-  font-weight: 300;
-}
-.card-foot-brand {
-  text-align: right;
-  font-size: 10px;
-  color: var(--ink-20);
-  line-height: 1.7;
-  letter-spacing: 0.04em;
-}
+        .result-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
 
-/* Psychology expandable */
-.psych {
-  background: var(--bg-warm);
-  border-radius: var(--r-lg);
-  margin-bottom: var(--s3);
-  overflow: hidden;
-}
-.psych-toggle {
-  width: 100%;
-  padding: 18px 22px;
-  display: flex; justify-content: space-between; align-items: center;
-  background: none; border: none;
-  cursor: pointer;
-  font-family: var(--sans);
-  font-size: 13px; font-weight: 500;
-  color: var(--ink-60);
-  letter-spacing: 0.03em;
-  transition: color 0.15s;
-}
-.psych-toggle:hover { color: var(--ink-100); }
-.psych-toggle .chevron {
-  transition: transform 0.3s;
-  color: var(--ink-40);
-  font-size: 14px;
-}
-.psych-toggle.open .chevron { transform: rotate(180deg); }
-.psych-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.psych-body.open { max-height: 600px; }
-.psych-content {
-  padding: 0 22px 22px;
-  font-size: 13px;
-  color: var(--ink-60);
-  line-height: 1.95;
-}
-.psych-content em { color: var(--ink-100); font-style: normal; font-weight: 500; }
+        .result-paragraph {
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
 
-/* Action buttons */
-.actions {
-  display: flex; gap: var(--s1); flex-wrap: wrap;
-  margin-bottom: var(--s2);
-}
-.btn-save {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--sans);
-  font-size: 13px; font-weight: 500;
-  padding: 12px 24px;
-  background: var(--ink-100);
-  color: var(--bg);
-  border: none; border-radius: var(--r-md);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.btn-save:hover { background: var(--ink-80); }
-.btn-redo {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--sans);
-  font-size: 13px;
-  padding: 12px 24px;
-  background: transparent;
-  border: 1.5px solid var(--ink-10);
-  color: var(--ink-60);
-  border-radius: var(--r-md);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.btn-redo:hover { border-color: var(--signal-soft); color: var(--ink-100); }
+        .result-paragraph-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.9rem;
+            color: #B8845A;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
 
-.share-hint {
-  font-size: 12px;
-  color: var(--ink-20);
-  margin-bottom: var(--s5);
-}
+        .result-quote {
+            font-family: 'Noto Serif SC', serif;
+            font-style: italic;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #2C2825;
+            padding: 1.5rem;
+            border-left: 2px solid #B8845A;
+            background-color: rgba(184, 132, 90, 0.05);
+        }
 
-/* Version links */
-.versions {
-  display: flex; gap: var(--s1); flex-wrap: wrap;
-  padding-top: var(--s3);
-  border-top: 1px solid var(--ink-05);
-  margin-bottom: var(--s2);
-}
-.ver {
-  font-size: 11px; color: var(--ink-40);
-  padding: 5px 14px;
-  border: 1px solid var(--ink-05);
-  border-radius: 20px;
-  text-decoration: none;
-  transition: all 0.15s;
-  cursor: default;
-  opacity: 0.6;
-}
+        .result-quote-author {
+            font-size: 0.85rem;
+            color: #A8A09A;
+            margin-top: 0.8rem;
+            font-style: normal;
+            text-align: right;
+        }
 
-/* FOOTER */
-footer {
-  padding: var(--s2) 0 var(--s3);
-  border-top: 1px solid var(--ink-05);
-  margin-top: var(--s4);
-}
-.foot-row {
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 11px; color: var(--ink-20);
-}
-.foot-row a { color: var(--ink-40); text-decoration: none; }
-.foot-row a:hover { color: var(--signal); }
+        .result-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5rem;
+        }
 
-/* Toast */
-.toast {
-  position: fixed; bottom: 28px; left: 50%;
-  transform: translateX(-50%) translateY(16px);
-  background: var(--ink-100); color: var(--bg);
-  padding: 11px 24px; border-radius: var(--r-md);
-  font-size: 13px; opacity: 0;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 100; pointer-events: none;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .result-tagline {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1rem;
+            color: #B8845A;
+            margin-bottom: 1rem;
+            letter-spacing: 0.02em;
+        }
 
-/* Mobile */
-@media (max-width: 480px) {
-  .wrap { padding: 0 20px; }
-  .card { padding: 28px 22px 22px; }
-  .card-foot { flex-direction: column; align-items: flex-start; gap: 6px; }
-  .card-foot-brand { text-align: left; }
-}
-</style>
+        .author-section {
+            padding: 2rem 0;
+        }
+
+        .author-divider {
+            width: 40px;
+            height: 1px;
+            background: #D9D3CC;
+            margin: 0 auto 2rem;
+        }
+
+        .author-label {
+            font-size: 0.75rem;
+            color: #A8A09A;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .author-text {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.95rem;
+            line-height: 2;
+            color: #2C2825;
+            max-width: 560px;
+            margin: 0 auto 2rem;
+            text-align: left;
+            opacity: 0.85;
+        }
+
+        .author-sign {
+            text-align: right;
+            max-width: 560px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .author-name {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2C2825;
+        }
+
+        .author-project {
+            font-size: 0.8rem;
+            color: #A8A09A;
+        }
+
+        .author-link {
+            font-size: 0.8rem;
+            color: #B8845A;
+            text-decoration: none;
+        }
+
+        .author-link:hover {
+            text-decoration: underline;
+        }
+
+        .radar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .stats-section {
+            border-top: 1px solid #D9D3CC;
+            padding-top: 2rem;
+            text-align: center;
+        }
+
+        .stats-text {
+            font-size: 0.9rem;
+            color: #A8A09A;
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-distribution {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .stat-type {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #2C2825;
+        }
+
+        .stat-percent {
+            font-size: 0.75rem;
+            color: #A8A09A;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid #2C2825;
+            color: #2C2825;
+        }
+
+        .btn-secondary:hover {
+            background-color: #2C2825;
+            color: #F6F1EB;
+        }
+
+        .btn-tertiary {
+            background-color: #F6F1EB;
+            border: 1px solid #2C2825;
+            color: #2C2825;
+        }
+
+        .btn-tertiary:hover {
+            background-color: #2C2825;
+            color: #F6F1EB;
+        }
+
+        /* CARD PREVIEW */
+        .card-preview {
+            width: 100%;
+            max-width: 400px;
+            margin: 2rem auto;
+            background: white;
+            border: 1px solid #D9D3CC;
+            border-radius: 4px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        #cardCanvas {
+            width: 100%;
+            border-radius: 4px;
+            background: white;
+            display: block;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .page {
+                padding: 1.5rem;
+            }
+
+            .intro-title {
+                font-size: 2rem;
+            }
+
+            .result-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .question-text {
+                font-size: 1.2rem;
+            }
+
+            .intro-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .stats-distribution {
+                gap: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .result-name {
+                font-size: 1.8rem;
+            }
+
+            .result-emoji {
+                font-size: 2rem;
+            }
+
+            .author-text {
+                font-size: 0.9rem;
+                line-height: 1.9;
+                padding: 0 0.5rem;
+            }
+
+            .author-sign {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 0.3rem;
+                padding-right: 0.5rem;
+            }
+
+            .card-preview canvas {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .decorative-vertical {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.9rem;
+            color: #B8845A;
+            opacity: 0.4;
+            letter-spacing: 0.2em;
+            margin: 2rem 0;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
+    <!-- INTRO PAGE -->
+    <div id="introPage" class="page active">
+        <div class="intro-content">
+            <div>
+                <div class="intro-title">共处指数</div>
+                <div class="intro-subtitle">Coexist Index</div>
+            </div>
 
-<header>
-  <div class="wrap">
-    <div class="header-row">
-      <div class="header-logo">共处指数</div>
-      <a class="header-link" href="../">dmlogic.ca</a>
-    </div>
-  </div>
-</header>
+            <div class="intro-philosophy">
+                你花了很多时间研究别人。<br>现在轮到你了。<br><br>12道题。不难。<br>但答完之后，你可能会安静很久。
+            </div>
 
-<div class="wrap">
+            <div class="intro-meta">
+                <div class="intro-meta-item">
+                    <span class="intro-meta-dot"></span>
+                    自适应测试
+                </div>
+                <div class="intro-meta-item">
+                    <span class="intro-meta-dot"></span>
+                    64题库 · 随机12题
+                </div>
+                <div class="intro-meta-item">
+                    <span class="intro-meta-dot"></span>
+                    不收集任何信息
+                </div>
+            </div>
 
-  <!-- ====== INTRO ====== -->
-  <div class="screen active" id="s-intro">
-    <section class="intro">
-      <h1 class="intro-hook fade-in">
-        你的生存模式<br><span class="hl">还在运行</span>
-      </h1>
-
-      <div class="intro-reframe fade-in-d1">
-        网上所有关于NPD的内容都在教你识别、对抗、诊断。<br>
-        但你有没有想过——<strong>分析太多有毒关系的时候，你反而成为了有毒的那个人。</strong><br><br>
-        这个测试不分析对方。<br>
-        它只做一件事：看看<strong>你</strong>。
-      </div>
-
-      <div class="cta-area fade-in-d2">
-        <button class="cta-btn" onclick="startQuiz()">
-          开始 <span class="arrow">→</span>
-        </button>
-        <div class="cta-meta">12题 · 3分钟 · 不收集任何信息</div>
-      </div>
-    </section>
-
-    <div class="trust-strip fade-in-d3">
-      <div class="trust-text">
-        心理学参考 · Pete Walker 4F创伤反应 · Marsha Linehan DBT · Stephen Porges 多迷走神经理论<br>
-        本测试不构成临床诊断。
-      </div>
-    </div>
-  </div>
-
-  <!-- ====== QUIZ ====== -->
-  <div class="screen" id="s-quiz">
-    <section class="quiz-area">
-      <div class="prog-row">
-        <span class="prog-count" id="prog-count">1 / 12</span>
-        <span class="prog-section" id="prog-section"></span>
-      </div>
-      <div class="prog-track">
-        <div class="prog-fill" id="prog-fill" style="width:0%"></div>
-      </div>
-      <div id="q-area"></div>
-      <div class="q-foot" id="q-foot">做完它。世界已经够乱了。</div>
-    </section>
-  </div>
-
-  <!-- ====== ANALYZING ====== -->
-  <div class="screen" id="s-analyzing">
-    <section class="analyzing">
-      <div class="analyzing-text">正在分析你的模式…</div>
-      <div class="analyzing-bar">
-        <div class="analyzing-fill" id="analyze-fill"></div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ====== RESULT ====== -->
-  <div class="screen" id="s-result">
-    <section class="result-area">
-
-      <div class="card fade-in" id="share-card">
-        <div class="card-eyebrow">你的共处指数结果</div>
-        <div class="card-code" id="r-code"></div>
-        <div class="card-name" id="r-name"></div>
-        <div class="card-zh" id="r-zh"></div>
-        <div class="card-line"></div>
-        <div class="card-roast" id="r-roast"></div>
-        <div class="card-warm">
-          <div class="card-warm-tag">但是</div>
-          <div class="card-warm-text" id="r-warm"></div>
+            <div>
+                <button class="btn" onclick="startQuiz()">开始测试</button>
+            </div>
         </div>
-        <div class="card-foot">
-          <div class="card-foot-type" id="r-foot-type"></div>
-          <div class="card-foot-brand">共处指数<br>dmlogic.ca</div>
-        </div>
-      </div>
-
-      <div class="psych fade-in-d1">
-        <button class="psych-toggle" onclick="togglePsych(this)">
-          心理学背景 <span class="chevron">▾</span>
-        </button>
-        <div class="psych-body" id="psych-body">
-          <div class="psych-content" id="r-psych"></div>
-        </div>
-      </div>
-
-      <div class="actions fade-in-d2">
-        <button class="btn-save" onclick="saveCard()">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
-          保存结果图
-        </button>
-        <button class="btn-redo" onclick="restartQuiz()">
-          再测一次
-        </button>
-      </div>
-      <div class="share-hint fade-in-d2">截图分享给朋友 · 或保存结果图发朋友圈</div>
-
-      <div class="versions fade-in-d3">
-        <span class="ver">方言版 · 即将</span>
-        <span class="ver">English · Coming</span>
-        <span class="ver">AI版 · Coming</span>
-      </div>
-
-    </section>
-  </div>
-
-</div>
-
-<footer>
-  <div class="wrap">
-    <div class="foot-row">
-      <span>© 2026 大毛</span>
-      <a href="../">dmlogic.ca</a>
     </div>
-  </div>
-</footer>
 
-<div class="toast" id="toast"></div>
-
-<script>
-/* ============================================
-   QUESTIONS — 纯中文, designed for flow state
-   ============================================
-   Structure: start with body (low cognitive load)
-   → cognitive patterns → relational → emotional
-   → current state → deep cuts (escalation)
-
-   The last 2 carry double weight (commitment + sunk cost)
-*/
-const Q = [
-  {
-    s: "神经系统",
-    t: "当你感觉到房间里的气氛在变——某人的情绪开始转——你身体的第一反应是？",
-    o: [
-      { t: "快速扫描，调整自己去配合", k: "MIRR" },
-      { t: "变得非常安静，呼吸变慢，让自己不显眼", k: "GHST" },
-      { t: "一种锕化，进入警觉", k: "FGHT" },
-      { t: "脑子开始转，分析刚才到底发生了什么", k: "DECT" },
-      { t: "一种抽离——人在，但精神退了一步", k: "PHIL" }
-    ]
-  },
-  {
-    s: "神经系统",
-    t: "一次困难的互动之后，你的身体保持紧绷状态多久？",
-    o: [
-      { t: "几分钟。结束了就过了", k: "COEX" },
-      { t: "好几个小时，脑子里不停回放", k: "DECT" },
-      { t: "不知道。紧张的时候我不太注意身体", k: "GHST" },
-      { t: "一整天，甚至更久", k: "MIRR" },
-      { t: "直到我把这件事写出来或跟人聊透", k: "PHIL" }
-    ]
-  },
-  {
-    s: "认知模式",
-    t: "一段关系出了问题，你的第一反应是什么？",
-    o: [
-      { t: "研究——找原因，理解机制", k: "DECT" },
-      { t: "沉默——光等等看", k: "GHST" },
-      { t: "说出来——即使会有摩擦", k: "FGHT" },
-      { t: "先想对方的角度——也许是我漏了什么", k: "MIRR" },
-      { t: "往大处看——找更大的意义", k: "PHIL" }
-    ]
-  },
-  {
-    s: "认知模式",
-    t: "过去三个月，你看了多少关于NPD、有毒关系的内容？",
-    o: [
-      { t: "没了。不研究这个了", k: "COEX" },
-      { t: "几篇，随便看看", k: "GHST" },
-      { t: "够写一篇维基百科了", k: "DECT" },
-      { t: "过了研究阶段，现在关注自己", k: "PHIL" },
-      { t: "需要论据的时候才去翻", k: "FGHT" }
-    ]
-  },
-  {
-    s: "关系行为",
-    t: "你有没有发现自己在帮别人解释他们的坏行为——即使你心里知道说不通？",
-    o: [
-      { t: "有，几乎是自动的，总能给他们找到理由", k: "MIRR" },
-      { t: "偶尔，为了不尴尬", k: "GHST" },
-      { t: "不，我只是默默记录，存档", k: "DECT" },
-      { t: "不，直接诵出来", k: "FGHT" },
-      { t: "以前会。意识到是在保护他们之后就停了", k: "COEX" }
-    ]
-  },
-  {
-    s: "关系行为",
-    t: "一个你在乎的人对你生气了——你还不知道自己做了什么——你的第一步是？",
-    o: [
-      { t: "先道歉。之后再弄清楚", k: "MIRR" },
-      { t: "等。不了解全局之前不动", k: "GHST" },
-      { t: "直接问：怎么了？", k: "FGHT" },
-      { t: "回放过去48小时，分析原因", k: "DECT" },
-      { t: "给空间，相信关系，让它过去", k: "COEX" }
-    ]
-  },
-  {
-    s: "情绪",
-    t: "你和「愤怒」的关系是怎样的？",
-    o: [
-      { t: "不熟。感到愤怒之前，已经先愧疚了", k: "MIRR" },
-      { t: "它存在，但我控制它。不让它出来", k: "GHST" },
-      { t: "是燃料。愤怒的时候最清醒", k: "FGHT" },
-      { t: "研究过它。理解它的来源", k: "DECT" },
-      { t: "来的时候承认它，它会过去了", k: "COEX" }
-    ]
-  },
-  {
-    s: "情绪",
-    t: "上一次被人近的人伤害——你怎么处理的？",
-    o: [
-      { t: "咽下去了。不想让事情更复杂", k: "MIRR" },
-      { t: "什么也没说。退了一步，重建距离", k: "GHST" },
-      { t: "面对了，也许不完美，但说出来了", k: "FGHT" },
-      { t: "深度处理——在脑子里　写日记、跟人聊", k: "DECT" },
-      { t: "感受了，记录了，让它告知我但不控制我", k: "COEX" }
-    ]
-  },
-  {
-    s: "当下",
-    t: "你目前和那个困难的人或处境——关系是什么样的？",
-    o: [
-      { t: "还在努力让它运转，让自己被理解", k: "MIRR" },
-      { t: "创造了距离。安全范围内共存", k: "GHST" },
-      { t: "还在其中。需要的时候我会战斗", k: "FGHT" },
-      { t: "比以前更了解了。这就是进步", k: "DECT" },
-      { t: "大致接受了它的样子。我还有自己的生活", k: "COEX" }
-    ]
-  },
-  {
-    s: "当下",
-    t: "「设立边界」对你来说是什么样子的？",
-    o: [
-      { t: "愧疚的来源。设了，马上担必对方反应", k: "MIRR" },
-      { t: "悄悄做。减少露面，不解释", k: "GHST" },
-      { t: "清楚地说出来，准备好执行", k: "FGHT" },
-      { t: "理论上会。实践是另一回事", k: "DECT" },
-      { t: "没以前戏剧性了。就是一条线", k: "COEX" }
-    ]
-  },
-  {
-    s: "深层",
-    t: "你想念他们——还是想念以前的那个版本？",
-    o: [
-      { t: "想念他们。就是本人。现在也是", k: "MIRR" },
-      { t: "想念那段关系平静的时光", k: "GHST" },
-      { t: "想念还没学会反击时的自己", k: "FGHT" },
-      { t: "想念我以为他们是的那个人", k: "DECT" },
-      { t: "已经不再问自己这个问题了", k: "COEX" }
-    ]
-  },
-  {
-    s: "深层",
-    t: "最后一题。你真正想要的是什么——不是你认为你应该想要的。",
-    o: [
-      { t: "让他们终于看见我", k: "MIRR" },
-      { t: "让一切安静一段时间", k: "GHST" },
-      { t: "赢一次。清晰地。不附带条件", k: "FGHT" },
-      { t: "终于完全理解我在面对什么", k: "DECT" },
-      { t: "不再需要从这一切中得到某个结果", k: "COEX" }
-    ]
-  }
-];
-
-/* ====== RESULTS ====== */
-const R = {
-  MIRR: {
-    code: "TYPE 01 · MIRR",
-    name: "The Mirror",
-    zh: "镜子",
-    roast: "你太擅长反映别人需要的东西了，以至于忘了自己长什么样。你称之为共情——有时候确实是。但更多时候，是一个学会了「变成他们需要的样子就安全了」的神经系统在自动运行。\n\n你在不知道自己做错了什么之前就先道歉。你帮别人解释他们的行为，偶尔自己也信了。你维持和平维持了太久，久到忘了——和平从来不是你的责任。",
-    warm: "镜子会碎。人不用。\n你还在。",
-    psych: "你描述的是创伤治疗师Pete Walker定义的<em>讨好反应（Fawn Response）</em>。神经系统学会了：取悦和安抚可以降低危险。Stephen Porges的多迷走神经理论将此解释为自主神经系统通过社交安全信号来调节自身。代价是逐渐失去对自己内在信号的感知。恢复不是变得不共情，而是重建区分自己感受和别人感受的能力。"
-  },
-  GHST: {
-    code: "TYPE 02 · GHST",
-    name: "The Ghost",
-    zh: "隐身者",
-    roast: "你没有战斗，没有逃跑。你有意识地让自己变得非常无聊——做得相当出色。\n\n灰岩法是一种合理的生存技术。无法离开也无法赢的时候，你让自己变得无趣：平淡的回应，没有情绪反应，把冲突可以抓住的表面积压到最低。\n\n问题是你已经不记得上次不在对某人用这个技术是什么时候了。保护你的东西，变成了默认设置。",
-    warm: "选择消失，仍然是一种选择。\n这意味着你还有主动权——比你感觉到的多。",
-    psych: "退缩和情绪关闭是多迷走神经理论所说的<em>背侧迷走状态</em>——神经系统最古老的生存回路。当战和逃都不可能，系统走向冻结。灰岩策略是对这种古老反应的有意识运用。长期使用可能导致<em>情绪钝化</em>——即使想感受也很难唤起。回归的路不是强迫自己敎开，是从注意微小的安全感开始。"
-  },
-  FGHT: {
-    code: "TYPE 03 · FGHT",
-    name: "The Fighter",
-    zh: "战士",
-    roast: "你反击了。每一次。你学会了他们的动作、模式、压力点，变得非常擅长。\n\n你有没有注意到你现在争论的方式变了？更快进入反击，有时对打中要害有满足感？在根本没威胁的关系里，你仍然在扫描威胁？\n\n你没有变成他们。但在一个需要战斗的系统里待了太久，战斗变成了自然反应——即使在不需要的时候。",
-    warm: "在需要战斗的地方学会战斗，不是缺陷。那是必要的。\n现在的问题是：哪些关系真正需要它。",
-    psych: "长期激活的战斗反应会将神经系统重塑为<em>过度警觉</em>。Pete Walker指出，固定的战斗反应可能产生与触发者相似的防御行为模式。这不是道德问题——是神经生物学。DBT的<em>相反行动</em>方法：刻意练习与条件反射相反的回应，在旧的神经通路旁建立新的。"
-  },
-  DECT: {
-    code: "TYPE 04 · DECT",
-    name: "The Detective",
-    zh: "侦探",
-    roast: "你读了所有东西。三句话就能诊断。依附风格。童年创伤、神经机制、模式、循环——你全懂。\n\n你也精疲力竭了。当这个话题出现在饭局上的时候，你有点让人受不了。\n\n分析的问题是：它感觉像进步。有时候确实是。但有一种「研究」，实际上是精巧的回避策略——理解一切，就能控制结果。理解可以代替那个一直没时间去感受的感受。",
-    warm: "理解是真正的技能。分析不是敌人。\n问题是它一直在服务于洞察——还是在帮你和感受保持距离。",
-    psych: "理智化是创伤文献中的<em>认知应对机制</em>——用分析管理情绪淹没感。Bessel van der Kolk指出，关于创伤的知识和疗愈是根本不同的过程。身体记录了分数，不是研究文件。DBT的<em>智慧心</em>：目标不是纯理性也不是纯情感，而是两者的整合。"
-  },
-  PHIL: {
-    code: "TYPE 05 · PHIL",
-    name: "The Philosopher",
-    zh: "顾悟者",
-    roast: "你原谅了他们。找到了平静。从经历中提取了意义。写日记——可能写得还不错。\n\n你也抓住每个机会提起这件事。不是没走出来——你确实走出来了。而是这个故事已经成为你身份的一部分，失去它就意味着失去围绕它建立的当下的自己。\n\n在痛苦中找到意义，和需要伤口保持可见来证明洞察力——这两者之间是有区别的。",
-    warm: "在痛苦中找到意义的能力是真正罕见的。大多数人做不到。\n那份成长是真实的——只是不需要每天被验证。",
-    psych: "你所描述的与<em>创伤后成长</em>重叠——困难经历事后的真实心理发展。但它可能滑入Lindsay Gibson所说的<em>叙事身份纠缠</em>：故事变得如此核心，完全解决反而像一种损失。DBT的<em>激进接纳</em>：完全接受某件事意味着它不再需要被处理——它只是现实的一部分。真正的解决，是安静的。"
-  },
-  COEX: {
-    code: "TYPE 06 · COEX",
-    name: "The Coexister",
-    zh: "共处者",
-    roast: "你不再试图修复他们了。也不再试图完全逃脱。你学会了天气的规律，然后相应地穿衣服。\n\n这听起来很禅。你自己知道有多少次差点崩溃。\n\n你不是开悟了——你是有策略的。共处不是和平，是一种你不得不发展出来的技能，因为其他选择的代价比你愿意付出的更多。这个区别很重要。",
-    warm: "共处不是认输。\n是你比他们更了解这个游戏，然后选择不玩。\n这不是什么都没有——这就是一切。",
-    psych: "你到达的状态与DBT的<em>激进接纳</em>高度吻合——不是同意也不是冷漠，而是对现实原貌的完全承认。Marsha Linehan的研究表明，即使处境不变，这种状态也与显著减少的痛苦相关。多迷走神经理论会描述你能够持续访问<em>腹侧迷走回路</em>——即使威胁存在。这不是性格特质，是来之不易的调节能力。"
-  }
-};
-
-/* ====== STATE ====== */
-let scores = {MIRR:0, DECT:0, GHST:0, FGHT:0, PHIL:0, COEX:0};
-let cur = 0;
-
-/* ====== FLOW ====== */
-function startQuiz() {
-  scores = {MIRR:0, DECT:0, GHST:0, FGHT:0, PHIL:0, COEX:0};
-  cur = 0;
-  show('s-quiz');
-  render();
-}
-
-function show(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
-function render() {
-  const q = Q[cur];
-  const pct = (cur / Q.length) * 100;
-  document.getElementById('prog-count').textContent = (cur + 1) + ' / ' + Q.length;
-  document.getElementById('prog-section').textContent = q.s;
-  document.getElementById('prog-fill').style.width = pct + '%';
-
-  // Section-specific footer text for escalation feel
-  const footTexts = {
-    '神经系统': '从身体开始。',
-    '认知模式': '你的脑子怎么运转的。',
-    '关系行为': '你在关系里做了什么。',
-    '情绪': '你和情绪的关系。',
-    '当下': '你现在在哪里。',
-    '深层': '最后两题。诚实一点。'
-  };
-  document.getElementById('q-foot').textContent = footTexts[q.s] || '';
-
-  const keys = ['A','B','C','D','E'];
-  document.getElementById('q-area').innerHTML = `
-    <div class="q-area">
-      <div class="q-num">Q${String(cur+1).padStart(2,'0')}</div>
-      <div class="q-text">${q.t}</div>
-      <div class="opts">
-        ${q.o.map((o,i) => `
-          <button class="opt" onclick="pick(this,'${o.k}')">
-            <span class="opt-key">${keys[i]}</span>
-            <span class="opt-label">${o.t}</span>
-          </button>
-        `).join('')}
-      </div>
+    <!-- STAGE TRANSITION OVERLAY -->
+    <div class="stage-transition" id="stageTransition">
+        <div class="stage-transition-text" id="stageTransitionText"></div>
+        <div class="stage-transition-sub" id="stageTransitionSub"></div>
     </div>
-  `;
-}
 
-function pick(el, k) {
-  // Visual feedback
-  document.querySelectorAll('.opt').forEach(o => {
-    o.classList.remove('selected');
-    o.style.pointerEvents = 'none'; // prevent double-tap
-  });
-  el.classList.add('selected');
+    <!-- QUIZ PAGE -->
+    <div id="quizPage" class="page">
+        <div class="quiz-container">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">1/12</div>
+            </div>
 
-  // Score with escalation: last 2 questions = double weight
-  setTimeout(() => {
-    scores[k]++;
-    if (cur >= 10) scores[k]++; // deep questions double weight
+            <div class="stage-indicator" id="stageIndicator"></div>
 
-    cur++;
-    if (cur >= Q.length) {
-      // Anticipation gap: show analyzing screen
-      show('s-analyzing');
-      // Reset the animation
-      const fill = document.getElementById('analyze-fill');
-      fill.style.animation = 'none';
-      fill.offsetHeight; // trigger reflow
-      fill.style.animation = 'analyzeGrow 2.5s cubic-bezier(0.4,0,0.2,1) forwards';
+            <div id="questionContent">
+                <div class="question-number" id="qNumber">01</div>
+                <div class="question-text" id="qText"></div>
+                <div class="options-container" id="optionsContainer"></div>
+            </div>
+        </div>
+    </div>
 
-      setTimeout(() => showResult(), 2800);
-    } else {
-      render();
-    }
-  }, 280);
-}
+    <!-- RESULT PAGE -->
+    <div id="resultPage" class="page">
+        <div class="result-container">
+            <div class="result-header">
+                <div class="result-code" id="resultCode">#000</div>
+                <div class="result-emoji" id="resultEmoji"></div>
+                <div class="result-name" id="resultName">测试名称</div>
+                <div class="result-tagline" id="resultTagline"></div>
+                <div class="result-type" id="resultType">类型</div>
+            </div>
 
-function showResult() {
-  document.getElementById('prog-fill').style.width = '100%';
-  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
-  const w = sorted[0][0];
-  const r = R[w];
+            <div class="result-content">
+                <div class="result-text">
+                    <div>
+                        <div class="result-paragraph-title">诊断报告</div>
+                        <div class="result-paragraph" id="roastText"></div>
+                    </div>
+                    <div>
+                        <div class="result-paragraph-title">但诰句人话</div>
+                        <div class="result-paragraph" id="warmthText"></div>
+                    </div>
+                </div>
 
-  document.getElementById('r-code').textContent = r.code;
-  document.getElementById('r-name').textContent = r.name;
-  document.getElementById('r-zh').textContent = r.zh;
-  document.getElementById('r-roast').innerHTML = r.roast.replace(/\n/g,'<br>');
-  document.getElementById('r-warm').innerHTML = r.warm.replace(/\n/g,'<br>');
-  document.getElementById('r-psych').innerHTML = r.psych;
-  document.getElementById('r-foot-type').textContent = r.name + ' · ' + r.zh;
+                <div class="radar-container">
+                    <canvas id="radarCanvas" width="350" height="350"></canvas>
+                </div>
+            </div>
 
-  // Reset psych toggle
-  const toggle = document.querySelector('.psych-toggle');
-  toggle.classList.remove('open');
-  document.getElementById('psych-body').classList.remove('open');
+            <div class="card-preview">
+                <canvas id="cardCanvas"></canvas>
+            </div>
 
-  show('s-result');
-}
+            <div class="stats-section">
+                <div class="stats-text" id="statsText">已有 X 人完成测试</div>
+                <div class="stats-distribution" id="statsDistribution"></div>
+            </div>
 
-function restartQuiz() { startQuiz(); }
+            <div class="author-section">
+                <div class="author-divider"></div>
+                <div class="author-label">写在最后</div>
+                <div class="author-text" id="authorText"></div>
+                <div class="author-sign">
+                    <span class="author-name">大毛</span>
+                    <span class="author-project">共处 · Coexist</span>
+                    <a href="https://dmlogic.ca" class="author-link" target="_blank">dmlogic.ca</a>
+                </div>
+            </div>
 
-function togglePsych(btn) {
-  btn.classList.toggle('open');
-  document.getElementById('psych-body').classList.toggle('open');
-}
+            <div class="action-buttons">
+                <button class="btn" onclick="downloadCard()">保存卡片</button>
+                <button class="btn btn-secondary" onclick="retakeQuiz()">重新测试</button>
+                <button class="btn btn-tertiary" onclick="goHome()">返回首页</button>
+            </div>
+        </div>
+    </div>
 
-/* ====== SAVE IMAGE ====== */
-function saveCard() {
-  const card = document.getElementById('share-card');
-  if (typeof html2canvas !== 'undefined') {
-    html2canvas(card, {
-      backgroundColor: '#FFFFFF',
-      scale: 2,
-      useCORS: true,
-      borderRadius: 20,
-      windowWidth: 620
-    }).then(canvas => {
-      const link = document.createElement('a');
-      link.download = '共处指数-' + document.getElementById('r-name').textContent + '.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-      toast('已保存');
-    }).catch(() => toast('长按截图即可分享'));
-  } else {
-    toast('长按截图即可分享');
-  }
-}
+    <script>
+        // ============================================================
+        // 共处指数 · 自适应引导测试 v4
+        // 64题库 · 4阶段自适应 · 心理学引导式选题
+        // ============================================================
 
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
-}
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" async></script>
-</body>
-</html>
+        // ============ UTILITY ============
+        function shuffle(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function getTopTypes(scores, n) {
+            return Object.entries(scores)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, n)
+                .map(e => e[0]);
+        }
+
+        // ============================================================
+        // STAGE 1: 表面行为扫描 (Surface Scan)
+        // 日常微场景，宽筛初始信号
+        // ============================================================
+        const STAGE1_POOL = [
+        {
+            text: "你在电梯里一般看哪？",
+            options: [
+                { label: "A", text: "看对方，礼貌微笑", scores: { MIRR: 3 } },
+                { label: "B", text: "看手机，假装在忙", scores: { GHST: 2, DECT: 1 } },
+                { label: "C", text: "盯着楼层数字", scores: { DECT: 3 } },
+                { label: "D", text: "直视前方，谁也别跟我说话", scores: { FGHT: 3 } },
+                { label: "E", text: "闭眼，享受这十秒钟的独处", scores: { PHIL: 2, COEX: 1 } }
+            ]
+        },
+        {
+            text: "深夜两点还在刷手机，你在看什么？",
+            options: [
+                { label: "A", text: "别人的朋友圈/Instagram", scores: { MIRR: 3, DECT: 1 } },
+                { label: "B", text: "某个话题的深度分析长文", scores: { DECT: 3 } },
+                { label: "C", text: "什么也没在看，拇指在自动滑", scores: { GHST: 3 } },
+                { label: "D", text: "评论区吵架，越吵越精神", scores: { FGHT: 2, DECT: 1 } },
+                { label: "E", text: "宇宙/哲学/某个奇怪的纪录片", scores: { PHIL: 3 } }
+            ]
+        },
+        {
+            text: "你发了一条朋友圈，20分钟了只有3个赞。你在想什么？",
+            options: [
+                { label: "A", text: "是不是我写的不够好，得改改", scores: { MIRR: 3, DECT: 1 } },
+                { label: "B", text: "已经在考虑删掉了", scores: { GHST: 3 } },
+                { label: "C", text: "无所谓，发的时候爽了就行", scores: { FGHT: 2, COEX: 1 } },
+                { label: "D", text: "开始分析是不是被限流了", scores: { DECT: 3 } },
+                { label: "E", text: "3个赞够了，这3个人才是真的", scores: { PHIL: 2, COEX: 2 } }
+            ]
+        },
+        {
+            text: "有人在你工位旁边吃螺蛳粉。你的内心活动是？",
+            options: [
+                { label: "A", text: "忍着，毕竟人家也要吃饭", scores: { MIRR: 3 } },
+                { label: "B", text: "默默戴上耳机，打开空气净化器链接", scores: { GHST: 2, DECT: 1 } },
+                { label: "C", text: "站起来去别的地方坐，什么也不说", scores: { GHST: 3 } },
+                { label: "D", text: "「能不能去茶水间吃」", scores: { FGHT: 3 } },
+                { label: "E", text: "闻着闻着，好像也还行", scores: { COEX: 2, PHIL: 1 } }
+            ]
+        },
+        {
+            text: "你买了一杯咖啡，发现做错了，你会？",
+            options: [
+                { label: "A", text: "算了，喝吧，别给人添麻烦", scores: { MIRR: 3, GHST: 1 } },
+                { label: "B", text: "默默走开，下次换一家", scores: { GHST: 3 } },
+                { label: "C", text: "拿回去要求重做", scores: { FGHT: 3 } },
+                { label: "D", text: "跟店员确认一下是不是搞错了", scores: { DECT: 2, FGHT: 1 } },
+                { label: "E", text: "喝一口，也许错的更好喝呢", scores: { COEX: 2, PHIL: 2 } }
+            ]
+        },
+        {
+            text: "开会的时候你其实在干嘛？",
+            options: [
+                { label: "A", text: "观察谁在说废话，心里打分", scores: { DECT: 3 } },
+                { label: "B", text: "认真听，同时在想怎么让所有人满意", scores: { MIRR: 3, DECT: 1 } },
+                { label: "C", text: "灵魂已经出窍了", scores: { GHST: 3 } },
+                { label: "D", text: "等一个机会反驳某个人", scores: { FGHT: 3 } },
+                { label: "E", text: "在想一个完全不相关的哲学问题", scores: { PHIL: 3 } }
+            ]
+        },
+        {
+            text: "路上有个传单小哥向你走来，你的身体已经在做什么了？",
+            options: [
+                { label: "A", text: "接过来，说声谢谢，走两步扔掉", scores: { MIRR: 3 } },
+                { label: "B", text: "提前变道，假装看手机绕过去", scores: { GHST: 3 } },
+                { label: "C", text: "摆手：不用了", scores: { FGHT: 2, COEX: 1 } },
+                { label: "D", text: "扫一眼传单内容，评估一下", scores: { DECT: 3 } },
+                { label: "E", text: "接过来看看，万一有意思呢", scores: { PHIL: 2, COEX: 1 } }
+            ]
+        },
+        {
+            text: "你在排队，后面有人贴得很近。你的第一反应是？",
+            options: [
+                { label: "A", text: "往前挪一步，假装在看手机", scores: { MIRR: 2, GHST: 1 } },
+                { label: "B", text: "不动，但全身每个毛孔都在抗议", scores: { GHST: 3 } },
+                { label: "C", text: "转过头看他一眼，让他知道我知道", scores: { FGHT: 3 } },
+                { label: "D", text: "开始分析：他是故意的还是没意识到", scores: { DECT: 3 } },
+                { label: "E", text: "算了，地铁早高峰观过更离谱的", scores: { COEX: 3 } }
+            ]
+        },
+        {
+            text: "聚会上有人开始讲一个你已经听过三遍的故事。你会？",
+            options: [
+                { label: "A", text: "配合表演，在该笑的地方笑", scores: { MIRR: 3 } },
+                { label: "B", text: "假装去亊厕所", scores: { GHST: 3 } },
+                { label: "C", text: "「这个你上次讲过了」", scores: { FGHT: 3 } },
+                { label: "D", text: "观察其他人的反应，看谁也听过", scores: { DECT: 3 } },
+                { label: "E", text: "听第三遍发现了新的细节，挺好", scores: { PHIL: 2, COEX: 1 } }
+            ]
+        },
+        {
+            text: "外卖员送错餐了。打开一看，是别人的寿司拼盘。你的反应？",
+            options: [
+                { label: "A", text: "联系骑手帮他解决，生怕他被投诉", scores: { MIRR: 3 } },
+                { label: "B", text: "默默关上门，先看看这寿司长什么样", scores: { GHST: 2, PHIL: 1 } },
+                { label: "C", text: "打电话投诉，要求重新配送", scores: { FGHT: 3 } },
+                { label: "D", text: "截图留证，app申请退款，然后对比两家店的评分", scores: { DECT: 3 } },
+                { label: "E", text: "命运选择让我今天吃寿司，那就吃吧", scores: { COEX: 3, PHIL: 1 } }
+            ]
+        },
+        {
+            text: "同事升职了，你的真实感受是？",
+            options: [
+                { label: "A", text: "真心恭喜，同时林林觉得自己不够好", scores: { MIRR: 3 } },
+                { label: "B", text: "无感。打开外卖App准备点杯奶茶", scores: { GHST: 3 } },
+                { label: "C", text: "不爽，但嘴上不说", scores: { FGHT: 2, GHST: 1 } },
+                { label: "D", text: "分析他做对了什么、老板看重什么", scores: { DECT: 3 } },
+                { label: "E", text: "每个人有自己的时区，急不来的", scores: { COEX: 2, PHIL: 2 } }
+            ]
+        },
+        {
+            text: "超市里只剩最后丰盒打折酸奶，你和另一个人同时伸手了。你？",
+            options: [
+                { label: "A", text: "「你拿吧」——说完心里骂自己三分钟", scores: { MIRR: 3 } },
+                { label: "B", text: "手缩回来，装作在看旁边的牛奶", scores: { GHST: 3 } },
+                { label: "C", text: "先到先得，拿了就走", scores: { FGHT: 3 } },
+                { label: "D", text: "看一眼保质期，如果还有两天就让给他", scores: { DECT: 3 } },
+                { label: "E", text: "笑一下说「你先」，然后去买了正价的，也不心疼", scores: { COEX: 3 } }
+            ]
+        },
+        {
+            text: "如果给你的人生选一个BGM，大概是什么风格？",
+            options: [
+                { label: "A", text: "轻柔的钢琴曲，偶尔有点小提琴", scores: { MIRR: 3 } },
+                { label: "B", text: "ambient——没有旋律，只有白噪音", scores: { GHST: 3 } },
+                { label: "C", text: "摇滚。电吉他那种", scores: { FGHT: 3 } },
+                { label: "D", text: "悬疑片配乐", scores: { DECT: 3 } },
+                { label: "E", text: "没有BGM。安静就是最好的背景", scores: { COEX: 2, PHIL: 2 } }
+            ]
+        },
+        {
+            text: "你的手机屏幕碎了。你修还是不修？",
+            options: [
+                { label: "A", text: "先问朋友要不要一起去修，顺便聚聚", scores: { MIRR: 3 } },
+                { label: "B", text: "碎了就碎了，贴个膜继续用", scores: { GHST: 2, COEX: 1 } },
+                { label: "C", text: "去投诉质量问题", scores: { FGHT: 3 } },
+                { label: "D", text: "上网比较各家维修店的价格和评分", scores: { DECT: 3 } },
+                { label: "E", text: "碎出来的纹路还挺好看的", scores: { PHIL: 3 } }
+            ]
+        },
+        ];
+
+        // ============================================================
+        // STAGE 2: 深层触发 (Deep Trigger)
+        // 根据Stage 1前2信号，选最能区分的题
+        // ============================================================
+        const STAGE2_POOL = [
+        { discriminates: ["MIRR", "GHST"], text: "有人对你说「你最近好像不太开心」。你的反应是？", options: [
+            { label: "A", text: "「没有啊，我很好！」——立刻调整表情", scores: { MIRR: 4 } },
+            { label: "B", text: "「嗯…」然后找借口结束对话", scores: { GHST: 4 } },
+            { label: "C", text: "「你怎么看出来的」", scores: { DECT: 2, MIRR: 1 } },
+            { label: "D", text: "「是，怎么了」", scores: { FGHT: 2, COEX: 1 } },
+            { label: "E", text: "被看穿的感觉，有一点安慰", scores: { COEX: 2, PHIL: 1 } }
+        ]},
+        { discriminates: ["MIRR", "GHST"], text: "你在一段关系里感到不被重视，你最可能做的是？", options: [
+            { label: "A", text: "加倍付出，用行动证明自己的价值", scores: { MIRR: 4 } },
+            { label: "B", text: "慢慢减少联系，直到彼此忘了对方", scores: { GHST: 4 } },
+            { label: "C", text: "把这件事说出来", scores: { FGHT: 3 } },
+            { label: "D", text: "分析到底是从什么时候开始不对的", scores: { DECT: 3 } },
+            { label: "E", text: "也许不是不重视，是两个人的频率不一样", scores: { PHIL: 2, COEX: 1 } }
+        ]},
+        { discriminates: ["MIRR", "GHST"], text: "朋友聚餐选餐厅，你的意见和其他人不一样。你会？", options: [
+            { label: "A", text: "算了，听大家的，我什么都行", scores: { MIRR: 4 } },
+            { label: "B", text: "说「你们定吧」然后退出讨论", scores: { GHST: 4 } },
+            { label: "C", text: "坚持推荐我选的那家", scores: { FGHT: 3 } },
+            { label: "D", text: "拉出两家的点评对比", scores: { DECT: 3 } },
+            { label: "E", text: "去哪吃不重要，人在一起就行", scores: { COEX: 3 } }
+        ]},
+        { discriminates: ["MIRR", "FGHT"], text: "有人当众指出你的错误。你身体的第一反应是？", options: [
+            { label: "A", text: "脸红，想找地缝钻进去", scores: { MIRR: 4 } },
+            { label: "B", text: "下巴收紧，准备反击", scores: { FGHT: 4 } },
+            { label: "C", text: "表面平静，内心在整理他诵得对不对", scores: { DECT: 3 } },
+            { label: "D", text: "僵住了。等这个场景过去", scores: { GHST: 3 } },
+            { label: "E", text: "确实错了就认，不至于", scores: { COEX: 3 } }
+        ]},
+        { discriminates: ["MIRR", "FGHT"], text: "你跟伴侣/好友大吵了一架，第二天你会？", options: [
+            { label: "A", text: "先道歉。不管谁对谁错，我受不了冷战", scores: { MIRR: 4 } },
+            { label: "B", text: "等对方先来找我。我没错凭什么先低头", scores: { FGHT: 4 } },
+            { label: "C", text: "复盘昨晚的对话，找出问题的根源", scores: { DECT: 3 } },
+            { label: "D", text: "假装什么都没发生", scores: { GHST: 3 } },
+            { label: "E", text: "给彼此一些空间，过两天再说", scores: { COEX: 3 } }
+        ]},
+        { discriminates: ["MIRR", "DECT"], text: "你总是在关系里付出更多。你觋得原因是？", options: [
+            { label: "A", text: "因为我宯怕不付出就不被爱", scores: { MIRR: 4 } },
+            { label: "B", text: "因为我观察到了对方的需求，不自觉就去满足了", scores: { DECT: 3, MIRR: 1 } },
+            { label: "C", text: "没想过为什么，就是习惯了", scores: { GHST: 2, MIRR: 1 } },
+            { label: "D", text: "我不觉得我付出更多", scores: { FGHT: 3 } },
+            { label: "E", text: "以前是，现在学会了调节", scores: { COEX: 3 } }
+        ]},
+        { discriminates: ["GHST", "DECT"], text: "你连续三天没回某人的消息。真实原因是？", options: [
+            { label: "A", text: "不知道怎么回。每个回复在脑子里编辑了十遍", scores: { DECT: 3, GHST: 1 } },
+            { label: "B", text: "不想面对。打开对话框就焦虑", scores: { GHST: 4 } },
+            { label: "C", text: "单纯忘了。然后越拖越不好意思回", scores: { GHST: 3 } },
+            { label: "D", text: "在等他先着急", scores: { FGHT: 3, DECT: 1 } },
+            { label: "E", text: "我给自己放了个假，他会理解的", scores: { COEX: 3 } }
+        ]},
+        { discriminates: ["GHST", "DECT"], text: "你发现自己总是旁观者。对此你的感受是？", options: [
+            { label: "A", text: "没办法，我不会主动靠近人", scores: { GHST: 4 } },
+            { label: "B", text: "我选择旁观是因为看得更清楚", scores: { DECT: 4 } },
+            { label: "C", text: "有时候会羡慡那些能融入的人", scores: { MIRR: 3 } },
+            { label: "D", text: "挺好的，旁观者最安全", scores: { GHST: 2, PHIL: 1 } },
+            { label: "E", text: "在不在场都可以。取决于我想不想", scores: { COEX: 3 } }
+        ]},
+        { discriminates: ["GHST", "FGHT"], text: "你被一个人深深伤害了。三个月后你的状态是？", options: [
+            { label: "A", text: "消失了。换了头像，不再出现在共同社交圈", scores: { GHST: 4 } },
+            { label: "B", text: "偶尔还是会愤怒，尤其是半夜", scores: { FGHT: 4 } },
+            { label: "C", text: "表面正常，但心里有一块地方结了痂", scores: { MIRR: 2, GHST: 1 } },
+            { label: "D", text: "已经写了一篇完整的「事件分析报告」", scores: { DECT: 3 } },
+            { label: "E", text: "那个人教会了我一些东西，仅此而已", scores: { COEX: 2, PHIL: 2 } }
+        ]},
+        { discriminates: ["FGHT", "DECT"], text: "有人在你面前撒谎，你能看出来。你会？", options: [
+            { label: "A", text: "当场拉穿", scores: { FGHT: 4 } },
+            { label: "B", text: "不说，但记下来，等更多证据", scores: { DECT: 4 } },
+            { label: "C", text: "假装不知道，避免冲突", scores: { MIRR: 2, GHST: 1 } },
+            { label: "D", text: "事后找他私下确认", scores: { DECT: 2, FGHT: 1 } },
+            { label: "E", text: "每个人都有自己撒谎的理由", scores: { PHIL: 2, COEX: 1 } }
+        ]},
+        { discriminates: ["FGHT", "PHIL"], text: "你觉得「愤怒」这种情绪：", options: [
+            { label: "A", text: "是力量。愤怒让我保护自己", scores: { FGHT: 4 } },
+            { label: "B", text: "是信号。它在告诉我某个边界被越过了", scores: { PHIL: 3, DECT: 1 } },
+            { label: "C", text: "是我最不想被别人看到的样子", scores: { MIRR: 3 } },
+            { label: "D", text: "越来越少了。不是不会生气，是不值得", scores: { COEX: 3 } },
+            { label: "E", text: "消耗太大。我宁愿躲开", scores: { GHST: 3 } }
+        ]},
+        { discriminates: ["DECT", "PHIL"], text: "你花了很长时间分析一段关系的问题。最后你得出的结论是？", options: [
+            { label: "A", text: "找到了根本原因。现在我知道怎么应对了", scores: { DECT: 4 } },
+            { label: "B", text: "分析到最后发现，有些事没有答案", scores: { PHIL: 4 } },
+            { label: "C", text: "分析完更难过了。知道了又怎样呢", scores: { DECT: 2, MIRR: 1 } },
+            { label: "D", text: "分析到一半就不想想了，累了", scores: { GHST: 3 } },
+            { label: "E", text: "不管原因是什么，日子还是要过", scores: { COEX: 3 } }
+        ]},
+        { discriminates: ["PHIL", "COEX"], text: "你觉得「想通了」和「接受了」之间的区别是？", options: [
+            { label: "A", text: "想通了是脑子的事，接受了是身体的事", scores: { PHIL: 3, COEX: 2 } },
+            { label: "B", text: "想通了是理解原因，接受了是不再需要原因", scores: { COEX: 4 } },
+            { label: "C", text: "想通了是第一步，接受了是最后一步", scores: { PHIL: 4 } },
+            { label: "D", text: "没区别，都是告诉自己「算了」的说法", scores: { FGHT: 2, GHST: 1 } },
+            { label: "E", text: "接受了之后还能笑出来，那才是真的", scores: { COEX: 3, MIRR: 1 } }
+        ]},
+        { discriminates: ["MIRR", "COEX"], text: "你总是帮别人忙。这件事让你感到？", options: [
+            { label: "A", text: "被需要的安全感", scores: { MIRR: 4 } },
+            { label: "B", text: "有时候开心，有时候觉得被利用", scores: { MIRR: 2, DECT: 1 } },
+            { label: "C", text: "想帮就帮，不想帮就不帮，没什么大不了的", scores: { COEX: 4 } },
+            { label: "D", text: "其实我也不知道为什么停不下来", scores: { MIRR: 3, GHST: 1 } },
+            { label: "E", text: "以前停不下来，现在学会了", scores: { COEX: 3, PHIL: 1 } }
+        ]},
+        { discriminates: ["GHST", "COEX"], text: "你一个人待了一整天，没跟任何人说话。这对你来说是？", options: [
+            { label: "A", text: "正常状态。人少一点世9太更安的", scores: { GHST: 4 } },
+            { label: "B", text: "充电完成。但明天可以见人了", scores: { COEX: 4 } },
+            { label: "C", text: "有点心虚，是不是应该联系一下谁", scores: { MIRR: 3 } },
+            { label: "D", text: "复盘了一天的事，有ڂ�获 ", scores: { DECT: 3 } },
+            { label: "E", text: "有点空蘚，但又不想打破这个状态", scores: { GHST: 2, PHIL: 1 } }
+        ]},
+        { discriminates: ["FGHT", "COEX"], text: "有人反复越过你的底线。你最终会？", options: [
+            { label: "A", text: "正面交锋。莙是我的底线，不可以", scores: { FGHT: 4 } },
+            { label: "B", text: "划清界限，不再跟这个人纠缰", scores: { COEX: 4 } },
+            { label: "C", text: "一次又一次地忍让", scores: { MIRR: 3 } },
+            { label: "D", text: "搜集证据，在关键时刻一次性说清", scores: { DECT: 3, FGHT: 1 } },
+            { label: "E", text: "慢慢消失", scores: { GHST: 3 } }
+        ]},
+        ];
+
+        // ============================================================
+        // STAGE 3: 核心冲突 (Core Conflict)
+        // 按主类型分组，精准打击深层模式
+        // ============================================================
+        const STAGE3_POOL = {
+        MIRR: [
+            { text: "你有没有发现，你道歉的速度比思考「我到底有没有错」的速度快？", options: [
+                { label: "A", text: "是的。道歉是我的条件反射", scores: { MIRR: 4 } },
+                { label: "B", text: "有时候。但我已经在练习先想再说", scores: { MIRR: 2, COEX: 2 } },
+                { label: "C", text: "我道歉不是因为我错了，是因为我怕你赢", scores: { MIRR: 3, GHST: 1 } },
+            �X�[���^���$y.㹧iy.#y����`d��bH���ܙ\Έ�����HK��X�[��H�^��.�ybcy�+��#9�9g*9/&�ab9`g9."y�䈋��ܙ\Έ���V��HB�_K��^��i����9k�y��ya��.��/h9."yi*{�#9/h:!$ykd:a�9g*9."��%9.�9.b9bi���{�'ȋ�[ۜΈ�X�[��H�^���$y�+�.#y�+�`f�e&y.��.�9.b;�'�. :`cy. :`cyf�oላ��ܙ\Έ�RT���
+HK��X�[����^��.幦+�.#y�+�m����.#zg :)�y�$y.�����ܙ\Έ�RT�������HHK��X�[��ȋ^���$z)�y.#z)�y..�b�9c�y��9�k�/�i#y. 9."ȋ��ܙ\Έ�RT����HK��X�[���^��ioyd)��#9.幧"z!�m�y�:"��icȋ��ܙ\Έ���V��HK��X�[��H�^��."yi*y.#y�!��${�'��$y.g��"z!�l"�����ܙ\Έ�����HB�_K��^��/h9n+�.��b*�.��. 9.*�o�{�#9k�y��y��z+�:,(�,(�� �/h9o��a�9g*9���.�9.b;�'ȋ�[ۜΈ�X�[��H�^���"y�yi,z$/{�#9/a�+�9�#z!�m�y.#z)�yg*9�#ȋ��ܙ\Έ�RT���
+HK��X�[����^��+�9."�.��� �, ��m9.��k�z/�y.*�.���9�'�o�y`/���ܙ\Έ�P���RT���HHK��X�[��ȋ^����yal�����#9n+�o�y�+��$z!깡/�����ܙ\Έ���V��HK��X�[���^��.�yd#�.#yn+�.�����ܙ\Έ�������V�HHK��X�[��H�^��e���'��$yg*9�by. 9h�:,(�,(�d%��'�c���iy�$yg*9�#��9�+�/�y.*����ܙ\Έ�S��HB�_K��^��/h9g*9. 9��yal����a�9�y�-��#�+�b,;�&�/h9. 9��9g*:acyd"9k�y��y�9��y��� �/�y.*�c�y�:+�y/h;�'ȋ�[ۜΈ�X�[��H�^��f��/��� �/a�c�� �y.g��.y.#y.��.�����ܙ\Έ�RT���
+HK��X�[����^��g!���� ��-�d#�o 9i��f�ho��`9�"yal���ȋ��ܙ\Έ�P���RT���HHK��X�[��ȋ^���)9�$�� �..�.�9.b9�$z)�y�.��$9b*�.���: �9�k��oȋ��ܙ\Έ�����HK��X�[���^��e���#9�"�b,9.��� �/�y�+��+9. 9�iH���ܙ\Έ���V��S�HHK��X�[��H�^����9b��� ���z`d�.��.g�.#y��z`d��#�.b9�.H���ܙ\Έ�����HB�_K�K�����^��/h9m����."ydj9��y..�b�: e9���.��/ey.��.��� �/h9��9�#�b,9.��d%��'ȋ�[ۜΈ�X�[��H�^����9�#�b,9.���#9/a�.#y����.yc����ܙ\Έ����
+HK��X�[����^����9�#�b,9.���#9�"y�yo��&f����ܙ\Έ�����RT����HK��X�[��ȋ^����y��9�#�b,8� �ioy`��l,y�+�!��-� #9�-�����ܙ\Έ�����HK��X�[���^��."ydj;�'��$y.�y..��cy. 9dj���ܙ\Έ�����S�HHK��X�[��H�^��e��� �/a�.�i*y��� e9���. 9.*�.��+�z+�H���ܙ\Έ���V��HB�_K��^��/h9��9i,y�9���`&{�#9am�k��g*9`f�.�9.b;�'ȋ�[ۜΈ�X�[��H�^��.�9.b9.g�.#y`f�� �l,y�+�kf9g*9�`���ܙ\Έ����
+HK��X�[����^��g*9k�yaj9�:)�$/y`m�`m�)�k�ȋ��ܙ\Έ�����P���HK��X�[��ȋ^��g*9�h�i#x� �`���b��.�aay�-y. 9�-ȋ��ܙ\Έ�������V�HHK��X�[���^��g*9���)�y.#z)�yf�c��� �/a�����(y���k�:/�9�+�.#yb����ܙ\Έ�����RT���HHK��X�[��H�^��g*9���.h9��9. 9i*z �y.#y��9i,H���ܙ\Έ���V��HB�_K��^��i����9�"y. 9.*��"zd��c��.�z+�y�`9�"y.��o�:+�9/h;�#9/h9/&��"yd%��'ȋ�[ۜΈ�X�[��H�^��/&�� ����`�y.#y��ȋ��ܙ\Έ����
+HK��X�[����^��/&��z,j�� �/a�c�� �z/�9�+�/&��"H���ܙ\Έ�����HK��X�[��ȋ^��.#y/&�� ��$z/�9���(����9.��.��+�9/cȋ��ܙ\Έ�RT����HK��X�[���^��.#y/&�� ���9i,y�+��$y�9..�b�:`"y��{�#9.#y�+�(��`e�o����ܙ\Έ���V��S�HHK��X�[��H�^���$y/&��"{�#9�-�d#�a�y��:`"y��z, y�iz+�:+Ṣ$H���ܙ\Έ�������V�HHB�_K��^���"y.��-�y/h:+�8�#9/h9� :/�y�#�.b9.#yaiy.���#x� �/h9d+9.��.�9.b9�'�)�{�'ȋ�[ۜΈ�X�[��H�^��(��c�y�9.��� ��"y�y�c���ܙ\Έ����
+HK��X�[����^���"y.����9�#�b,9.��� ��"y�y������ܙ\Έ�RT�������HHK��X�[��ȋ^��f�9..�aiy��y�#��'yeb����ܙ\Έ��������HHK��X�[���^���$y. 9."��m�(cz/��c�ȋ��ܙ\Έ�����HK��X�[��H�^��e���#9.g�+�9c��.�yaiy. 9�(H���ܙ\Έ���V��HB�_K�K�����^��/h9g*9. 9g.�.�yd-y.+z-h�.��� ��f�."�f�b,9k��/h:)�yo���'ȋ�[ۜΈ�X�[��H�^��)���%8� �/a�.g��"y. 9�y�n���H���ܙ\Έ����
+HK��X�[����^��o 9i��d#���;�#9�+�.#y�+�+�9o��i*�a�y.�����ܙ\Έ�����RT����HK��X�[��ȋ^��-h�.��l,y�+�-h�.���#9��y.�9.b9ioy�������ܙ\Έ�����HK��X�[���^��i#y��9�m9g.�k�z+�{�#9�"��"y��y�"z`.�/�y�#��'����ܙ\Έ�P������HHK��X�[��H�^��-h�.��.g���y�"z-h�� �.�yd-y�+:.��l,y�+�/�ȋ��ܙ\Έ�S����V�HHB�_K��^��/h9� 9�'��%9�9.#y�+�(��/)9k���#: #9�+��'ȋ�[ۜΈ�X�[��H�^��(��od�`��kd8� �����$yod�ioy�.�-'�����ܙ\Έ����
+HK��X�[����^��(��a�9��x� ��$y�#��#���y`f�e&H���ܙ\Έ�����P��HHK��X�[��ȋ^��!�m�y�#��#�c��.�yc�ya��cm9o�y/c�.�����ܙ\Έ�����RT���HHK��X�[���^���"�b,9.#yak9nl��9.��c�y�'ȋ��ܙ\Έ�����S�HHK��X�[��H�^��.�ybcyo�9k�y�$��'��%;�#9�9g*9.#yi*�.�����ܙ\Έ���V��HB�_K��^���"y.��+�9/h8�#9i*�a��.���#x�#9i*���9��y.���#x� �/h9�9c�yn�9�+��'ȋ�[ۜΈ�X�[��H�^��,(�,(�i.yie����ܙ\Έ����
+HK��X�[����^���"y. 9�yc��/)8� �/a�.#y/&�+�9aiH���ܙ\Έ�����RT����HK��X�[��ȋ^���$y.#ya���#9�$yc깦+�.#z(�H���ܙ\Έ�����HK��X�[���^��/&�c�y�'x� �.g�+�9��9.��g.�d"9c��.�y�*yd�9. 9�H���ܙ\Έ���V��P��HHK��X�[��H�^��.�.�:g :)�y. 9.*�d+:+�y�9.���#9/a�`��.#y�+��$H���ܙ\Έ�����S�HHB�_K��^��/h9�9�)9�$�`&�n.9� y��yi&�.a{�'ȋ�[ۜΈ�X�[��H�^���iyo��o��c��o��.g�o��� �`����:h�f����ܙ\Έ�����HK��X�[����^��c��.�y� y��yo�9.ax� ��$y.#z/n��$�c��,!H���ܙ\Έ����
+HK��X�[��ȋ^��(j:gh�m����/��c��.���#9/a�.��/d�/�:+�9�`���ܙ\Έ��������HHK��X�[���^���)9�$�.b�d#�/&�/k9c%��$9b!������ܙ\Έ�P���HK��X�[��H�^��-���iz-����y.��� �.#y`/9o�ȋ��ܙ\Έ���V��HB�_K�K�P���^��/h9�"y��y�"z/��/�y��y�'�)�{�&�/h9��9od�.��.����9.��)��.�!�m�y�:e�h�;�'ȋ�[ۜΈ�X�[��H�^�����n.8� ��-�d#�o�9�9���)�y.#z)�z+����ܙ\Έ�P��
+HK��X�[����^���"{�#9/a��$y.#z+�8� �+�9.��.g���y�*���ܙ\Έ�P������HHK��X�[��ȋ^���"{�#: #9.%9�$y/&�o�y.#y/c�b!���9��y.�d+���ܙ\Έ�P������HHK��X�[���^���"{�#9/a�d#��iy�$yc�y�9�$z!�m�y�:e�h�9�$y.g��"�.#y�!H���ܙ\Έ�S��P��HHK��X�[��H�^��.#yc��b!���9b*�.��.���#9i*��+�.�����ܙ\Έ���V��HB�_K��^��/h9�9i)�!$y� 9`��d�.*�+��i!��'ȋ�[ۜΈ�X�[��H�^���9l#����/�:/k9�9�#yb�yfj;�#9.�.#yal��.����ܙ\Έ�P��
+HK��X�[����^��oey`���.��#9aj:`�:+�9oey/a�.�.#y��y�/���yb*�.���"ȋ��ܙ\Έ�P������HHK��X�[��ȋ^���'9�(�o%y���#9�"yal�e+�+�yl,z!�b�9o 9i����9�(����ܙ\Έ�P���HK��X�[���^��� :/�yg*9ki�.h9�#�.b9�b�b�9al��.����ܙ\Έ���V��S�HHK��X�[��H�^��. 9c�9o�9����9�-�g���.��#9`m�l%9�-�b,9/�yc�ȋ��ܙ\Έ�����S�HHB�_K��^��/h8�#9�"�`#�.��. 9.*�.���#y.b�d#�`&�n.9/&��'ȋ�[ۜΈ�X�[��H�^�������z)�k��� ��"��$yb!���9o��k�y.#yk�H���ܙ\Έ�P��
+HK��X�[����^��i,y�&�� �c�9. 9.*�(���$y�"��o��9.�����ܙ\Έ�P������HHK��X�[��ȋ^����9��z`o�o 8� �.#y����j�-.y���e����ܙ\Έ��������HHK��X�[���^���"�`#�.��.g�.#yolyd�y��9i!8� �.���+9�iyl,yi#y�`����ܙ\Έ���V�
+HK��X�[��H�^���"�`#�.��b*�.��k�y�$��#9�"�`#�!�m�zf�����ܙ\Έ�S��HB�_K��^���"y.��-��/h:+�8�#9/h9���i*�i&�.���#x� �/h9d+9b,9�9am�k���+��'ȋ�[ۜΈ�X�[��H�^��/h9��9�$y�"�b,9.����9i&��#:/�z+�y�$y.#z"#y�#H���ܙ\Έ�P��
+HK��X�[����^��.g�+�9.�+�9o��k�x� �/a��$y`g9.#y."��iH���ܙ\Έ�P���RT���HHK��X�[��ȋ^��.#y�+��$y���i*�i&��#9�+�/h9���i*�l$H���ܙ\Έ�����P��HHK��X�[���^��e���#9.g�+�9c��.�z+�z+�y.#y��ȋ��ܙ\Έ���V��S�HHK��X�[��H�^��c�yc���%8� �.�.#y/&�������ܙ\Έ�����HB�_K�K�S��^��/h9�"y��y�"y. 9.*����b.��y�-�)�yo���&����"�.g��+�. 9��y�/9�jy�'ȋ�[ۜΈ�X�[��H�^���"x� �`��.*����b.��.yc�9.���$H���ܙ\Έ�S�
+HK��X�[����^���"{�#9/a��$y� 9�z`��c깦+��$yg*:!깢$yk�y�l���ܙ\Έ�S��P��HHK��X�[��ȋ^����y�"x� ����"�l,y�+����"鈋��ܙ\Έ�����HK��X�[���^��/�y��y�����y�+:.��l,y�+�. 9��z` �`oȋ��ܙ\Έ�P������HHK��X�[��H�^��.#y�+��/9�jy.g�.#y�+���y�f��#9l,y�+����c�����ܙ\Έ���V�
+HB�_K��^��/h:)�yo���#:!��,x�#y�+�.�9.b;�'ȋ�[ۜΈ�X�[��H�^��.#zg :)�yd$y.��/ey.��)��a�!�m�H���ܙ\Έ�S�
+HK��X�[����^�� �z+�9.#y�: �yb�ȋ��ܙ\Έ�������V�HHK��X�[��ȋ^��.#z(��.��g :)�y.g�.#zg :)�y.�����ܙ\Έ�����HK��X�[���^��(���,y�9d#9���/�: �y`f�!�m�H���ܙ\Έ�RT������V��HK��X�[��H�^���i9b.�l,y�+�!��,x� �i����9/h:)�yo���+��:+�H���ܙ\Έ���V��S�HHB�_K��^��/h:+��.��o�9i&�o���!�ki������8� �/h:)�yo��k��.�9�'��h��.yc�9.��/h9d%��'ȋ�[ۜΈ�X�[��H�^���+��;�#9k��.�9n+��$y�!�)��.��!�m�H���ܙ\Έ�S��P��HHK��X�[����^���!�)��.��/a���y�.yc�8� ���z`d�d�9`f�b,9.b�e�:f�9.��. 9.*�i*�nl��"ȋ��ܙ\Έ�S�
+HK��X�[��ȋ^��-���"�-��)�yo��!�m�y�"y��H���ܙ\Έ�RT����P��HHK��X�[���^����y�"�� ��.��`9l,z(c���ܙ\Έ�������V�HHK��X�[��H�^��� 9ioy�9o���!�ki�.#y�+�g*9�����:a�;�#9�+�g*9�'��.�a����ܙ\Έ���V��HB�_K��^��/h9k�x�#9�#�.bx�#z/�y.*�+�y�9� yn���+��'ȋ�[ۜΈ�X�[��H�^��. 9��9g*9�o�� �c�� �y�.:/�9.g��o�.#yb,���ܙ\Έ�S�
+HK��X�[����^���o�/���#9�o�b,9.���#9�-�d#�c�y�9�#�.by.g�/&�c����ܙ\Έ�S����V�HHK��X�[��ȋ^���.��`9�+:.��l,y�+��#�.b{�#9.#zg :)�zh�yi%�k��.bH���ܙ\Έ���V�
+HK��X�[���^���#�.by�+�b*�.����y�8� �(��g :)�yl,y�"y�#�.bH���ܙ\Έ�RT����HK��X�[��H�^��.#y���,"9�#�.bx� �i*���y.�����ܙ\Έ�����HB�_K�K���V��^��/h9�9g*9� 9���k�z/��c���:!�m�z+�9.�9.b;�'ȋ�[ۜΈ�X�[��H�^����y.�9.b9���+�9�8� �-l9b,:/�za�9�.�ioy����ܙ\Έ���V�
+HK��X�[����^��/h9.#zg :)�z`��.b9b��b��c��+�y�`9�"y.��o 9o�ȋ��ܙ\Έ�RT����HK��X�[��ȋ^����y�yki�/&�c�ya���#: �yl$yc��o�9i&��j����ܙ\Έ�����HK��X�[���^��/h9�"�b,9�:`��.��/�yc��`�y�+�k�y�;�#9��9/�z!�m�H���ܙ\Έ�P���HK��X�[��H�^����yal�����#9���. 9�iz`�y�+�o�z)�y����ܙ\Έ���V��S�HHB�_K��^��/h:)�yo��/h9�9g*9�9nl�gfy�+�d���{�'ȋ�[ۜΈ�X�[��H�^����:h�f�:/��d#��9nl�gfx� ��'�����ܙ\Έ���V�
+HK��X�[����^��.g�+�9c깦+���:h�f�9.+ze�9�9`g:hoȋ��ܙ\Έ���V��P��HHK��X�[��ȋ^���$y.#y�k�k��/�y��.#y��nl�gf{�#9c�� �yc깦+�嬹��ȋ��ܙ\Έ�����HK��X�[���^���$y��y�"ynl�gfx� ��$z/�9g*:h㹦�:a����ܙ\Έ�����HK��X�[��H�^��nl�gfy�+�. 9.*�b�9� y�9.':)o��#9���i*y.#y. 9�-ȋ��ܙ\Έ���V��S�HHB�_K��^��i����9���/h9�9.��fayal�����.��$9. 9nay�.��#9/h:)�yo��k���+��'ȋ�[ۜΈ�X�[��H�^��. 9.*��"z/�y�c9/a�o 9�`:e�9�:"�yf�H���ܙ\Έ���V�
+HK��X�[����^��. :gh��"yo�9i&����-��9h�H���ܙ\Έ�����P��HHK��X�[��ȋ^��. 9o(9�d{�#9�$yg*9.+ze�9�%���ȋ��ܙ\Έ�RT����HK��X�[���^��. 9.*�h(yg���#9�$yk�9�`9aiyc�ȋ��ܙ\Έ�����HK��X�[��H�^��. 9�hy����#9�"y.��.���iy.��c�:-l9.�����ܙ\Έ�S����V�HHB�_K��^��/h:)�yo��.�9.b9���`&y/h9� 9`��!�m�{�'ȋ�[ۜΈ�X�[��H�^��. 9.*�.��k�zgfyo�y�`9�9���`&H���ܙ\Έ�����HK��X�[����^��n+�b�yb*�.���9���`&H���ܙ\Έ�RT����HK��X�[��ȋ^��+�9�'�+�y�9���`&H���ܙ\Έ�����HK��X�[���^��b!���:e�h�9�9���`&H���ܙ\Έ�P���HK��X�[��H�^��.��/ey���`&x� �.#zg :)�y�nyk��g.��kȋ��ܙ\Έ���V�
+HB�_K�K�N���OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB����Q�H
+�9�m9d":)��i�
+[�Yܘ][ۊB���9� 9��9�(ya�..�bk��n�g����9d"
+�9��y���"�n�����OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB��ۜ��Q�M���H�^��/h:)�yo���#:-��. 9.*�f����9i!9�9.��alyi!8�#z/�y.��.���&���[ۜΈ�X�[��H�^��c�)�y�$ya�yb��b��. 9�yl,z(c���ܙ\Έ�RT����HK��X�[����^��g :)�yab9on�n�y.��)��.��9�(yo#ȋ��ܙ\Έ�P���HK��X�[��ȋ^�� �y.#z)�yl,y.#z)�H���ܙ\Έ�����HK��X�[���^���$ya�y.�9.b:)�yo�H���ܙ\Έ�����HK��X�[��H�^����yc��.�l,y�+�/�y�-��9.���#9�-�d#�, ��m:!�m�y�:-�y�ȋ��ܙ\Έ���V�
+HB�_K��^���"y.��+�8�#9�$y.�:g :)�z,":,"8�#{�#9/h:.��/d��9c�yn�9�+��'ȋ�[ۜΈ�X�[��H�^��o��-��b�:`'��#9o 9i��a�i!�`d��bH���ܙ\Έ�RT�������HHK��X�[����^��i)�!$yd+�b�;�#9o 9i��h�9b)9�`9�"yc�� �H���ܙ\Έ�P���HK��X�[��ȋ^�����`a�(�y��y�"�b,:/�y�hy��9�kȋ��ܙ\Έ�����HK��X�[���^��ioyeb��#9�iz,"���ܙ\Έ�����HK��X�[��H�^����ydo9d.;�#9�iyd)ȋ��ܙ\Έ���V��S�HHB�_K��^��/h:)�yo��.���'�� :f���9.#y�+�"��#: #9�+��'ȋ�[ۜΈ�X�[��H�^��.#z(���!�)�ȋ��ܙ\Έ�RT����HK��X�[����^����9i!9c��c�ȋ��ܙ\Έ�����HK��X�[��ȋ^��o�y.#y.��c�9�.yc�9.#y.�����ܙ\Έ�����HK��X�[���^���"�o��i*��!y�f����ܙ\Έ�P���HK��X�[��H�^����yc���#:/�yl,y�+�.���#H���ܙ\Έ���V��S��HB�_K��^��`a�i��/h9�"y. 9�(y�.�/&�k�z/��c���:!�m�z+�9. 9c�z+�{�#9/h9/&�+�9.�9.b;�'ȋ�[ۜΈ�X�[��H�^��/h9.#zg :)�z`��.b9b��b��c��+�9ioy���. 9.*�.�����ܙ\Έ�RT����HK��X�[����^��/h9c��.�y.#yf�`���hy��9�k�����ܙ\Έ�����HK��X�[��ȋ^����y�y���!.;�#: �y� yo�9i&�.�ȋ��ܙ\Έ�����HK��X�[���^��/h9�"�b,9�:`��.��/�yc���#:`�y�+�k�y����ܙ\Έ�P���HK��X�[��H�^����y.�9.b9���+�9�8� �-l9b,:/�za�9�.�ioy����ܙ\Έ���V��S�HHB�_K��^��i����9.���'��"ykf9�h��{�#9/h9� 9���f�b,9d�.*����b.��'ȋ�[ۜΈ�X�[��H�^��`���(y�$y�#��#�.#yo 9o��cm:+�9.���#9�$y��y.���#y�9���`&H���ܙ\Έ�RT����HK��X�[����^��`��i*y�$z`"y��y.#ydb� #9b*��9���`&H���ܙ\Έ�����HK��X�[��ȋ^��`���(y�$yo�y/c�.����y�"yc�ya���9���`&H���ܙ\Έ�����HK��X�[���^��`��.*��$yo�y�iy.���`9�"z+i�db�/�yc���9���b.ȋ��ܙ\Έ�P���HK��X�[��H�^��.#yf�.��� ����.*�`"y��z`�z`(9l,y.���9g*9�9�$H���ܙ\Έ���V��S�HHB�_K��^��/h9��:!�-l9g*9. 9�hyo�:eo�o�:eo��:-��."�� �/h:)�yo��/�y�hz-���9l/yi-9�+�.�9.b;�'ȋ�[ۜΈ�X�[��H�^��. 9.*�.��g*9�by�$H���ܙ\Έ�RT����HK��X�[����^��. 9.*�, y.g��o�.#yb,9�$y�9g,9��H���ܙ\Έ�����HK��X�[��ȋ^��. 9�bze�;�#9�$z)�z..yo 9k�ȋ��ܙ\Έ�����HK��X�[���^��. :gh�eg9kd;�#9�i�a��'�k���:!�m�H���ܙ\Έ�P���HK��X�[��H�^����y�"yl/yi-8� �-l9�+:.��l,y�+�������ܙ\Έ�S����V�HHB�_K��^��i����9/h9�+�. :`d�#�;�#9/h:)�yo��/h9�9g*9�+�.�9.b9⭹� {�'ȋ�[ۜΈ�X�[��H�^���j�e!yn�y��x�%8�%9�"�-m��iy��y��;�#9am�k��g*:(���k����ܙ\Έ�RT�������HHK��X�[����^���oy�-9�k�&���%8�%9i%�h��k�9�m;�#9a�yo��b&��ȋ��ܙ\Έ�����P��HHK��X�[��ȋ^��f�9i':ikx�%8�%:/�: �yd ��#9/a��k�k��.#y��:l�9.�����ܙ\Έ�����S�HHK��X�[���^��/���$�alx�%8�%9�9. 9."�l,y����ܙ\Έ�����HK��X�[��H�^��#-��%8�%9��yo��-��.az-���"ydl�`dȋ��ܙ\Έ���V��S�HHB�_K��^��/h:-��. 9.*�o�:f���'��9.��. :-m�d �ik{�#9/h9gd9d��'ȋ�[ۜΈ�X�[��H�^��gd9.幥�z/�{�#9..�b�9�o�+�zh����ܙ\Έ�RT����HK��X�[����^��gd9k�zgh��#9��y/��)�k�ȋ��ܙ\Έ�P���HK��X�[��ȋ^��gd9� :/�9�9/cy�k����ܙ\Έ�����HK��X�[���^��gd9d깥�9�`:,$��#9�$y.#y�%y.刋��ܙ\Έ�����HK��X�[��H�^��gd9d�`�z(c;�#9d �ikyl,y�+�d �ikH���ܙ\Έ���V��HB�_K��^���"y.��k�y/h:+�8�#9/h9c�9.���#x� �/h9�9a�yo��c�yn�9�+��'ȋ�[ۜΈ�X�[��H�^���c9.��� ��$y�+�.#y�+�`f�e&y.�9.b9.�����ܙ\Έ�RT����HK��X�[����^��.#z+�:+�{�#:n�:n�9��9c%����ܙ\Έ�����HK��X�[��ȋ^���#9c�9.���#�.b9.���'�.#z(c9d%��#H���ܙ\Έ�����HK��X�[���^��o 9i��b!���;�&��$yd�a�9c�9.���#9.�..�.�9.b:/�y.b:+����ܙ\Έ�P���HK��X�[��H�^��e���#9�$y�k�k��c�9.��� �/�y�+�ioy.�ȋ��ܙ\Έ���V��HB�_K��^��/h9b(:/�� b�i*z+�9oeyd%��'ȋ�[ۜΈ�X�[��H�^��b(:/���#9�%z(���"�b,:!�m�yi*�cdyo�����ܙ\Έ�RT����HK��X�[����^��.�.#yb(;�#:`���+�+�y�k����ܙ\Έ�P������HHK��X�[��ȋ^��b(:/���#9�!ynl�a�9��:/��"$��#H���ܙ\Έ�������V�HHK��X�[���^��b(:/���#9b(9k�9l,y.#y���.�����ܙ\Έ�������V�HHK��X�[��H�^����9�`:,$��#:+�9oey.#za�z)�H���ܙ\Έ�S����V��HB�_K�N���OOOOOOOOOOOH�T�S��P���OOOOOOOOOOOB��ۜ��T�S���P���H�RT��QP�����[YN��裺eg9�`��'ȋ��\���/h9�i�ho��`9�"y.���9��y���#9d#9����*^�[:(j9�/:/�z.*�, y.�9.b9���`&y/)9k��.��/h8� �/h9�9aly��z �yb��d�9b!���: �yb��d#9���g*9���#9�����9l,y�+��&�/h9��:, z`�y���#9.g���:, z`�y�+�� �/h9�+�`����y. :/�yn+�k�y��z/�z)��. :/�yg*9��z+�:a�9a�x�#9.��'��9�"y��x�#y�9.��� ���\�]�� �yd#9����'�c��d�9b!���;�#9�+�� 9�"zacy�k�� �b*��j�-.yg*9.#y`/9o���9.��.��."�� ��Y�[�N���*y��9�^�[:(j9�/9�y�!�df�[[ښN��'ꧼ'�∈K��RT��Q������[YN��oly.+y�+��kH���\���/h9�+�`����yg*9al����a�9�h��h���9i,z/�:)�z+�8�#9��y.���$yo�9iox�#y�9.��� �+�9ioyk�9.��l,z.��-m��i{�#:.��k�9.��c�9aiz+�9iox� �/h9��9i,yo��i*�k�zgf{�#9k�y��y�&�!��.#y��z`d�/h9�����g*9g.�� �/h9����,y�.��$9.��. 9g.�cey.��n�9bi�� ���\�]��/h9�9k�zgfy.#y�+�/k�o,{�#9�+�g*9/�y��9. 9.*�/�/h:!�m�z`�yo�9.���9.���%8�%9/h:!�m�x� ��Y�[�N��g*9g.�/a�.#ykf9g*9�:"n��+�k���[[ښN��'ꧼ'�nȈK��RT��Q������[YN��d*���c�ya�ȋ��\���. :/�yd�y. :/�yd-y����#9. :/�yd-y���. :/�z`d��bx� �/h9�9��y��`���j�e!y����渠%8�%9��yd�9�!y�i9d#9���a����{�#9b*�.���"�.��`�y��x� �/h9���c�y���/a�o��i*�/k��#9����*y��9/a�i*�i�9lb8� �����﹧+9��� ���\�]��/h9�9�/9��d�9���i-:+�9�9�+�d#9. 9c�z+�{�&��$yg*9.c�� ��Y�[�N��/�yd�z/�y�d��:n,�n+�e!H�[[ښN��'ꧼ'�)H�K��RT��TS����[YN����� !y�+�.�ȋ��\���/h9���(��.��/)9k��/�y.��.��ca�cc��$9.���#9�mzk`�b��+��#x� �.�j��/h;�'�`���+�.��9.&�b��� �.�a����9b���'�`���+�/h9�9/�(c8� �/h9�9��9�+�쯹�g�.%��c9�9/d���z`$9b�9df;�#9.�9.b9b�9/g:`�z �z$/yg,9�$9d�ki�� �.��.���+�/h9c�� �z/�z/�9kd:`�y.#y/&��'��9�'��%8� ���\�]��.����"�a�9�o�b,9�#�.by�+�i*�-`x� �/a����l,y�+�����#9.#zg :)�y��y.&�+�x� ��Y�[�N��c��/)9.g�)�ya�z+����ȋ[[ښN��'ꧼ'���K��RT��P��V����[YN��d�:)���+�.�ȋ��\���/h9m����c��,!y.���`9�"y.���#9c!y��9.#z+�z(��c��,!y�8� �/h9�9k�yk�yi)�b,9c��.�y�,�+��gg�`e�� �e�h�9�+��&�/h9c��,!y.��aj9.%��c;�#9l,y�+�o�9.��k�z!�m�yioy. 9�x� �/h9�+�`����z(��.*y.��/�:+�8�#9��yal����/h9.g�.#y�+��ay�#��8�#y�9.��oh�`d��by/�x� ���\�]��/h9�9e�:"k��+��'��8� ��9g*:+�z+�y���k��b!�. 9�y��z!�m�x� ��Y�[�N��.��oh�`d��by/�p����9��y�b�[[ښN��'ꧼ'�b��#ȈK��P�SRT������[YN��b!���9�+��kH���\���/h9�*9/������9��yo#�g*9�,x� �+�9oey���. 9.*���"���#9b!���9���. 9�(y��zn�;�#9�-�d#��*:/�y.���l9�k��iz+�y�#�!�m�y�"yi&�g*9.c�� �/h9�9�,y��y`��. 9���+������&�o%z* 9�+�o��b�;�#9�h�����+�b!���;�#9���+���+��#9�$yc�9.�9a�i*�i&�.���#x� ���\�]��/h9�:)�k��b���+�-�z �yb��� ��by/h9�*9g*:!�m�z.��."��:`��i*{�#9. 9b!�`�y/&��.yc�8� ��Y�[�N���*:+������/9o#�,"9�b��,H�[[ښN��'��'꧈�K��P�Q������[YN�����i!:)๨�ȋ��\���/h:.��g*:)�$/za�9�"��o�.���`9�"y.���#9/a���y.����z`d�� �/h9�9�%:+�9�+:a�9aj9�+�b*�.���:)�9o���#9/h9�9b!���9쯹a�b,9�d9�%�� �/a�� :+�yb.��9�+��%8�%9/h9.�9.b:`�y��z`d��#9.�9.b:`�y.#y`f�� �/h9�+�al����a�9�9��y����a9`��i-;�&�+�9oey. 9b!��#9nl�h�9..�f��� ���\�]��/h9�9k�yaj:-�y��/�y��9.��/h8� ��"yi*y/h9/&�c�y�;�#:gh:/�y.g�c��.�y�+�k�yaj9�8� ��Y�[�N��.��oh���y����a9`��i-�[[ښN��'��'�nȈK��P�Q������[YN��+���&: !H���\���/h9d-y���!�n)�8� �+���k�aayb!��#:`.�/�ze�y���#9k�y��y�.y�+9��9��yc�zjl�� �/h:-h�.�����. 9g.�/�z+���#9d#9���/����y.�����. 9��yal����� �f�9..�g*9.��k�al����a�;�#8�#9�$y�+�k�y�8�#y�+�� 9��y�*9�9. 9c�z+�x� ���\�]��/h9�: j��#� �ybj9o :e�h�8� ��by/h9ki�/&�.#ybj9.���9���`&{�#9l,y�'��9��9�c9.��� ��Y�[�N��d-y���!�n)�9�9.���[[ښN��'��'�)H�K��P�TS����[YN��/��n���!za�����\���/h9m�������. 9b!�`�yb!���:`#�.��� �f�9��9al����� yo���!�b�9�.�� yc���'�k��n�x� y/�y�b��(yo#��%8�%9/h9aj9��� �/a�/h9�"y��y�"yc�y�;�#9/h:-���!za��-��f��c���'���z`d��e9�b9nm�.#y�by.��ioy.���#9�"y���`&yc깦+��h�.��. 9��y��yo#������y�8� �/h9�9i)�!$y�+�.*��.9.#yal��.��9�#yb�yfj8� ���\�]��/h9�"�o����:, z`�z/�8� �/a�/�9i!9.#yc깧"y�'���;�#:/�9�"ya�c��� ��Y�[�N���.9.#yal��.��9�#yb�yfj�[[ښN��'��'���K��P�P��V����[YN����z(c9d"9. ���\���/h9b!���9k�9.���#9�-�d#���yc��.��� �d+:-m��iyo�9�f��#9/a�.g��"yc�� �yc깦+�b!���9b,9��yb���%9.��l,y��zfcy.���#9�-�d#��z/�yc���#9��y���#x� �.#z/��+�z+�9f繧i{�#: �z-l9b,:/�y. 9�iy�9.��.#yi&�� �/h9�+�`����yg*9�&9g.�."��.�k�9g,9f��-�d#�+�8�#9�$z`"y��yd�9nl��#y�9.��� ���\�]��i����9/h9�9nl�gfy�iz!��!�)�� #9.#y�+�嬹����#:`��/�yl,y�+��n��i�� ��Y�[�N���.�k�9g,9f�`"y��yd�9nlȋ[[ښN��'��'�b��#ȈK����SRT������[YN��k�gfy�+��kH���\���/h9��9i,y.��/a�/�9g*9`m�`m�al�o��� �/h:` 9a�.���: b�/a����i*yc���"�b�9� x� �/h9�+�`����yb!��b�.b�d#�/�:n�:n�9n+�bcy.���yi%�ce�/&9��9b.9�9.��� �f�:.���+�/h9�9/�y��:"l��#9/a�/h9�9o��.㹧iy��y�"y�'��:-l:/�8� ���\�]��/h9�9�*y��9.#zg :)�z(���"�)�y.g�/�y�-�kf9g*8� �/�y�+:.��l,yo�9.��.#z-m�� ��Y�[�N��` 9�9/a����i*y`m��"��9.���[[ښN��'�n�'꧈�K����QP�����[YN��f�9��9�%9�m� !H���\���(j:gh�."�/h9m������9i,y.��� �k��fay."�/h9g*9���i!9n�.��. 9.*�k�9�m9�9��y��y�dx� �/h9��z`d�k�y��ya�9�y."���� z-��, y.��b�8� y� :/�yo����y�#��-�� �/h9�+�aj9.%��c9� 9k�zgfy��[�\��%8�%9/a�/h9�z/�yc���#9.��)����ya�x�#x� ���\�]��/h9�:)�k��b����.��� ��"yi*y/h9/&����/�y.*���: �y�*9g*9��9`/9o���9.����y."�� ��Y�[�N��� 9k�zgfy�9��y��y.$�k���[[ښN��'�n�'�∈K����Q������[YN����zn�9c�y��ȋ��\���/h9nl����k�zgfyo��`���n��%;�#9/a�. 9���!�c�{�#9�`9/)9b��h*���9��zn�9.��."ynm9�9�j�llx� �/h9�9a���&:+�y.��ꤹ�k��#9/h9�9��zn�9��9.��/ez!#�+�z`�y��9�"y�.�a���)�� �/h9.#zg :)�yi)�h�;�#9k�zgfy�+:.��l,y�+�/h9� 9c���%y�9�i�fj8� ���\�]��/h:`"y��y��zn�9�+�f�9..�/h9��z`d�!�m�yo 9c���9b��a��� �/�y�+����b-�b���#9.#y�+���o,x� ��Y�[�N����zn�9.��."ynm9�9�j�llH�[[ښN��'�n�'�)H�K����TS����[YN��f�: !y/�(c���\���/h9��9i,y.���#9�-�d#�db�+�z!�m�z/�y�+�/�(c8� �/h9��9i!;�#9/h9a�y����#9/h:)�yo��!�m�ym�����"�`#�.��� �/a�+�9k��+�x�%8�%9/h9�+��'��9�"�`#�.���#:/�9�+�c깦+��o�.��.*�j�9��. 9�y�9`'�c��.#ya�e�;�'�/h9�9/�(c9c�� �yc깦+��/��d9�9d�ki�c!z(�x� ���\�]���'��h��9nl�gfy.#y�%z(���d��l8� ��by/h: �yg*9.���:a�9.g�k�zgfy�9���`&{�#9l,y�+��'��8� ��Y�[�N����9�d9�9d�ki�c!z(�H�[[ښN��'�n�'���K����P��V����[YN���!:n�9d�9nlȋ��\���/h9�.��$9.�� �9�k��o��9� :j�9h���c8� �.#yd-y.#ze�y.#y�d�.#zj���#9/h9l,z`��.b9kf9g*9�`;�#9`��. 9�ṥ/�g*:)�$/y�9���$'x�%8�%9.#zg :)�yi*�i&��-9.g� �y�.�� �b*�.��.�y..�/h9/f�.���#9am�k��/h9c깦+��o�b,9.��� 9� y�-y�9�(yo#�� ���\�]���.��$9���$'y.g��+�. 9��y�'�doyb��� � ﹭.�."��iy�9��yo#��#9l,y�+�ioy��yo#�� ��Y�[�N��)�$/za�9�9���$'p��� y�-y�(yo#ȋ[[ښN��'�n�'�b��#ȈK����SRT������[YN��d�yh�y��9o�ȋ��\���/h9a��o��`��.*�/�yk�{�#9o��/k�o��`����z"�y��� �/h:-��.��d-yk�9���f�k��l,yo 9i��d#���;�#9�-�d#��%�/�y. 9�hzeo�eo��:`d��by��9�k��#9�%�/�y.��akz`cz/�9�+���yc�x� �/h9�9�.�a��b��d�9�)�妹�'�d#9�����y��{�#9����(y�&9���`�y�+�.):-)y/�y/)8�%8�%9/)9b*�.��. 9b ;�#:!�m�z(k�.)9b 8� ���\�]��/h9�9e�:"k�+�y/h9�9b��a����9�'�k��� �.#y�+����.*��&9h��`�y�"yo��� ��Y�[�N��d-yk�9���`m�`m�`d��byakz`cH�[[ښN��'�)|'꧈�K����Q������[YN���!�c�y.#�k�k�����\���/h9g*9�!�c�yd�9��9i,y.b�e�9c�yi#y�*�-���#:h�y��h*���9��yg,��9i*y�%8� �."�. 9��/�9g*9�k��!�b��.�{�#9."�. 9��l,y.��e�:$�yc�y.��� �/h9�9�"�c���.:/�9.#y��z`d�.�i*z)�yb,9�9�+��j�lly�b:/�9�+�a�9m�y�b9�9/h8� �쯹�g�⭹� {�&�%��k��,%9�9��:!+��%8� ���\�]��/h9�9�!�c�y�+��'�k���;�#9/h9�9��:` 9.g��+�� �.)9.*�`�y�+�/h9g*9/�y��:!�m�y�9��yo#�� ��Y�[�N��%��k��,%9�9��9i*9�%�[[ښN��'�)|'�nȈK����QP�����[YN��+��+�z !H���\���/h9c�ya���9���`&z!�n)���yn�z/�z+���(yo#�� �k�y��z+�9. 9c�{�#9/h9���a�."y.*�c�y/��.)9.*��l9�k�. 9��yoezg��� �/h:-h�.��k�9c�;�#:/��.���'���x� �/h9g*9al����a�:/�y�`��9.#y�+�k�y��y�9o���#9�+��'���9�9k�yb)9�`�� ���\�]��/h9�9b��a��d�9�n��i����d"9�9���`&yo�9o.�i)�� ��by/h9�*9�iy/�y��:!�m�z #9.#y�+�k���j�b*�.���9���`&x� ��Y�[�N��!�n)�oezg���%9�:/�y��9o��n"�[[ښN��'�)|'�∈K����TS����[YN��.by�): !H���\���/h9�'��%9.#y�+�f�9..�l#�.���%8�%9/h9�'��%9�+�f�9..�c��b&x� �/h9�9���. 9�(y�)9�$�`�zacyo��."�. 9����/�+��� �e�h�9�+��#9/h9g*:-��. 9.*�.��d-y����#9.#y�+�g*9a�x�"�.���$y��y��x�"�� �/h9�����y.���jy�*9ca����$9.��d�ki�dozh�;�#9�����9�+�, z`�y.#y���-��/h9d-y.���#9f�9..�i*��+�.��� ���\�]��/h9�9c��b&y�+�/h9�:j�9i-8� ��by/h9ki�/&�c��b&y.g�c��.�y��:/k��9���`&x� ��Y�[�N��d-y���`��g*9a�y�/�+���[[ښN��'�)|'���K����P��V����[YN���i�(�y�9��y�ȋ��\���/h9�d�i'�.��� �/h9�'��9�d�i'�.��� ��`9.�y/h9�/�."�.���%8�%9/a�.#y�+�`����y.�y��zh�/n��9�/�."��#9�+�`����y���i-9��y.��i*�.ay�o�o 9.�yd#��b�/&�c�y����9�/�."�� �/h9�9nl�gfy."�gh�/�9�"y/fzg!��#9c깦+�/h:`"y��y.#ya�yod�f�.��.��� ���\�]��.㹢&9g.�."�-l9."��izg :)�y�9b���%;�#9��9."�c����9i&�� �/h9`f�b,9.��� ��Y�[�N�����i-9�o�o 9d#��9/fzg!ȋ[[ښN��'�)|'�b��#ȈK��SSRT������[YN��)� !y�+�.�ȋ��\���/h9m����.����"�a�9��9�9a�.��. 9�m9ie�.���'�d�ki��#9�-�d#�acz-.yb!�.����y�`9�"y.���%8�%:fi9.��/h:!�m�x� �/h: �yo 9k�9aj9.%��c;�#9l,y�+�k�z!�m�y�9/):/n������ya�x� �/h9�+�`����y�"�c��g"9c�x�#9�/�."�cl�!��,x�#{�#9cb�i'9`m�`m�d�y�9.��� ���\�]��/h: �y�"�)�yb*�.���"�.#z)�y�9.':)o�� ��by/h9.g� ���"�)�z!�m�y�9���`&x� ��Y�[�N���"�c��g"9c�y/f�����cb�i'9`m�`m�d�H�[[ښN��'��<'꧈�K��SQP�����[YN���'y���k�����\���/h9����`9�"y���c��`�yc�9�$9.���'y����(9�d8� �i,y�b��+�kf9g*9..�.b{�#:(�� �9c���+�.���)��%9�m��#:/�h-z/i�`�z �z+�y/h9���b,9b�9�*�� �/h9�+�� 9/&�c!z(�y���"��9.���%8�%9.#yc��c��/);�#9c���#9���c���#x� �.#yc��m*y����#9c���#:)�yk���#x� �/h9�9o���!�f,�o�y�.�b-����.��+��+�yi)�ie�� ���\�]�� �y.�n��h��a�9n�a�.':)o��iy�9.���#9.��.#z-m�� ��Y�[�N�����"�c!z(�z+��+�yi)�ie�o��..ȋ[[ښN��'��<'�∈K��SQ������[YN��a�y��� !H���\���/h9�9�jy�!�/cy�k��+�/�y.*�.%��c;�#9쯹�g�/cy�k��+�c�. 9.*���9n��� �/h:+�9/h9�/�."�.���#9/a�/h9�8�#9�/�."��#y�"�-m��iyo�9`���#9��yo :/繣�x�#x� �/h9.#y�+�/f��e��#9/h9c깦+��o�b,9.��� :j�9���:` �`o���yo#��%8�%9c��k��o 9���� ���\�]��i����9/h9�9nl�gfy�+�`"y��z #9.#y�+�` ����#:`��k��l,y�+��'��8� ��Y�[�N��� :j�9���:` �`o��c��k��o 9��ȋ[[ښN��'��<'�nȈK��SQ������[YN���&9h��d�.�����\���/h9����d�c�:)�yo��.#z+�y�d��#9����/�."�c�9d�y.#y."�/�yc���%8� �. 9cb��9/h9g*:+��`d�o������#9c�. 9cb�g*9�%�/�y. 9�hyo�:eo�o�:eo��9c�ya����9�k�� �/h9�+�o���!�ki�."��8�#:+�9��yi,z, ��#y�.�/d��fy�d8� ��kye�9/h;�#9/h:!�m�yl,y�+�/h9� 9i)��9�&9g.�� ���\�]��a�yo���9a���z+�9�#�/h9.)9��yb��a��`�y�"x� ��m9d"9k��.�9�:`��i*{�#9/h9/&��$9..�� 9c�yk���9.��� ��Y�[�N��. :/�z+��`d�o�����. :/�ya�yl#�/g9��ȋ[[ښN��'��<'�)H�K��SP��V����[YN��i)���9�cȋ��\���/h9�"�-m��iym����.�9.b:`�y���`&�.��� ����/��.���#9b!���:/��.���#9�)9�$�/��.���#9�9g*9/h:+�9/h9��y��.��. 9b!�� �/�yd+:-m��iyi*�k�9.���%8�%9`��. 9.*�.������`9�"y��y��`�y�m9�!�ioy�/�/����9kd9�-�d#�+�8�#9�$z!��,y.���#x� �/a�/h9�9��9kd:e�9�"y���/&�!�m�yo 8� ���\�]��l,y����9kd9`m�l%9/&�o ;�#9/h9.g�m����-l9o����9i)�i&��l9.��/�9.��� ��Y�[�N����y�깧�9kd9`m�l%9/&�!�m�yo �[[ښN��'��<'�b��#ȈK����VSRT������[YN��d�:)�� !H���\���/h9m����-��aj9.%��c9d�:)��.���#9� 9d#�. 9.*�g :)�yd�:)���9k�z,hy�+�/h:!�m�x� �/h9k�y�ey.��k�y��{�#9�!�)��.��k�y��{�#9��y��.��k�y��x�%8�%9�-�d#�/k:/��i-9�iyk�z!�m�z+�8�#9/h9od�����#�.b:`��.b9`���#x� �/h9k�y�`9�"y.��`�y�*y��;�#9l,y�+�k�z!�m�yb.�%�8� ���\�]��/h9m����-l9.��/�y.b:/�8� �� 9d#�. 9�i{�#9l,y�+�k�zeg9kd:a�:`��.*�.��+�9h�9ioy�8� ��Y�[�N��c��,!yaj9.%��c0��e+���9k�z!�m�yb.�%��[[ښN��'�b��#�'꧈�K����VQP�����[YN���n� !yoh�f����\���/h9�%9�m�`#�.���#9�-�d#��/�."�.��� �/h9�9�/�."�.#y�+�f�9..�.#y���#9�+�f�9..�i*���.���%8�%9��b,9��y.�9.b9ioz+�9�9.��� �/h9`��. 9.*�` 9/$y�9��y��yl`9l`:eo��#9�`9�"y�.�k�`�yg*:!$ykd:a�;�#9/a�/h9m����.#y���a�z)��+��.��/ey.��.��� ���\�]�� �y.��!�)��-l9b,9��y���#:/�y�hz-��o�9l$y�"y.��-l9k�8� �/h:-l9k�9.��� ��Y�[�N��` 9/$y�9��y��yl`9l`:eoȋ[[ښN��'�b��#�'�∈K����VQ������[YN����:* 9�9g!���H���\���/h9��.#yg*:/�z`�9al����a�;�#9.g�.#y�'��9g*9i%�gh�� �/h9�+�. 9.*�)�k��df;�#9n)��`9�*yn����z)�. 9b!�� �/h9�9kf9g*9�'�o�9/c�/a�.#y�+�f�9..�k���%x�%8�%9�+�f�9..�/h9�'��:)�yo��.#zg :)�z(���"�)�y.g���yal����� �/�y��y⭹� z)�y.b9�+�i)�on�i)�����#:)�y.b9�+�쯹�g�` 9/$x� ���\�]��.#zg :)�z(���"�)�y.g� �z!�g*;�#:/�y�+:.��l,y�+�. 9��yb��a��� ��Y�[�N��쯹�g�` 9/$p��n)�%����z)���[[ښN��'�b��#�'�nȈK����VQ������[YN���/�."��&9h�ȋ��\���/h9�d�/��.���#9c��/��/);�#9�9g*9���b 9�-�-m��iy.��� �.#y�+�f�9..�/��.���#9�+�f�9..�c�y�:/�yg.�.���.y�+9��y�"yie�d�x� �/h9�9nl�gfy�+��d�aiy�;�#9.#y�+�/�aiy�8� �/h:.��."�/�9�"y�;�#9/a�/h9m����.#z+���&9.�y�ay.��.��� ���\�]��.㹢&9g.�."�..�b�:-l9."��iy�9.���#9��9.㹧*�."�g.��9.����9o.�� ��Y�[�N���-�b 9aizg�0���9��z/�9g*�[[ښN��'�b��#�'�)H�K����VTS����[YN��)�y��� !H���\���/h9c�� �y�+�/�y.*��b�+�za�9� 8�#9k�9�$8�#y�9.��� �/h9b!���:/��� y�)9�$�/��� y��9i,z/��� z+�9ioz/���#9aj:+�z/��. :`c{�#9� 9d#�f�b,9.��c���x�%8�%9/h�/�y.*�c���z-��a�c�y���.#y. 9�-�.��� �/h9.#ya�zg :)�y�e9�b;�#9f�9..�/h9c�y�:e�h�9�+:.��l,y�+��e9�b8� �d+:-m��iyo�9�{�#9/a�/h9�'��9`f�b,9.��� �/h9�+��b�+�y.���:a�9� 9� 9�"y��x� ���\�]��/h9.#zg :)�y.��/ey.��db�+�y/h9m����b,9.��� �/h:!�m�y��z`d�� ��Y�[�N��aj:`�:+�z/��. :`cp��f�b,9c���H�[[ښN��'�b��#�'���B�N���OOOOOOOOOOOH�Q�H�SQT�OOOOOOOOOOOB��ۜ��Q�WӐSQT�HN���[YN��(j:gh�(c9..��j���ȋ�X����T��P�H��S��K�����[YN����yl`�)�c�H��X���QT�Q��T��K�Έ��[YN���.9o��a���H��X����ԑH�ӑ�P��K�
+���[YN���m9d":)��iȋ�X���S�QԐUSӈ�B�N���OOOOOOOOOOOH�UHOOOOOOOOOOOB�]]Z^��]HH�[]�\��[��Y�T]Y\�[ۜ�H�N]�\��[��R[�^H]�[��\][ۜ�H]\Q\��X�][ۈH�RT���������P��S���V�N���OOOOOOOOOOOHS�UPSV�USӈOOOOOOOOOOOB���[Y[��Y]�[�\�[�\�	��P�۝[��YY	�
+
+HO��Y�]�
+NJN��[��[ۈ�Y�]�
+H�ۜ��ܙYH��[�ܘY�K��]][J	���^\���]��NY�
+�ܙY
+H�ۜ�]HH��Ӌ�\��J�ܙY
+N�[��\][ۜ�H]K���\][ۜ�\Q\��X�][ۈH]K�\��X�][ۈ�RT���������P��S���V�NB�B���[��[ۈ�]�T�]�
+H��[�ܘY�K��]][J	���^\���]����Ӌ���[��Y�J��\][ۜΈ�[��\][ۜ��\��X�][ێ�\Q\��X�][ۂ�JJNB����OOOOOOOOOOOHQTU�HS��S�HOOOOOOOOOOOB��[��[ۈ�[X��Y�LT]Y\�[ۜ�
+H�]\���Y��J�Q�LW���
+K��X�J�NB���[��[ۈ�[X��Y�L�]Y\�[ۜ���ܙ\�H�ۜ���H�]�\\���ܙ\��N]�[�Y]\�H�Q�L������[\�HO�Y�
+]Z^��]K�\�Y^˚\�K�^
+JH�]\���[�N�ۜ�HK�\�ܚ[Z[�]\��]\��
+�˚[��Y\��JH	���˚[��Y\��WJJNJNY�
+�[�Y]\˛[���H�ۜ�^�HH�Q�L������[\�HO�Y�
+]Z^��]K�\�Y^˚\�K�^
+JH�]\���[�NY�
+�[�Y]\˚[��Y\�JJH�]\���[�N�ۜ�HK�\�ܚ[Z[�]\��]\���˚[��Y\��JH�˚[��Y\��WJNJN�[�Y]\�Hˋ���[�Y]\�����Y��J^�JWNB��]\���Y��J�[�Y]\�K��X�J�NB���[��[ۈ�[X��Y�L�]Y\�[ۜ���ܙ\�H�ۜ��[X\�U\HH�]�\\���ܙ\�JV�N�ۜ���H�Q�L������[X\�U\WH�Q�L������RT���N�ۜ�]�Z[X�HH����[\�HO�\]Z^��]K�\�Y^˚\�K�^
+JN�]\���Y��J]�Z[X�JK��X�J�NB���[��[ۈ�[X��Y�M]Y\�[ۜ�
+H�ۜ�]�Z[X�HH�Q�M�����[\�HO�\]Z^��]K�\�Y^˚\�K�^
+JN�]\���Y��J]�Z[X�JK��X�J�NB���[��[ۈ�Y�Y�T]Y\�[ۜ�
+H��]�
+]Z^��]K��Y�JH�\�HN��]\���[X��Y�LT]Y\�[ۜ�
+N�\�H���]\���[X��Y�L�]Y\�[ۜ�]Z^��]K���ܙ\�N�\�HΈ�]\���[X��Y�L�]Y\�[ۜ�]Z^��]K���ܙ\�N�\�H
+��]\���[X��Y�M]Y\�[ۜ�
+NY�][��]\���NB�B����OOOOOOOOOOOH�U�Q�USӈOOOOOOOOOOOB��[��[ۈ�\�]Z^�
+H]Z^��]HH��ܙ\Έ�RT���������P��S���V�K��Y�N�K�]Y\�[ے[�^��\�Y^Έ�]��]
+
+K�[���\�Έ�B�N�\��[��Y�T]Y\�[ۜ�H�Y�Y�T]Y\�[ۜ�
+N�\��[��R[�^H���Y�J	�]Z^�Y�I�N�[�\�]Y\�[ۊ
+NB���[��[ۈ���Y�JY�RY
+H��[Y[��]Y\�T�[X�ܐ[
+	˜Y�I�K��ܑXX�
+O���\��\���[[ݙJ	�X�]�I�JN��[Y[���][[Y[��RY
+Y�RY
+K��\��\��Y
+	�X�]�I�NB���[��[ۈ�[�\�]Y\�[ۊ
+H�ۜ�HH�\��[��Y�T]Y\�[ۜ���\��[��R[�^NY�
+\JH�]\����ۜ��[HH]Z^��]K�]Y\�[ے[�^
+�N��[Y[���][[Y[��RY
+	�S�[X�\��K�^�۝[�H�[K����[��
+K�Y�\�
+�	�	�N��[Y[���][[Y[��RY
+	�U^	�K�^�۝[�HK�^��ۜ��Y�R[���H�Q�WӐSQT��]Z^��]K��Y�WN��[Y[���][[Y[��RY
+	��Y�R[�X�]܉�K�^�۝[�H	��Y�R[��˜�X�H0��	��Y�R[��˛�[Y_X��ۜ��۝Z[�\�H��[Y[���][[Y[��RY
+	��[ۜ��۝Z[�\��N�۝Z[�\��[��\�SH	���K��[ۜ˙�ܑXX�
+
+�Y
+HO��ۜ���H��[Y[��ܙX]Q[[Y[�
+	؝]ۉ�N����\�Ә[YHH	��[ۉ����[��\�SH	��[��\��H��[ۋ[X�[���
+���X�[
+�	���[���
+���^���ۘ�X��H
+
+HO��[X��[ۊY
+N�۝Z[�\��\[��[
+��NJN�\]T��ܙ\��
+NB���[��[ۈ�[X��[ۊY
+H�ۜ�HH�\��[��Y�T]Y\�[ۜ���\��[��R[�^N����\�X[�YY�X��ۜ��[ۜ�H��[Y[��]Y\�T�[X�ܐ[
+	˛�[ۉ�N�[ۜ˙�ܑXX�
+
+�JHO�˘�\��\�����J	��[X�Y	�HOOHY
+N˜�[K��[�\�]�[��H	ۛۙI�JN���\H��ܙB��ۜ��[ۈHK��[ۜ��YN�܈
+�ۜ��\K�[Hوؚ�X��[��Y\��[ۋ���ܙ\�JH]Z^��]K���ܙ\��\WHH
+]Z^��]K���ܙ\��\WH
+H
+��[B�]Z^��]K�\�Y^˘Y
+K�^
+N]Z^��]K�[���\�˜\�
+�]Y\�[ێ�K���[��YJN���]]�XY�[��HY�\���YY�[^B��][Y[�]
+
+
+HO�]Z^��]K�]Y\�[ے[�^
+���\��[��R[�^
+���Y�
+�\��[��R[�^�H�H���Y�H��\]B�]Z^��]K��Y�J��Y�
+]Z^��]K��Y�H�
+H�[�[]T�\�[
+
+N�]\��B�������Y�H�[��][ۂ�����Y�U�[��][ۊ
+
+HO��\��[��Y�T]Y\�[ۜ�H�Y�Y�T]Y\�[ۜ�
+N�\��[��R[�^H�YR[�]Y\�[ۊ
+NJNH[�H�YR[�]Y\�[ۊ
+NB�K�L
+NB���[��[ۈ�YR[�]Y\�[ۊ
+H�ۜ��۝[�H��[Y[���][[Y[��RY
+	�]Y\�[ې�۝[�	�N�۝[���\��\��Y
+	٘YK[�]	�N�][Y[�]
+
+
+HO��[�\�]Y\�[ۊ
+N�۝[���\��\���[[ݙJ	٘YK[�]	�NK�L
+NB���[��[ۈ����Y�U�[��][ۊ�[�X��H�ۜ�ݙ\�^HH��[Y[���][[Y[��RY
+	��Y�U�[��][ۉ�N�ۜ��Y�R[���H�Q�WӐSQT��]Z^��]K��Y�WN��[Y[���][[Y[��RY
+	��Y�U�[��][ە^	�K�^�۝[�H�Y�R[��˛�[YN��[Y[���][[Y[��RY
+	��Y�U�[��][۔�X��K�^�۝[�H�Y�R[��˜�X��ݙ\�^K��\��\��Y
+	�X�]�I�N�][Y[�]
+
+
+HO�ݙ\�^K��\��\���[[ݙJ	�X�]�I�N�][Y[�]
+�[�X���
+NKL�
+NB���[��[ۈ\]T��ܙ\��
+H�ۜ�\��[�H
+
+]Z^��]K�]Y\�[ے[�^
+�JH�L�H
+�L��[Y[���][[Y[��RY
+	���ܙ\�њ[	�K��[K��YH\��[�
+�	�I���[Y[���][[Y[��RY
+	���ܙ\��^	�K�^�۝[�H
+]Z^��]K�]Y\�[ے[�^
+�JH
+�	��L��B����OOOOOOOOOOOH��ԒS��OOOOOOOOOOOB��[��[ۈ�[�[]T�\�[
+
+H�ۜ���ܙ\�H]Z^��]K���ܙ\��ۜ��ܝYHؚ�X��[��Y\���ܙ\�K��ܝ
+
+K�HO���WHHV�WJN�ۜ��[X\�U\HH�ܝY�V�N�ۜ��X�ۙ\�U\HH�ܝY�WV�N��[��\][ۜ���\Q\��X�][ۖ��[X\�U\WJ���]�T�]�
+N�\�^T�\�[
+�[X\�U\K�X�ۙ\�U\K��ܙ\�NB���[��[ۈ\�^T�\�[
+�[X\�K�X�ۙ\�K[��ܙ\�H�ۜ���X���^HH�[X\�H
+�	�I�
+��X�ۙ\�N�ۜ��\�[H�T�S���P������X���^WN�Y�
+\�\�[
+H�ۜ��K�\��܊	�[�ۛ�ۈ��X�Ή���X���^JN�]\��B���ۜ��X�[Y[��[HH
+�[��\][ۜ�	HL
+K����[��
+K�Y�\�
+�	�	�N���[Y[���][[Y[��RY
+	ܙ\�[��I�K�^�۝[�H	���
+��X�[Y[��[N��[Y[���][[Y[��RY
+	ܙ\�[[[ښI�K�^�۝[�H�\�[�[[ښN��[Y[���][[Y[��RY
+	ܙ\�[�[YI�K�^�۝[�H�\�[��[YN��[Y[���][[Y[��RY
+	ܙ\�[Y�[�I�K�^�۝[�H�\�[�Y�[�N��[Y[���][[Y[��RY
+	ܙ\�[\I�K�^�۝[�H�[X\�H
+�	�0��	�
+��X�ۙ\�N��[Y[���][[Y[��RY
+	ܛ�\�^	�K�^�۝[�H�\�[���\���[Y[���][[Y[��RY
+	��\�]^	�K�^�۝[�H�\�[��\�]��ۜ�]]ܓ��\�HRT���	��$z+�:+�o�9i&�`��/h:/�y�-��9.��� �.�.�9i*���zeo��i�ho�b*�.��.���#9��zeo�b,9o�9.��!�m�y.g�g :)�z(���i�ho�� ��$y`f�/�y.*��b�+�y.#y�+�..�.��db�+�y/h8�#9/h9�"ze�h�8�#x�%8�%9/h9��y�"x� �/h9c깦+�g*9. 9.*�g :)�zeg9kd9�9g,9��{�#9���!�m�y�.��$9.��`��gh�eg9kd8� �alyi!9�9�+9. 9�i{�#9�+�a`z+�:!�m�y.#ya�yc�yl!9.��/ey.��� �/h9c��.�yc깦+�/h8� ���P��	�+�9k��+�{�#9�$y`f�/�y.*�hny���9���`&{�#:!�m�y�b�aiy�9.g��+�/�����g��� ��$yi*���`����x�#9b!���9."��/��#y�9�'�)�y.���%8�%9/h:)�yo��c�)�y�%9�m�`#�.���#9l,z �yacy��� �/a�d#��iy�$yc�y�;�#9b!���9�+:.��.g��+�. 9��y��� �/h:-�����#:-��f��`a�(�y.#y��z`d�� �alyi!9.#y�+������y�%9�m��#9�+�a`z+�:!�m�y.#y��z`d�.g���yal����� ������	�/h9��9i,y�9���`&{�#9�"y��y�"y.��/�z/���ize�/h9c��d�.���'�i����9�"{�#:`��.*�.��`/9o��/h9f繧ix� �i����9��y�"{�#:`��/h9�9��9i,y�+�k�y�8� ��$y`f�/�y.*��b�+�y���+�9�9am�k��c깧"y. 9c�z+�{�&�f�:.��.#y.(�.��� �/a�i����9/h:f�:.��i*�.a{�#:+�9o��`m�l%:+�z!�m�z(���"�)�x� �d깠%yc깦+�. 9��� ������	�/h9g*9�&9����9���`&yi)����.#z)�yo��!�m�yg*9�&9���� �/h:)�yo��!�m�yg*9.��c�. 9.*�ak9nl��#9g*:+��. 9.*�`d��!��#9g*9k�9. 9�hy��� ��$y�!�)��� �f�9..��"y.�����'��9.#z �z+�x� �/a��$yd#��iy�#��oy.��. 9.��.���&��"y.��.���#9/h:-h�.��.g�c깦+��+�� �alyi!9�9�#��'y.#y�+�+�:/���#9�+�`"y��y���b���$:"�yg*9��9`/9o���9g,9��x� ���S�	�/h9�+�.#y�+����n.:)�yo��!�m�ym�����#9���`&�.���#{�'��$y.�ybcy.g��+�� �d#��iy�$yc�y�;�#9���`&�d�9�/�."�.b�e�:f�9.��. :`d�h�{�#9c��`f��#:.��/d�+�9o���#x� �!$ykd9c��.�yc��,!{�#9/a� �z!�:/�9�+��)��;�#9cb�i':/�9�+�/&�a��� �alyi!9.#y�+�. 9.*������{�#9�+�. 9.*�.h9���� ��h��h��ix� �����V�	�/h9�+���yl$y�l9�b�a�/�y.*������9�9.��� �.#y�+�f�9..�/�y.*��n�g����:j�9���%8�%9�+�f�9..�-l9b,:/�y. 9�iy�:-���#9�'��9o�:eo�o�:f��� �/h9i)�������c��/��."�gh��`9�"y�n�g���:f-���{�&�+�9ioz/���#9b!���:/���#9��9i,z/���#9�&9���/���#9.g�+�yf�ho����/��� �� 9d#�/h9c�y�;�#9e+�. 9c��(c9�9��yo#�l,y�+��&�ki�/&��"�i*y�%9�o�(h��#x� �/�yl,y�+�alyi!8� �.#y�+�+�:/���#9.#y�+��/�o ��#9�+�/h9m����.#zg :)�z-h�.��� �N��[Y[���][[Y[��RY
+	�]]ܕ^	�K�^�۝[�H]]ܓ��\���[X\�WH]]ܓ��\���P�	�N��[�\��Y\��\�
+[��ܙ\�N�[�\��\�
+�\�[�[X\�H
+�	�I�
+��X�ۙ\�K[��ܙ\��X�[Y[��[JN�[�\��]�
+N����Y�J	ܙ\�[Y�I�NB����OOOOOOOOOOOH�QT��T�OOOOOOOOOOOB��[��[ۈ�[�\��Y\��\�
+��ܙ\�H�ۜ��[��\�H��[Y[���][[Y[��RY
+	ܘY\��[��\��N�ۜ��H�[��\˙�]�۝^
+	̙	�N�ۜ��[�\�H�[��\˝�Y���ۜ��[�\�HH�[��\˚ZY����ۜ��Y]\�HL��ۜ�[��T�X�HH
+X]�H
+��H�
+��ۜ�\\�H��RT���	���	�	ё�	�	�P�	�	�S	�	���V	�N�ۜ�X^��ܙHHX]�X^
+���\\˛X\
+O���ܙ\��JJN�ۜ��ܛX[^�Y��ܙ\�H\\˛X\
+O�X]�Z[�K��ܙ\��H�X]�X^
+X^��ܙKJJJN����X\��X�
+�[��\˝�Y�[��\˚ZY�
+N�������T�[HH	��Q������[�U�YHN�܈
+]HHN�HH
+N�J��H�ۜ��H
+�Y]\��
+JH
+�N���Y�[�]
+
+N�܈
+]�H��
+�����H�ۜ�[��HH[��T�X�H
+��HX]�H���ۜ�H�[�\�
+��
+�X]����[��JN�ۜ�HH�[�\�H
+��
+�X]��[�[��JNY�
+�OOH
+H��[ݙU�JN[�H��[�U�JNB������T]
+
+N������J
+NB��������T�[HH	��NLPI���[�U�YHN\\˙�ܑXX�
+
+�JHO��ۜ�[��HH[��T�X�H
+�HHX]�H�����Y�[�]
+
+N��[ݙU��[�\��[�\�JN��[�U��[�\�
+��Y]\�
+�X]����[��JK�[�\�H
+��Y]\�
+�X]��[�[��JJN������J
+NJN����۝H	�L�H�[������[�[HH	�̐̎�I���^[YۈH	��[�\��\\˙�ܑXX�
+
+X�[JHO��ۜ�[��HH[��T�X�H
+�HHX]�H�����[^
+X�[�[�\�
+�
+�Y]\�
+��JH
+�X]����[��JK�[�\�H
+�
+�Y]\�
+��JH
+�X]��[�[��JJNJN�������T�[HH	�Ў
+
+PI����[�[HH	ܙؘJN
+L̋L��I���[�U�YH����Y�[�]
+
+N�ܛX[^�Y��ܙ\˙�ܑXX�
+
+��ܙKJHO��ۜ�[��HH[��T�X�H
+�HHX]�H���ۜ��H�Y]\�
+���ܙN�ۜ�H�[�\�
+��
+�X]����[��JN�ۜ�HH�[�\�H
+��
+�X]��[�[��JNY�
+HOOH
+H��[ݙU�JN[�H��[�U�JNJN�����T]
+
+N���[
+
+N������J
+N����[�[HH	�Ў
+
+PI��ܛX[^�Y��ܙ\˙�ܑXX�
+
+��ܙKJHO��ۜ�[��HH[��T�X�H
+�HHX]�H���ۜ��H�Y]\�
+���ܙN���Y�[�]
+
+N��\���[�\�
+��
+�X]����[��JK�[�\�H
+��
+�X]��[�[��JK
+X]�H
+��N���[
+
+NJNB����OOOOOOOOOOOH�T�H�T�OOOOOOOOOOOB��[��[ۈ�[�\��\�
+�\�[\P��K��ܙ\��X�[Y[��[JH�ۜ��\��[��\�H��[Y[���][[Y[��RY
+	��\��[��\��N�ۜ��H
+��ۜ�H
+N�\��[��\˝�YH��\��[��\˚ZY�H�ۜ��H�\��[��\˙�]�۝^
+	̙	�N����[�[HH	�э��QP�����[�X�
+�
+N�������T�[HH	�̐̎�I���[�U�YH�������T�X�
+
+K
+K�HLHL
+N������T�[HH	��Q������[�U�YHN������T�X�
+L�L��H�H�
+N����۝H	�LH�[������[�[HH	��NLPI���^[YۈH	��[�\�����[^
+	���HH�H�HL��MLM�HMNL
+M��
+�M�M�	�����JN����۝H	؛�L�H�[������[�[HH	�Ў
+
+PI����[^
+	��P�SQS���
+��X�[Y[��[K���
+MJN����۝H	�͜�\�Y�����[^
+�\�[�[[ښK���L
+N����۝H	؛�̜����\�Y�������[�[HH	�̐̎�I����[^
+�\�[��[YK���M
+JN����۝H	�L�����\�Y�������[�[HH	�Ў
+
+PI����[^
+�\�[�Y�[�K���M̊N����۝H	�L\H�[������[�[HH	��NLPI����[^
+\P��K���NMJN�������T�[HH	��Q������[�U�YH�N���Y�[�]
+
+N��[ݙU�
+�L
+N��[�U��H
+�L
+N������J
+N���Z[�H�Y\���ۜ�Z[�T�Y\�HH��ۜ�Z[�T�Y]\�H
+MN�ۜ�\\�H��RT���	���	�	ё�	�	�P�	�	�S	�	���V	�N�ۜ�\SX�[֚H��NMMX��	�NM�L	�	�M��N	�	�M�M��	�M�Y��	�MNL
+	�N�ۜ�X^��ܙHHX]�X^
+���\\˛X\
+O���ܙ\��JJN�ۜ��ܛX[^�Y��ܙ\�H\\˛X\
+O�X]�Z[�K��ܙ\��H�X]�X^
+X^��ܙKJJJN�ۜ�[��T�X�HH
+X]�H
+��H�
+��������T�[HH	��Q������[�U�YH�N�܈
+]HHN�HH��J��H�ۜ��H
+Z[�T�Y]\���H
+�N���Y�[�]
+
+N�܈
+]�H��
+�����H�ۜ�[��HH[��T�X�H
+��HX]�H��Y�
+�OOH
+H��[ݙU����
+��
+�X]����[��JKZ[�T�Y\�H
+��
+�X]��[�[��JJN[�H��[�U����
+��
+�X]����[��JKZ[�T�Y\�H
+��
+�X]��[�[��JJNB������T]
+
+N������J
+NB�����۝H	�L����\�Y�������[�[HH	��NLPI���^[YۈH	��[�\��\SX�[֚��ܑXX�
+
+X�[JHO��ۜ�[��HH[��T�X�H
+�HHX]�H�����[^
+X�[���
+�
+Z[�T�Y]\�
+�N
+H
+�X]����[��JKZ[�T�Y\�H
+�
+Z[�T�Y]\�
+�N
+H
+�X]��[�[��JH
+�
+NJN�������T�[HH	�Ў
+
+PI����[�[HH	ܙؘJN
+L̋L��JI���[�U�YHK�N���Y�[�]
+
+N�ܛX[^�Y��ܙ\˙�ܑXX�
+
+��ܙKJHO��ۜ�[��HH[��T�X�H
+�HHX]�H���ۜ��HZ[�T�Y]\�
+�X]�X^
+��ܙK�
+NY�
+HOOH
+H��[ݙU����
+��
+�X]����[��JKZ[�T�Y\�H
+��
+�X]��[�[��JJN[�H��[�U����
+��
+�X]����[��JKZ[�T�Y\�H
+��
+�X]��[�[��JJNJN�����T]
+
+N���[
+
+N������J
+N����[�[HH	�Ў
+
+PI��ܛX[^�Y��ܙ\˙�ܑXX�
+
+��ܙKJHO��ۜ�[��HH[��T�X�H
+�HHX]�H���ۜ��HZ[�T�Y]\�
+�X]�X^
+��ܙK�
+N���Y�[�]
+
+N��\�����
+��
+�X]����[��JKZ[�T�Y\�H
+��
+�X]��[�[��JK�X]�H
+��N���[
+
+NJN�����ܙH�\��ۜ��\��\�HH�����۝H	�\H�[����ۜ��\��YHM�ۜ��\�H
+�H�\��Y
+H����ۜ��ܝY\\�H\\˛X\
+
+JHO�
+�\N�X�[�\SX�[֚�WK��ܙN���ܙ\��HJJB���ܝ
+
+K�HO�����ܙHHK���ܙJN�ۜ�X^�HX]�X^
+����ܝY\\˛X\
+O����ܙJKJN��ܝY\\˙�ܑXX�
+
+JHO��ۜ�HH�\��\�H
+�H
+�N���[�[HH	��NLPI���^[YۈH	ܚY�	����[^
+�X�[�\�HH
+�
+N���[�[HH	��NL������[�X�
+�\�HH��\��Y
+N���[�[HHHOOH�	�Ў
+
+PI��	ܙؘJN
+L̋L�
+I����[�X�
+�\�HH��\��Y
+�
+���ܙH�X^�K
+N���[�[HH	��NLPI���^[YۈH	�Y�	����[^
+X]���[�
+
+���ܙH�X^�H
+�L
+H
+�	�I��\�
+��\��Y
+�
+�H
+�
+NJN�������T�[HH	��Q������[�U�YH�N���Y�[�]
+
+N��[ݙU�
+H
+N��[�U��H
+H
+N������J
+N����۝H	�L����\�Y�������[�[HH	�̐̎�I���^[YۈH	��[�\��ܘ\^
+��\�[��\�]���H
+���HM
+N�������T�[HH	��Q������[�U�YH�N���Y�[�]
+
+N��[ݙU�
+H�JN��[�U��H
+H�JN������J
+N����۝H	؛�L\H�[������[�[HH	�̐̎�I���^[YۈH	�Y�	����[^
+	�H��P���KHM�N���۝H	�L����\�Y�������[�[HH	��NLPI����[^
+	�MNL��M���M��WM�
+��MKHM�N����۝H	�\H�[������[�[HH	�Ў
+
+PI���^[YۈH	ܚY�	����[^
+	�[��X˘�K���^\�	��H�KHM�NB���[��[ۈܘ\^
+�^KX^�Y[�RZY�
+H�ۜ��\��H^��]
+	��N][�HH	��]�\��[�HHN�܈
+]HH�H�\�˛[���J��H�ۜ�\�[�HH[�H
+��\���WNY�
+��YX\�\�U^
+\�[�JK��Y�X^�Y	��[�K�[���
+H���[^
+[�K�\��[�JN[�HH�\���WN�\��[�H
+�H[�RZY�H[�H[�HH\�[�NB�B����[^
+[�K�\��[�JNB���[��[ۈ�ۛ�Y�\�
+
+H�ۜ��[��\�H��[Y[���][[Y[��RY
+	��\��[��\��N�ۜ�[��H��[Y[��ܙX]Q[[Y[�
+	�I�N[�˚�Y�H�[��\˝�]UT�
+	�[XY�K����N[�˙�ۛ�YH	���^\�\�\�[����[�˘�X��
+NB���[��[ۈ�[�\��]�
+H�ۜ��[H�[��\][ۜ��ۜ�\SX�[HRT���	�N�NMNM�N
+I����	�NM�LNXX�N
+I�����	�M��NMNX��P��	�M�M�M��L���S�	�NN
+ٗM�Y�N
+I���V�	�MLM�WMNL
+N
+IN���[Y[���][[Y[��RY
+	��]�^	�K�^�۝[�H	�MY��M��H	�
+��[
+�	�MX�WMX��M��LM�
+�N�
+I���ۜ�\�]�H��[Y[���][[Y[��RY
+	��]�\��X�][ۉ�N\�]��[��\�SH	���ؚ�X��[��Y\�\Q\��X�][ۊB���ܝ
+
+K�HO���WHHV�WJB���[\�
+����[�JHO���[��
+B���ܑXX�
+
+�\K��[�JHO��ۜ��H�[��
+
+��[���[
+H
+�L
+K�њ^Y
+JH��ۜ�][HH��[Y[��ܙX]Q[[Y[�
+	�]��N][K��\�Ә[YHH	��]Z][I�][K�[��\�SH	�]��\��H��]]\H���
+�\SX�[�\WH
+�	��]��]��\��H��]\\��[����
+��
+�	�O�]���\�]��\[��[
+][JNJNB���[��[ۈ�]Z�T]Z^�
+H�\�]Z^�
+NB���[��[ۈ���YJ
+H���Y�J	�[���Y�I�NB���ܚ\��؛�O���[
